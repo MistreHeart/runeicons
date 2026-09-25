@@ -1,9 +1,11 @@
 "use client";
-import { motion } from "motion/react";
 import { X } from "lucide-react";
+import { motion } from "motion/react";
+
 import { Button } from "@/components/ui/button";
 import { IconData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
 interface TrayIconItemProps {
   icon: IconData;
   index: number;
@@ -11,13 +13,7 @@ interface TrayIconItemProps {
   onSelect: (icon: IconData) => void;
   onRemove: (name: string) => void;
 }
-export function TrayIconItem({ 
-  icon, 
-  index, 
-  isSelected, 
-  onSelect, 
-  onRemove 
-}: TrayIconItemProps) {
+export function TrayIconItem({ icon, index, isSelected, onSelect, onRemove }: TrayIconItemProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
@@ -46,9 +42,7 @@ export function TrayIconItem({
           <icon.icon
             className={cn(
               "h-4 w-4 shrink-0 transition-colors duration-200",
-              isSelected
-                ? "text-primary"
-                : "text-muted-foreground group-hover:text-foreground",
+              isSelected ? "text-primary" : "text-muted-foreground group-hover:text-foreground",
             )}
           />
         ) : icon.url ? (

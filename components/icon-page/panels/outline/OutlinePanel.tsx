@@ -1,8 +1,11 @@
 "use client";
 import { AnimatePresence, motion } from "motion/react";
+
 import { CustomizationState, IconData } from "@/lib/types";
+
 import { IconTypeList } from "./components/IconTypeList";
 import { TrayIconItem } from "./components/TrayIconItem";
+
 export { ToolRail } from "./components/ToolRail";
 export type { ToolRailProps } from "./components/ToolRail";
 type IconType = CustomizationState["iconType"];
@@ -28,9 +31,7 @@ export function OutlinePanel({
       <div className="relative z-10 flex h-full flex-col">
         <div className="border-b border-border px-3 pt-3 pb-2">
           <h2 className="text-sm font-semibold text-foreground">Outline</h2>
-          <p className="mt-1 text-xs whitespace-normal text-muted-foreground">
-            Layers and styles
-          </p>
+          <p className="mt-1 text-xs whitespace-normal text-muted-foreground">Layers and styles</p>
           <div className="mt-3">
             <IconTypeList activeType={activeType} onTypeChange={onTypeChange} />
           </div>

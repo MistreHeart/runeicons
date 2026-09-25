@@ -1,6 +1,7 @@
 "use client";
 import type { JSX } from "react";
 import { useRef } from "react";
+
 import { DuotoneIcon } from "@/components/icons/DuotoneIcon";
 import { FillIcon } from "@/components/icons/FillIcon";
 import { GlassIcon } from "@/components/icons/GlassIcon";
@@ -8,9 +9,10 @@ import { NormalIcon } from "@/components/icons/NormalIcon";
 import { PixelatedIcon } from "@/components/icons/PixelatedIcon";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CustomizationState } from "@/lib/types";
 import { getIconsForType, getSpriteFile } from "@/lib/icons";
+import { CustomizationState } from "@/lib/types";
 import { cn } from "@/lib/utils";
+
 type IconType = CustomizationState["iconType"];
 export const iconTypes: Array<{
   id: IconType;
@@ -118,8 +120,8 @@ export function IconTypeList({
                   className={cn(
                     "group/icon-type h-8 w-8 rounded-md border-border transition-[background-color,color,scale] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.96]",
                     isActive
-                      ? "bg-brand dark:bg-brand text-white border-brand/20 hover:bg-brand/90 dark:hover:bg-brand/90"
-                      : "bg-white dark:bg-[#1a1a1a] text-muted-foreground hover:bg-accent hover:text-foreground",
+                      ? "border-brand/20 bg-brand text-white hover:bg-brand/90 dark:bg-brand dark:hover:bg-brand/90"
+                      : "bg-white text-muted-foreground hover:bg-accent hover:text-foreground dark:bg-[#1a1a1a]",
                   )}
                   aria-label={type.label}
                   role="radio"

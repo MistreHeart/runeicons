@@ -1,9 +1,11 @@
 "use client";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+
 import { Button } from "@/components/ui/button";
 import { KEYBOARD_SHORTCUTS } from "@/hooks/use-keyboard-shortcuts";
 import { cn } from "@/lib/utils";
+
 interface KeyboardShortcutsModalProps {
   isOpen: boolean;
   onClose: () => void;
