@@ -13,6 +13,7 @@ const ROUTES: Entry[] = [
   { path: "/icons", priority: 0.9, changeFrequency: "weekly" },
   { path: "/editor", priority: 0.8, changeFrequency: "monthly" },
   { path: "/sponsor", priority: 0.6, changeFrequency: "monthly" },
+  { path: "/packages", priority: 0.7, changeFrequency: "monthly" },
   { path: "/about", priority: 0.5, changeFrequency: "yearly" },
   { path: "/changelog", priority: 0.5, changeFrequency: "weekly" },
   { path: "/terms", priority: 0.2, changeFrequency: "yearly" },

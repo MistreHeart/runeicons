@@ -7,6 +7,7 @@ import Footer from "@/components/landing/components/footer";
 import HeroSection from "@/components/landing/components/herosection";
 import Search from "@/components/landing/components/search";
 import Navbar from "@/components/ui/navbar";
+import { NAV_LINKS } from "@/lib/nav-links";
 
 export const metadata: Metadata = {
   title: "RuneIcons - Beautiful Icons for Your Next Project",
@@ -17,14 +18,7 @@ const Page = async () => {
   return (
     <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
       <div className="relative col-start-2 row-start-1 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
-        <Navbar
-          showBanner
-          showDashedBorder
-          links={[
-            { href: "/about", label: "About dev" },
-            // { href: "/sponsor", label: "Sponsor" },
-          ]}
-        />
+        <Navbar showBanner showDashedBorder links={NAV_LINKS} />
       </div>
 
       <div

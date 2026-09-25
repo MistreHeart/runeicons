@@ -1,1 +1,4 @@
-export const NAV_LINKS = [{ href: "/about", label: "About dev" }];
+export const NAV_LINKS = [
+  { href: "/packages", label: "Packages" },
+  { href: "/about", label: "About dev" },
+];
