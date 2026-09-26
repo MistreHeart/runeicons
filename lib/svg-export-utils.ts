@@ -526,7 +526,7 @@ export async function generateStandaloneSvg(
   const preservesDesignedPaint = effectiveIconType === "glass" || effectiveIconType === "pixelated";
 
   const finalSvg = `<?xml version="1.0" encoding="UTF-8"?>
-<!-- Made with RuneIcon — https://runeicon.com -->
+<!-- Made with RuneIcon - https://runeicon.com -->
 <svg xmlns="http://www.w3.org/2000/svg" width="${state.width}" height="${state.height}" viewBox="${currentViewBox}" preserveAspectRatio="xMidYMid meet" fill="none">${defs ? `\n  <defs>${defs}</defs>` : ""}${animationCss ? `\n  <style><![CDATA[${animationCss}]]></style>` : ""}
   <rect x="${vbx}" y="${vby}" width="${vbw}" height="${vbh}" rx="${rx}" ry="${rx}" fill="${backgroundFill}"/>
   <g transform="translate(${vbx + paddingVB}, ${vby + paddingVB}) scale(${iconScaleFactor})"${

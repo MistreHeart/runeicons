@@ -31,21 +31,21 @@ Requires [Node.js](https://nodejs.org) 20+, [pnpm](https://pnpm.io) 10, and [Bun
 
 ## Repository structure
 
-| Directory / File                   | Description                                                     |
-| :--------------------------------- | :-------------------------------------------------------------- |
-| `app/`                             | Next.js App Router pages, layout, and site metadata             |
-| `components/`                      | React UI components, including the icon editor                  |
-| `lib/icons/`                       | Icon registry — `index.ts` plus the generated manifest          |
-| `lib/icons/manifest.generated.ts`  | **Generated file.** Built from `public/` — never edit by hand   |
-| `public/normal/`                   | Outline-style icon SVGs, grouped by category folder             |
-| `public/duotone/`                  | Duotone-style icon SVGs                                         |
-| `public/fill/`                     | Fill-style icon SVGs                                            |
-| `public/pixelated/`                | Pixelated-style icon SVGs                                       |
-| `public/glass-icons/`              | Glass-style icon SVGs                                           |
-| `scripts/build-icon-manifest.ts`   | Manifest generator — scans `public/` and writes the manifest    |
-| `packages/`                        | Standalone platform packages, each with its own toolchain       |
-| `packages/runeicons-react-native/` | React Native package — SVGR-generated icons, own yarn workspace |
-| `docs/`                            | Architecture and behavior notes                                 |
+| Directory / File                   | Description                                                    |
+| :--------------------------------- | :------------------------------------------------------------- |
+| `app/`                             | Next.js App Router pages, layout, and site metadata            |
+| `components/`                      | React UI components, including the icon editor                 |
+| `lib/icons/`                       | Icon registry — `index.ts` plus the generated manifest         |
+| `lib/icons/manifest.generated.ts`  | **Generated file.** Built from `public/` — never edit by hand  |
+| `public/normal/`                   | Outline-style icon SVGs, grouped by category folder            |
+| `public/duotone/`                  | Duotone-style icon SVGs                                        |
+| `public/fill/`                     | Fill-style icon SVGs                                           |
+| `public/pixelated/`                | Pixelated-style icon SVGs                                      |
+| `public/glass-icons/`              | Glass-style icon SVGs                                          |
+| `scripts/build-icon-manifest.ts`   | Manifest generator: scans `public/` and writes the manifest    |
+| `packages/`                        | Standalone platform packages, each with its own toolchain      |
+| `packages/runeicons-react-native/` | React Native package: SVGR-generated icons, own yarn workspace |
+| `docs/`                            | Architecture and behavior notes                                |
 
 > Never manually edit `lib/icons/manifest.generated.ts`. It is regenerated from the SVG files in `public/`.
 

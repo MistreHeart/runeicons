@@ -13,12 +13,27 @@ type ChangelogEntry = {
   date: string;
   title: string;
   items: string[];
+  authors?: string[];
 };
 
 const CHANGELOG: ChangelogEntry[] = [
   {
+    date: "September 27, 2026",
+    title: "404 page, packages page & feedback rework",
+    authors: ["Nexvyn"],
+    items: [
+      "Added a custom 404 page where the hero rocket launches and bursts into shards, glyphs, and smoke.",
+      "Added a packages page with inline per-package guides and a platform section on the landing page.",
+      "Rebuilt the feedback dialog to file GitHub issues with the text prefilled.",
+      "Showed a direction arrow on the canvas when an outer shadow is applied.",
+      "Rewrote the package READMEs, normalized authorship to the Rune Icons Team, and removed em-dashes site-wide.",
+      "Wired the new OG image and added GitHub avatars to changelog entries.",
+    ],
+  },
+  {
     date: "September 25, 2026",
     title: "Platform packages, pnpm & lighter assets",
+    authors: ["Nexvyn", "404khai", "MayurK-cmd", "withxat", "gs-rumana"],
     items: [
       "Added the core runeicons package plus React, Vue, Svelte, Astro, React Native, Flutter, VS Code, Figma, and MCP packages.",
       "Moved the repository to a single pnpm workspace.",
@@ -28,6 +43,7 @@ const CHANGELOG: ChangelogEntry[] = [
   {
     date: "August 26, 2026",
     title: "Landing refresh, legal pages & site metadata",
+    authors: ["Nexvyn"],
     items: [
       "Refined the banner, navbar, hero, search, bento, FAQ, CTA, and footer with faster motion, reduced-motion support, and theme-aware artwork.",
       "Added Terms of Use and Privacy Policy pages, linked from the footer.",
@@ -208,7 +224,7 @@ const CHANGELOG: ChangelogEntry[] = [
     title: "Project kickoff",
     items: [
       "Started the project on Next.js.",
-      "Added the full icon set — 170+ icons.",
+      "Added the full icon set: 170+ icons.",
       "Shipped the initial about page and landing page layout.",
     ],
   },
@@ -239,11 +255,36 @@ const ChangelogPage = () => {
                 }`}
               >
                 <div className="flex flex-col gap-1.5">
-                  <span className="flex items-center gap-2 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+                  <span className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-widest text-muted-foreground uppercase">
                     {entry.date}
                     {i === 0 && (
                       <span className="rounded-full bg-blue-700 px-2 py-0.5 text-[10px] font-semibold tracking-normal text-white normal-case">
                         Latest
+                      </span>
+                    )}
+                    {entry.authors && entry.authors.length > 0 && (
+                      <span className="flex -space-x-1.5 normal-case">
+                        {entry.authors.map((author) => (
+                          <a
+                            key={author}
+                            href={`https://github.com/${author}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            title={author}
+                            aria-label={`GitHub profile of ${author}`}
+                            className="rounded-full border border-background transition-transform duration-150 ease-out hover:-translate-y-0.5"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={`https://github.com/${author}.png?size=64`}
+                              alt=""
+                              width={20}
+                              height={20}
+                              loading="lazy"
+                              className="size-5 rounded-full bg-muted"
+                            />
+                          </a>
+                        ))}
                       </span>
                     )}
                   </span>

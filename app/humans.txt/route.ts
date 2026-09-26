@@ -5,9 +5,9 @@ export function GET() {
 Site: Rune Icons
 Role: Design and engineering
 
-Nexvyn: design engineering — https://nexvyn.dev
-Abhinav: software engineering — https://abhi.at
-Vansh: design engineering — https://vanshnagar.me
+Nexvyn: design engineering, https://nexvyn.dev
+Abhinav: software engineering, https://abhi.at
+Vansh: design engineering, https://vanshnagar.me
 Mohit: software development
 
 /* THANKS */

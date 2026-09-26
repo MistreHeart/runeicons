@@ -8,7 +8,7 @@ import { TuningProvider } from "@/components/icon-page/tuning";
 export const metadata: Metadata = {
   title: "Browse icons",
   alternates: { canonical: "/icons" },
-  description: "Browse and customize 1000+ beautiful icons.",
+  description: "Browse and customize 900+ beautiful icons.",
 };
 
 export default function Home() {

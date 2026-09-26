@@ -1,5 +1,5 @@
 "use client";
-import { ChevronLeft, ChevronRight, Disc as Discord, Github, Globe, Mail, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Github, Globe, Mail, X } from "lucide-react";
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
@@ -149,7 +149,6 @@ const DetailView = ({ user, isMobile = false, onClose, onNext, onPrev }: DetailV
                     {social.type === "twitter" && <XIcon size={20} />}
                     {social.type === "github" && <Github size={20} />}
                     {social.type === "mail" && <Mail size={20} />}
-                    {social.type === "discord" && <Discord size={20} />}
                   </a>
                 ))}
               </div>
@@ -273,7 +272,6 @@ const DetailView = ({ user, isMobile = false, onClose, onNext, onPrev }: DetailV
                   {social.type === "twitter" && <XIcon size={20} />}
                   {social.type === "github" && <Github size={20} />}
                   {social.type === "mail" && <Mail size={20} />}
-                  {social.type === "discord" && <Discord size={20} />}
                 </a>
               ))}
             </div>

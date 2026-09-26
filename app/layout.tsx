@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { Caveat, Geist, Geist_Mono, Gemunu_Libre, Inter, Inter_Tight } from "next/font/google";
+
+import { Analytics } from "@vercel/analytics/next";
 
 import { Toaster } from "@/components/ui/sonner";
 import { ShapeProvider } from "@/lib/shape-context";
@@ -77,7 +78,7 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: [
       {
-        url: `${SITE_URL}/opengraph-image`,
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Rune Icons",
@@ -90,7 +91,7 @@ export const metadata: Metadata = {
     creator: "@RuneIcon",
     title: "Rune Icons: open-source icons in five styles",
     description: DESCRIPTION,
-    images: [`${SITE_URL}/opengraph-image`],
+    images: [`${SITE_URL}/og-image.png`],
   },
   robots: {
     index: true,

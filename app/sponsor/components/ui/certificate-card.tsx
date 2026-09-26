@@ -76,7 +76,7 @@ export function CertificateCard({
           <p className="mt-3 max-w-[320px] text-[13px] leading-relaxed text-muted-foreground sm:mt-4">
             {amount > 0
               ? "RuneIcons stays free and open-source, always. Your sponsorship helps me ship new icons, refine every stroke, and keep the library evolving."
-              : "Enter any amount above — RuneIcons stays free and open-source, always. Sponsor whatever feels right."}
+              : "Enter any amount above. RuneIcons stays free and open-source, always. Sponsor whatever feels right."}
           </p>
           <m.div
             layout
