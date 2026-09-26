@@ -5,6 +5,7 @@ import CTA from "@/components/landing/components/cta";
 import Faq from "@/components/landing/components/faq";
 import Footer from "@/components/landing/components/footer";
 import HeroSection from "@/components/landing/components/herosection";
+import Packages from "@/components/landing/components/packages";
 import Search from "@/components/landing/components/search";
 import Navbar from "@/components/ui/navbar";
 import { NAV_LINKS } from "@/lib/nav-links";
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 
 const Page = async () => {
   return (
-    <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
+    <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
       <div className="relative col-start-2 row-start-1 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
         <Navbar showBanner showDashedBorder links={NAV_LINKS} />
       </div>
@@ -49,21 +50,30 @@ const Page = async () => {
       <div className="pointer-events-none col-span-full col-start-1 row-start-8 border-b-2 border-dashed" />
 
       <div
-        id="faq"
-        className="col-start-2 row-start-9 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col justify-center p-3 sm:p-6 md:w-[90vw] lg:min-h-[calc(100vh-104px)] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        id="packages"
+        className="col-start-2 row-start-9 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]"
       >
-        <Faq />
+        <Packages />
       </div>
 
       <div className="pointer-events-none col-span-full col-start-1 row-start-10 border-b-2 border-dashed" />
 
-      <div className="col-start-2 row-start-11 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
-        <CTA />
+      <div
+        id="faq"
+        className="col-start-2 row-start-11 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col justify-center p-3 sm:p-6 md:w-[90vw] lg:min-h-[calc(100vh-104px)] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+      >
+        <Faq />
       </div>
 
       <div className="pointer-events-none col-span-full col-start-1 row-start-12 border-b-2 border-dashed" />
 
-      <div className="col-start-2 row-start-13 flex w-[95vw] max-w-[1440px] flex-col px-3 py-10 sm:px-6 sm:py-14 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+      <div className="col-start-2 row-start-13 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+        <CTA />
+      </div>
+
+      <div className="pointer-events-none col-span-full col-start-1 row-start-14 border-b-2 border-dashed" />
+
+      <div className="col-start-2 row-start-15 flex w-[95vw] max-w-[1440px] flex-col px-3 py-10 sm:px-6 sm:py-14 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
         <Footer />
       </div>
 
