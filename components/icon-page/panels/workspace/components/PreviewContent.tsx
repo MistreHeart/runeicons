@@ -24,6 +24,49 @@ interface PreviewContentProps {
   noiseFilter: string;
   blurFilter: string;
 }
+const SHADOW_ARROW_BLUE = "#1346E7";
+function ShadowDirectionArrow({ offsetX, offsetY }: { offsetX: number; offsetY: number }) {
+  const length = Math.hypot(offsetX, offsetY);
+  if (length < 0.5) return null;
+  const center = 60;
+  const reach = 34;
+  const dx = (offsetX / length) * reach;
+  const dy = (offsetY / length) * reach;
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center"
+    >
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+        <defs>
+          <marker
+            id="shadow-dir-head"
+            viewBox="0 0 10 10"
+            refX="8"
+            refY="5"
+            markerWidth="7"
+            markerHeight="7"
+            orient="auto-start-reverse"
+          >
+            <path d="M0 0L10 5L0 10z" fill={SHADOW_ARROW_BLUE} />
+          </marker>
+        </defs>
+        <circle cx={center} cy={center} r="3" fill={SHADOW_ARROW_BLUE} fillOpacity="0.35" />
+        <line
+          x1={center}
+          y1={center}
+          x2={center + dx}
+          y2={center + dy}
+          stroke={SHADOW_ARROW_BLUE}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeDasharray="5 4"
+          markerEnd="url(#shadow-dir-head)"
+        />
+      </svg>
+    </div>
+  );
+}
 export const PreviewContent = memo(
   forwardRef<HTMLDivElement, PreviewContentProps>(
     (
@@ -607,6 +650,9 @@ export const PreviewContent = memo(
                 </motion.div>
               )}
             </AnimatePresence>
+            {shadowOuterOn ? (
+              <ShadowDirectionArrow offsetX={state.shadow.offsetX} offsetY={state.shadow.offsetY} />
+            ) : null}
           </motion.div>
         </div>
       );
