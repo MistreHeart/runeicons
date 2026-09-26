@@ -20,7 +20,19 @@ import { RuneIcon } from "runeicons-vue";
 </template>
 ```
 
-`name` takes any icon id from the [icon browser](https://runeicons.com); `type` is one of `normal`, `duotone`, `fill`, `pixelated`, or `glass`, and defaults to `normal`. Icons render inline and inherit text color through `currentColor` where the style supports it.
+`name` takes any icon id from the [icon browser](https://runeicons.com). Icons render inline and inherit text color through `currentColor` where the style supports it.
+
+## Props
+
+| Prop   | Type                                                       | Default    |
+| :----- | :--------------------------------------------------------- | :--------- |
+| `name` | `string`                                                   | required   |
+| `type` | `"normal"`, `"duotone"`, `"fill"`, `"pixelated"`, `"glass"` | `"normal"` |
+| `size` | `number`                                                   | `24`       |
+
+## Styles
+
+All five styles share the same ids, so switching styles never renames your icon. Outline styles follow the surrounding text color. Glass icons carry their own gradients with safely scoped ids, so any number can share a page.
 
 Helpers are also available for custom rendering:
 

@@ -1,10 +1,4 @@
 #!/usr/bin/env node
-// runeicons-mcp — MCP server exposing the Rune Icons library to AI agents.
-//
-// Runs over stdio. Registered tools:
-//   search_icons    — find icons by query, category, and style
-//   get_icon        — resolve metadata + ready-to-use SVG source for one icon
-//   list_categories — category overview with per-style counts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -33,7 +27,7 @@ function iconToResult(icon: GeneratedIcon, opts: { svg: boolean; related: boolea
     viewBox: getViewBox(icon),
     svg: opts.svg ? getSvgSource(icon) : undefined,
     relatedStyles: related.length > 0 ? related : undefined,
-    credit: "Rune Icons (https://runeicons.com) — Apache-2.0",
+    credit: "Rune Icons (https://runeicons.com) - Apache-2.0",
   };
 }
 
@@ -98,7 +92,7 @@ async function main(): Promise<void> {
               "",
               ...results.map(
                 (icon) =>
-                  `- ${icon.id} — \"${icon.name}\" (style: ${icon.style}, category: ${icon.category})`,
+                  `- ${icon.id} - \"${icon.name}\" (style: ${icon.style}, category: ${icon.category})`,
               ),
               "",
               "Use get_icon with an id to fetch SVG source.",
@@ -154,7 +148,7 @@ async function main(): Promise<void> {
           `other styles: ${result.relatedStyles.map((r) => `${r.style} (${r.id})`).join(", ")}`,
         );
       }
-      lines.push("", result.svg ?? "(svg omitted — pass includeSvg: true to include it)");
+      lines.push("", result.svg ?? "(svg omitted - pass includeSvg: true to include it)");
       return { content: [{ type: "text", text: lines.join("\n") }] };
     },
   );

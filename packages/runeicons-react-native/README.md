@@ -1,6 +1,6 @@
 # runeicons-react-native
 
-908 Rune Icons as [react-native-svg](https://github.com/software-mansion/react-native-svg) components — 354 icons drawn across five styles, generated from the SVG sources in this repo with [`@svgr/cli`](https://react-svgr.com/docs/cli/).
+908 Rune Icons as [react-native-svg](https://github.com/software-mansion/react-native-svg) components: 354 icons drawn across five styles, generated from the SVG sources in this repo with [`@svgr/cli`](https://react-svgr.com/docs/cli/).
 
 ## Install
 
@@ -25,7 +25,7 @@ Anything beyond the four props below is forwarded to the underlying `<Svg>`, so 
 
 ### Tree-shaking
 
-The package is side-effect free and ships ES modules with one module per icon, so importing from the root **tree-shakes to exactly the icons you use**. Bundled with esbuild, `import { ArrowUp } from 'runeicons-react-native'` produces a 580-byte chunk — byte-identical to importing that icon's module directly.
+The package is side-effect free and ships ES modules with one module per icon, so importing from the root **tree-shakes to exactly the icons you use**. Bundled with esbuild, `import { ArrowUp } from 'runeicons-react-native'` produces a 580-byte chunk, byte-identical to importing that icon's module directly.
 
 Metro does not tree-shake by default, so under bare React Native import the icon's own module instead:
 
@@ -34,7 +34,7 @@ import ArrowUp from 'runeicons-react-native/arrow-up';
 import ArrowUpDuotone from 'runeicons-react-native/arrow-up-duotone';
 ```
 
-Every icon is reachable at `runeicons-react-native/<slug>`, where the slug is its file name — `arrow-up`, `arrow-up-duotone`, `chart-pie-fill`, `arrow-up-pixelated`, `archive-glass`.
+Every icon is reachable at `runeicons-react-native/<slug>`, where the slug is its file name: `arrow-up`, `arrow-up-duotone`, `chart-pie-fill`, `arrow-up-pixelated`, `archive-glass`.
 
 #### React Native version support for subpath imports
 
@@ -44,7 +44,7 @@ Per-icon paths, and `runeicons-react-native/manifest` below, exist only through 
 | :--------------- | :-------------------------------------------------- |
 | 0.79+ / Expo 53+ | Work as-is                                          |
 | 0.72 – 0.78      | Turn on package exports in `metro.config.js`, below |
-| 0.70 – 0.71      | Not available — import from the package root        |
+| 0.70 – 0.71      | Not available. Import from the package root        |
 
 ```js
 // metro.config.js (React Native 0.72 – 0.78)
@@ -91,7 +91,7 @@ The style is part of the component name, with `normal` as the unsuffixed default
 | `duotone`   | `ArrowUpDuotone`   | 24×24 |   215 | `color` + `secondaryColor` |
 | `fill`      | `ArrowUpFill`      | 24×24 |   126 | `color` + `secondaryColor` |
 | `pixelated` | `ArrowUpPixelated` | 40×40 |   215 | `color`                    |
-| `glass`     | `ArchiveGlass`     | 24×24 |   135 | fixed — see below          |
+| `glass`     | `ArchiveGlass`     | 24×24 |   135 | fixed (see below)          |
 
 ## Props
 
@@ -110,7 +110,7 @@ The `secondaryColor` default is tuned for light backgrounds; on a dark surface i
 
 ## Example app
 
-An Expo app that browses the whole set — search, style switcher, live size and colour controls, and per-icon import snippets:
+An Expo app that browses the whole set: search, style switcher, live size and colour controls, and per-icon import snippets:
 
 ```sh
 yarn
@@ -125,11 +125,11 @@ yarn example ios      # or: android, web
 1. `scripts/prepare-svg.mjs` stages the repo's `public/**` SVGs into `svg/`, flattening them into kebab-case names that carry the style (so SVGR's filename-derived component names are unique), and swapping the themeable colours and the dominant stroke weight for sentinels.
 2. `@svgr/cli` converts them to react-native-svg components, replacing those sentinels with the `color` / `secondaryColor` / `strokeWidth` props.
 
-Sentinels are used rather than raw colour literals because the same literal means different things in different styles — `#A4A5A6` is the primary tone in duotone but an accent in fill, and `black` inside a glass icon's `<mask>` is a mask channel that must not be themed.
+Sentinels are used rather than raw colour literals because the same literal means different things in different styles. `#A4A5A6` is the primary tone in duotone but an accent in fill, and `black` inside a glass icon's `<mask>` is a mask channel that must not be themed.
 
 ### The filter shim
 
-SVGR's react-native transform carries a hard-coded list of supported elements that predates react-native-svg's filter support, so it silently **drops** `<filter>` and its primitives and leaves dangling `filter="url(#…)"` references — which would flatten the blur layers out of all 132 filtered glass icons. SVGR has been unmaintained since 2023, so `svgr/rn-filters.cjs` bridges the gap: a Babel plugin that runs before SVGR's preset, proxies the filter elements through elements SVGR does know, and restores them afterwards. `color-interpolation-filters` is dropped instead, since react-native-svg has no matching prop and its pipeline is already sRGB — the only value this artwork uses.
+SVGR's react-native transform carries a hard-coded list of supported elements that predates react-native-svg's filter support, so it silently **drops** `<filter>` and its primitives and leaves dangling `filter="url(#…)"` references, which would flatten the blur layers out of all 132 filtered glass icons. SVGR has been unmaintained since 2023, so `svgr/rn-filters.cjs` bridges the gap: a Babel plugin that runs before SVGR's preset, proxies the filter elements through elements SVGR does know, and restores them afterwards. `color-interpolation-filters` is dropped instead, since react-native-svg has no matching prop and its pipeline is already sRGB (the only value this artwork uses).
 
 ### Regenerating
 
@@ -143,7 +143,7 @@ The generator fails loudly on any SVG element or attribute it does not already k
 
 ## Releasing
 
-CI builds the icons on every PR touching the package or `public/`. Releases run from [`Nexvyn/runeicons`](https://github.com/Nexvyn/runeicons) only — the publish job skips forks, because npm provenance ties the package to the repository named in `package.json`. To publish, bump `version`, merge, and push a matching tag to `Nexvyn/runeicons`:
+CI builds the icons on every PR touching the package or `public/`. Releases run from [`Nexvyn/runeicons`](https://github.com/Nexvyn/runeicons) only. The publish job skips forks, because npm provenance ties the package to the repository named in `package.json`. To publish, bump `version`, merge, and push a matching tag to `Nexvyn/runeicons`:
 
 ```sh
 git tag runeicons-react-native@0.1.0

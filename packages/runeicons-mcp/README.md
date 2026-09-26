@@ -1,8 +1,8 @@
 # runeicons-mcp
 
 An [MCP](https://modelcontextprotocol.io) server that gives AI agents access to the
-[Rune Icons](https://runeicons.com) library — **900+ icons in 5 styles** (outline, duotone, fill,
-pixelated, and glass) — so agents can search icons and drop ready-to-use SVG straight into your code.
+[Rune Icons](https://runeicons.com) library: **900+ icons in 5 styles** (outline, duotone, fill,
+pixelated, and glass), so agents can search icons and drop ready-to-use SVG straight into your code.
 
 All SVGs are bundled with the package (no network access needed at runtime) and recolored to
 `currentColor`, so agents can restyle icons inline.
@@ -63,9 +63,9 @@ Search the library by text, category, and style.
 ```text
 search_icons { "query": "arrow", "style": "normal", "limit": 3 }
 
-- arrows-arrow-down-left — "Arrow Down Left" (style: normal, category: navigation)
-- arrows-arrow-down-right — "Arrow Down Right" (style: normal, category: navigation)
-- arrows-arrow-down-to-line — "Arrow Down To Line" (style: normal, category: navigation)
+- arrows-arrow-down-left - "Arrow Down Left" (style: normal, category: navigation)
+- arrows-arrow-down-right - "Arrow Down Right" (style: normal, category: navigation)
+- arrows-arrow-down-to-line - "Arrow Down To Line" (style: normal, category: navigation)
 ```
 
 ### `get_icon`
@@ -90,7 +90,7 @@ SVGs use `currentColor`, so set `color` (CSS) or the `stroke`/`fill` attributes 
 
 ### `list_categories`
 
-List every category with per-style counts — useful for narrowing `search_icons` filters.
+List every category with per-style counts, useful for narrowing `search_icons` filters.
 
 ```text
 category       total  normal  duotone  fill  pixelated  glass
@@ -114,7 +114,7 @@ bundled registry, so the MCP package always mirrors the main icon set.
 
 ## License
 
-Copyright 2026 Runeicons. Licensed under the [Apache 2.0 License](LICENSE).
+Copyright 2026 Rune Icons Team. Licensed under the [Apache 2.0 License](LICENSE).
 
-Icon data and SVGs are part of [Rune Icons](https://runeicons.com) — free for commercial and
+Icon data and SVGs are part of [Rune Icons](https://runeicons.com), free for commercial and
 personal use. When using these icons, keep the upstream license and credit intact.

@@ -1,8 +1,8 @@
 /**
  * Design tokens, mirroring the Rune Icons website.
  *
- * The site is deliberately monochrome — every one of its OKLCH tokens has zero
- * chroma — so the app's chrome is ink and greys only, and the one place colour
+ * The site is deliberately monochrome: every one of its OKLCH tokens has zero
+ * chroma, so the app's chrome is ink and greys only, and the one place colour
  * appears is the swatch row, where it is the product being demonstrated rather
  * than decoration.
  */

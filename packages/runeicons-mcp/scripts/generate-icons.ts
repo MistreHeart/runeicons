@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 // Generates the self-contained icon data for runeicons-mcp:
-//   1. src/icons.generated.ts — searchable registry of every icon (all 5 styles)
-//   2. assets/<style>/<file>.svg — snapshot of the SVGs bundled with the package
+//   1. src/icons.generated.ts - searchable registry of every icon (all 5 styles)
+//   2. assets/<style>/<file>.svg - snapshot of the SVGs bundled with the package
 //
 // Run from the repository root:  bun run generate  (inside packages/runeicons-mcp)
 // The outputs are gitignored; `prepublishOnly` regenerates them before publishing.
@@ -259,7 +259,7 @@ function copyAssets(icons: GeneratedIcon[]): void {
 function main(): void {
   const icons = [...buildNormalIcons(), ...buildGlassIcons()];
   if (icons.length === 0) {
-    console.error("No icons found — run this script from the runeicons repository.");
+    console.error("No icons found - run this script from the runeicons repository.");
     process.exit(1);
   }
 

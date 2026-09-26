@@ -95,5 +95,4 @@ Run the generator whenever the core icon set changes.
 ## License and credit
 
 Rune Icons and this Flutter package are licensed under the
-[Apache License 2.0](LICENSE). Icons are created and maintained by the
-[Rune Icons contributors](https://github.com/Nexvyn/runeicons/graphs/contributors).
+[Apache License 2.0](LICENSE). Copyright 2026 Rune Icons Team.

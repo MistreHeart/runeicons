@@ -52,7 +52,7 @@ module.exports = {
       },
       'removeXMLNS',
       // No matching prop on react-native-svg's <Filter>, and its pipeline is
-      // sRGB already — which is the only value this artwork uses.
+      // sRGB already, which is the only value this artwork uses.
       { name: 'removeAttrs', params: { attrs: '(color-interpolation-filters)' } },
     ],
   },

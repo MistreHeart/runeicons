@@ -44,7 +44,7 @@ module.exports = function rnFilters({ types: t }) {
               if (RESERVED.has(name)) {
                 throw new Error(
                   `rune-rn-filters: <${name}> is reserved as a proxy for an SVG filter element. ` +
-                    `An icon now uses it for real — pick a different proxy element.`,
+                    `An icon now uses it for real, pick a different proxy element.`,
                 );
               }
               const proxy = PROXY[name];

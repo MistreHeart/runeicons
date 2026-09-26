@@ -18,7 +18,19 @@ import RuneIcon from "runeicons-astro/RuneIcon.astro";
 <RuneIcon name="tools-house" type="fill" size={32} />
 ```
 
-The component renders an inline SVG at build time, so no icon files are fetched at runtime. `name` takes any icon id from the [icon browser](https://runeicons.com); `type` is one of `normal`, `duotone`, `fill`, `pixelated`, or `glass`, and defaults to `normal`. Icons inherit text color through `currentColor` where the style supports it.
+The component renders an inline SVG at build time, so no icon files are fetched at runtime. `name` takes any icon id from the [icon browser](https://runeicons.com). Icons inherit text color through `currentColor` where the style supports it.
+
+## Props
+
+| Prop   | Type                                                       | Default    |
+| :----- | :--------------------------------------------------------- | :--------- |
+| `name` | `string`                                                   | required   |
+| `type` | `"normal"`, `"duotone"`, `"fill"`, `"pixelated"`, `"glass"` | `"normal"` |
+| `size` | `number`                                                   | `24`       |
+
+## Styles
+
+All five styles share the same ids, so switching styles never renames your icon. Outline styles follow the surrounding text color. Glass icons carry their own gradients with safely scoped ids, so any number can share a page.
 
 Helpers are also available for custom rendering:
 
