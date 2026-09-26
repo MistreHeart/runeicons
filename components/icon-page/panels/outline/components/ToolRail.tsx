@@ -16,7 +16,7 @@ import {
 import { CustomizationState } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-import { FeedbackForm } from "./FeedbackForm";
+import { FeedbackForm } from "@/components/docs/FeedbackForm";
 import { IconTypeList } from "./IconTypeList";
 
 type IconType = CustomizationState["iconType"];
