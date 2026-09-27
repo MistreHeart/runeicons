@@ -1,8 +1,8 @@
-packages
-docs
-.github
-.agents
-.claude
-.hermes
-.kilo
-.vscode
+/packages
+/docs
+/.github
+/.agents
+/.claude
+/.hermes
+/.kilo
+/.vscode

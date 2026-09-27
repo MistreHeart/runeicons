@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { SITE_URL } from "./layout";
 
-const DISALLOW = ["/api/", "/checkout", "/blossom-demo"];
+const DISALLOW = ["/api/", "/checkout"];
 
 const AI_AGENTS = [
   "GPTBot",
