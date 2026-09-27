@@ -44,7 +44,7 @@ const BentoCard = ({
 
   return (
     <div
-      className={`relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border ${transparentBg ? "bg-transparent" : "bg-card"} ease text-card-foreground transition-colors duration-150 hover:border-foreground/20 md:rounded-3xl ${className}`}
+      className={`relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border ${transparentBg ? "bg-transparent" : "bg-card"} ease text-card-foreground transition-colors duration-150 hover:bg-foreground/[0.03] md:rounded-3xl ${className}`}
     >
       <div
         className={

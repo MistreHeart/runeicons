@@ -35,7 +35,7 @@ const Packages = () => (
           key={platform.name}
           href="/packages"
           prefetch={false}
-          className="group flex flex-col rounded-2xl border border-border bg-card p-4 text-card-foreground transition-colors duration-150 ease-out hover:border-foreground/20"
+          className="group flex flex-col rounded-2xl border border-border bg-card p-4 text-card-foreground transition-colors duration-150 ease-out hover:bg-foreground/[0.03]"
         >
           <span className="flex size-10 items-center justify-center rounded-lg bg-foreground/[0.06]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
