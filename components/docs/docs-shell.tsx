@@ -21,9 +21,12 @@ const DocsShell = ({ title, lead, wide = false, children }: DocsShellProps) => (
       <Navbar showDashedBorder links={NAV_LINKS} />
 
       <div
-        className={`mx-auto flex w-full flex-col gap-10 px-3 pt-32 pb-20 sm:px-6 ${wide ? "max-w-6xl" : "max-w-2xl"}`}
+        className={cn(
+          "mx-auto flex w-full flex-col gap-10 px-4 pt-32 pb-14 sm:gap-12 sm:px-6 sm:pb-18 lg:px-8 lg:pb-22",
+          wide ? "max-w-6xl" : "max-w-2xl",
+        )}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
           <h1 className="text-h1">{title}</h1>
           <p className="max-w-[65ch] text-lead text-muted-foreground">{lead}</p>
         </div>
@@ -31,7 +34,7 @@ const DocsShell = ({ title, lead, wide = false, children }: DocsShellProps) => (
         {children}
       </div>
 
-      <div className="px-3 pb-10 sm:px-6">
+      <div className="px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8">
         <Footer />
       </div>
     </div>

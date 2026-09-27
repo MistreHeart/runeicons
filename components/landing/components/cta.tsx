@@ -47,7 +47,7 @@ const CTA = () => {
   ];
 
   return (
-    <section className="relative h-full w-full overflow-hidden rounded-3xl py-24">
+    <section className="relative h-full w-full overflow-hidden rounded-3xl pad-panel">
       <Image
         src="/landing/gradient/cta-gradient.webp"
         className="absolute inset-0 h-full w-full object-cover"
@@ -107,7 +107,7 @@ const CTA = () => {
           </m.div>
         ))}
       </div>
-      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center text-center">
+      <div className="relative z-10 mx-auto flex max-w-4xl flex-col items-center py-10 text-center sm:py-12">
         <div ref={mascotRef} data-stage={stage} className="mb-3 h-20 w-20 rotate-2">
           <m.div
             initial={shouldReduceMotion ? false : { opacity: 0, y: 46, scaleX: 1, scaleY: 1 }}

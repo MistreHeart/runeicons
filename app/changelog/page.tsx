@@ -231,13 +231,13 @@ const CHANGELOG: ChangelogEntry[] = [
 
 const ChangelogPage = () => (
   <DocsShell title="Changelog" lead="A history of what shipped, newest first.">
-    <div className="flex flex-col">
+    <div className="flex flex-col divide-y divide-border">
       {CHANGELOG.map((entry, i) => (
         <div
           key={`${entry.date}-${entry.title}`}
-          className={`flex flex-col gap-3 py-8 ${i !== 0 ? "border-t border-border" : "pt-0"}`}
+          className="flex flex-col gap-4 py-8 first:pt-0 last:pb-0"
         >
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col gap-2">
             <span className="flex flex-wrap items-center gap-2 text-label tracking-[0.08em] text-muted-foreground tabular-nums uppercase">
               {entry.date}
               {i === 0 && (

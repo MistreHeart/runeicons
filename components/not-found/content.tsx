@@ -28,7 +28,7 @@ const NotFoundContent = () => (
 
     <div className="mt-8 flex flex-wrap justify-center gap-2 sm:gap-4">
       <Link href="/icons" prefetch={false}>
-        <Button className="bg-brand py-5 text-white hover:bg-brand/90">Browse Icons</Button>
+        <Button className="bg-brand py-5 text-white hover:bg-brand/90 dark:hover:bg-brand/90">Browse Icons</Button>
       </Link>
       <Link href="/" prefetch={false}>
         <Button className="py-5">Back to home</Button>

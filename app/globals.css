@@ -101,6 +101,40 @@
   --text-micro--letter-spacing: 0.01em;
 }
 
+/* Spacing rhythm. Every container uses one of these instead of ad-hoc padding,
+   so gutters line up down the page:
+     pad-section  page bands between the dashed dividers
+     pad-panel    large feature blocks (CTA, footer, FAQ, specimen plate)
+     pad-card     cards, tiles, accordion items, package rows
+   Gaps follow the same steps: gap-2 (title to text), gap-4 (inside a card),
+   gap-6 (between cards), gap-10 sm:gap-12 (section header to content). */
+@utility pad-section {
+  padding: 3.5rem 1rem;
+  @variant sm {
+    padding: 4.5rem 1.5rem;
+  }
+  @variant lg {
+    padding: 5.5rem 2rem;
+  }
+}
+
+@utility pad-panel {
+  padding: 1.75rem;
+  @variant sm {
+    padding: 2.5rem;
+  }
+  @variant lg {
+    padding: 3.5rem;
+  }
+}
+
+@utility pad-card {
+  padding: 1.25rem;
+  @variant sm {
+    padding: 1.5rem;
+  }
+}
+
 /* The UI is flat: drop Tailwind's shadow scales so shadow-sm, drop-shadow-md,
    text-shadow-lg and friends don't generate any CSS. */
 @theme {

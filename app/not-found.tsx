@@ -23,7 +23,7 @@ const NotFoundPage = () => (
     <main
       className={cn(
         FRAME_WIDTH,
-        "col-start-2 row-start-2 flex flex-col items-center justify-center px-3 pt-20 pb-10 sm:px-6",
+        "col-start-2 row-start-2 flex flex-col items-center justify-center px-4 pt-20 pb-10 sm:px-6 lg:px-8",
       )}
     >
       <NotFoundContent />

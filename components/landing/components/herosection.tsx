@@ -66,7 +66,7 @@ const HeroSection = () => {
 
         <div className="mt-8 flex flex-wrap gap-2 sm:gap-4">
           <div className="group relative inline-block">
-            <Button asChild className="bg-brand py-5 text-white hover:bg-brand/90 transition-[background-color,scale] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]">
+            <Button asChild className="bg-brand py-5 text-white hover:bg-brand/90 dark:hover:bg-brand/90 transition-[background-color,scale] duration-160 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.97]">
               <Link href="/icons">Browse Icons</Link>
             </Button>
             <span

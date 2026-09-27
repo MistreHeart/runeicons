@@ -33,11 +33,11 @@ const BentoCard = ({
     <div
       className={
         inlineLabel
-          ? "relative z-10 p-4 md:px-8 md:pb-6"
-          : "pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 md:px-8 md:pb-6"
+          ? "relative z-10 flex flex-col gap-2 pad-card"
+          : "pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col gap-2 pad-card"
       }
     >
-      <TextHighlightWave as="h3" className="mb-1 text-h3" text={title} />
+      <TextHighlightWave as="h3" className="text-h3" text={title} />
       <p className="text-body-sm text-muted-foreground">{description}</p>
     </div>
   );
@@ -63,8 +63,8 @@ const BentoCard = ({
 const Bento = () => {
   return (
     <section className="w-full">
-      <div className="mx-auto grid min-h-[60vh] w-full grid-cols-1 gap-2 max-sm:h-full md:gap-4 lg:h-[calc(100vh-104px)] lg:grid-cols-12">
-        <div className="grid min-h-0 grid-cols-1 gap-2 md:gap-4 lg:col-span-4 lg:grid-rows-[6fr_4fr]">
+      <div className="mx-auto grid min-h-[60vh] w-full grid-cols-1 gap-4 max-sm:h-full sm:gap-6 lg:h-[calc(100vh-104px)] lg:grid-cols-12">
+        <div className="grid min-h-0 grid-cols-1 gap-4 sm:gap-6 lg:col-span-4 lg:grid-rows-[6fr_4fr]">
           <BentoCard
             title="Five styles, one library"
             description="Outline, duotone, fill, pixel, glass. The same glyph, drawn five ways."
@@ -88,14 +88,14 @@ const Bento = () => {
         <BentoCard
           title="Snaps to your grid"
           description="Built on a 24px grid so nothing lands half a pixel off."
-          className="h-full min-h-0 max-sm:p-5 lg:col-span-3"
+          className="h-full min-h-0 lg:col-span-3"
           inlineLabel
           transparentBg
         >
           <BentoCenterSvg />
         </BentoCard>
 
-        <div className="grid min-h-0 grid-cols-1 gap-2 md:gap-4 lg:col-span-5 lg:grid-rows-[5fr_5fr]">
+        <div className="grid min-h-0 grid-cols-1 gap-4 sm:gap-6 lg:col-span-5 lg:grid-rows-[5fr_5fr]">
           <BentoCard
             title="Tune every detail"
             description="Stroke, size, color, motion. Dial each icon in until it fits."

@@ -44,7 +44,7 @@ const Search = () => {
 
   return (
     <div
-      className="flex h-full flex-col gap-5 py-6 lg:flex-row"
+      className="flex h-full flex-col gap-4 sm:gap-6 lg:flex-row"
       onPointerEnter={() => setInteracting(true)}
       onPointerLeave={() => setInteracting(false)}
     >
@@ -59,14 +59,14 @@ const Search = () => {
 
       <div className="lg:w-1/2">
         <div
-          className="flex h-full w-full items-center justify-center rounded-2xl bg-center bg-no-repeat p-6 max-sm:p-2 md:p-10"
+          className="flex h-full w-full items-center justify-center rounded-3xl bg-center bg-no-repeat pad-panel"
           style={{
             backgroundImage: "url('/landing/gradient/search-gradient2.webp')",
             backgroundSize: "cover",
           }}
         >
           <div className="w-full max-w-md">
-            <div className="rounded-3xl border border-border/50 bg-background/20 p-4 backdrop-blur-[2px]">
+            <div className="rounded-2xl border border-border/50 bg-background/20 pad-card backdrop-blur-[2px]">
               <div className="flex h-11 items-center overflow-hidden rounded-xl border border-input bg-background/80 focus-within:ring-2 focus-within:ring-ring/50">
                 <div className="flex h-full items-center px-3 text-muted-foreground dark:text-white/80">
                   <SearchIcon className="h-4 w-4" />

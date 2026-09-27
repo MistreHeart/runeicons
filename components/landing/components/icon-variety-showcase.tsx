@@ -236,8 +236,8 @@ const IconVarietyShowcase = () => {
 function CardContent({ variant }: { variant: Variant }) {
   const Icon = variant.Icon;
   return (
-    <div className="flex h-full items-center gap-3 px-4">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-muted">
+    <div className="flex h-full items-center gap-4 px-5">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-muted">
         <Icon className="h-7 w-7 text-foreground" />
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1">

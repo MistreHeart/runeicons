@@ -42,14 +42,14 @@ export default function SponsorContent() {
       <div
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-3 flex flex-col items-center justify-center px-3 py-14 sm:px-6 sm:py-16",
+          "col-start-2 row-start-3 flex flex-col items-center justify-center pad-section",
         )}
       >
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 flex w-full max-w-3xl flex-col items-center"
+          className="mb-10 flex w-full max-w-3xl flex-col items-center sm:mb-12"
         >
           <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-label font-medium tracking-[0.08em] text-foreground uppercase dark:bg-card">
             <svg
@@ -99,7 +99,7 @@ export default function SponsorContent() {
           className="flex w-full max-w-3xl flex-col items-center"
         >
           <div className="w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground">
-            <div className="px-6 pt-6 pb-5 sm:px-8 sm:pt-8 sm:pb-6">
+            <div className="pad-card">
               <AmountSelector
                 selectedAmount={selectedAmount}
                 customMode={customMode}
@@ -109,7 +109,7 @@ export default function SponsorContent() {
             </div>
 
             <div className="relative h-px w-full">
-              <div className="absolute inset-0 mx-6 border-t border-dashed border-border sm:mx-8" />
+              <div className="absolute inset-0 mx-5 border-t border-dashed border-border sm:mx-6" />
             </div>
 
             <div className="w-full">

@@ -44,7 +44,7 @@ export function CertificateCard({
           : "relative mt-2 w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground"
       }
     >
-      <div className="relative flex flex-col gap-5 overflow-hidden px-6 py-6 sm:flex-row sm:items-center sm:gap-10 sm:px-10 sm:py-10">
+      <div className="relative flex flex-col gap-4 overflow-hidden pad-card sm:flex-row sm:items-center sm:gap-6">
         <div className="relative flex h-[160px] w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border bg-white sm:h-[200px] sm:w-[200px]">
           <div className="relative flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32 [&>svg]:h-full [&>svg]:w-full">
             <Mascot stage={stage} />

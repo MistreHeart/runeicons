@@ -26,14 +26,14 @@ const Page = async () => {
           "relative col-start-2 row-start-1 flex flex-col overflow-hidden",
         )}
       >
-        <Navbar links={NAV_LINKS} />
+        <Navbar showBanner links={NAV_LINKS} />
       </div>
 
       <div
         id="home"
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-3 flex scroll-mt-24 flex-col gap-2 px-3 pt-20 pb-4 sm:px-6 sm:pb-6",
+          "col-start-2 row-start-3 flex scroll-mt-24 flex-col gap-2 px-4 pt-20 pb-4 sm:px-6 sm:pb-6 lg:px-8",
         )}
       >
         <HeroSection />
@@ -45,7 +45,7 @@ const Page = async () => {
         id="search"
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-5 flex scroll-mt-24 flex-col gap-2 px-3 py-10 sm:px-6 sm:py-14",
+          "col-start-2 row-start-5 flex scroll-mt-24 flex-col pad-section",
         )}
       >
         <Search />
@@ -55,7 +55,7 @@ const Page = async () => {
 
       <div
         id="features"
-        className={cn(FRAME_WIDTH, "col-start-2 row-start-7 flex scroll-mt-24 flex-col p-3 sm:p-6")}
+        className={cn(FRAME_WIDTH, "col-start-2 row-start-7 flex scroll-mt-24 flex-col pad-section")}
       >
         <Bento />
       </div>
@@ -64,7 +64,7 @@ const Page = async () => {
 
       <div
         id="packages"
-        className={cn(FRAME_WIDTH, "col-start-2 row-start-9 flex scroll-mt-24 flex-col p-3 sm:p-6")}
+        className={cn(FRAME_WIDTH, "col-start-2 row-start-9 flex scroll-mt-24 flex-col pad-section")}
       >
         <Packages />
       </div>
@@ -75,7 +75,7 @@ const Page = async () => {
         id="faq"
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-11 flex scroll-mt-24 flex-col justify-center p-3 sm:p-6 lg:min-h-[calc(100vh-104px)]",
+          "col-start-2 row-start-11 flex scroll-mt-24 flex-col justify-center pad-section lg:min-h-[calc(100vh-104px)]",
         )}
       >
         <Faq />
@@ -86,7 +86,7 @@ const Page = async () => {
       <div
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-13 flex flex-col overflow-hidden p-3 sm:p-6",
+          "col-start-2 row-start-13 flex flex-col overflow-hidden pad-section",
         )}
       >
         <CTA />
@@ -97,7 +97,7 @@ const Page = async () => {
       <div
         className={cn(
           FRAME_WIDTH,
-          "col-start-2 row-start-15 flex flex-col px-3 py-10 sm:px-6 sm:py-14",
+          "col-start-2 row-start-15 flex flex-col pad-section",
         )}
       >
         <Footer />

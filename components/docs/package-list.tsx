@@ -66,16 +66,16 @@ const PackageCard = ({
   onToggle: () => void;
 }) => (
   <div
-    className={`flex flex-col rounded-2xl bg-white p-6 transition-shadow duration-200 ease-out dark:bg-[#141414] ${open ? "ring-1 ring-[#1346E7]" : ""}`}
+    className={`flex flex-col rounded-2xl bg-white pad-card transition-shadow duration-200 ease-out dark:bg-[#141414] ${open ? "ring-1 ring-[#1346E7]" : ""}`}
   >
     <Logo row={row} />
-    <h2 className="mt-5 text-h3 text-foreground">{row.name}</h2>
+    <h2 className="mt-4 text-h3 text-foreground">{row.name}</h2>
     <div className="mt-2 flex flex-wrap gap-1.5">
       <Badge label="status" value="live soon" />
       <Badge label="platform" value={row.platform} />
       {/* <Badge label="downloads" value="coming soon" /> */}
     </div>
-    <p className="mt-4 mb-6 text-body-sm text-muted-foreground">{row.description}</p>
+    <p className="mt-4 mb-4 text-body-sm text-muted-foreground">{row.description}</p>
 
     <div className="mt-auto flex flex-wrap gap-2">
       <button
@@ -157,7 +157,7 @@ const Guide = ({ row }: { row: PackageRow }) => {
         animate={{ y: 0 }}
         exit={reduceMotion ? undefined : { y: -12 }}
         transition={SPRING}
-        className="rounded-2xl bg-white p-6 sm:p-10 dark:bg-[#141414]"
+        className="rounded-2xl bg-white pad-panel dark:bg-[#141414]"
         onClick={copyFromButton}
       >
         <article
@@ -181,7 +181,7 @@ const PackageList = ({ rows }: { rows: PackageRow[] }) => {
 
   return (
     <LayoutGroup>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((row, index) => (
           <Fragment key={row.dir}>
             <motion.div

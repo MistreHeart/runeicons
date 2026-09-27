@@ -215,7 +215,7 @@ const DetailView = ({ user, isMobile = false, onClose, onNext, onPrev }: DetailV
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: reduceMotion ? 0 : 24, opacity: 0 }}
         transition={rightPanelTransition}
-        className="fixed top-0 right-0 bottom-0 z-50 flex w-[30%] flex-col justify-center border-l border-border bg-background/55 p-12 backdrop-blur-xl"
+        className="fixed top-0 right-0 bottom-0 z-50 flex w-[30%] flex-col justify-center border-l border-border bg-background/55 pad-panel backdrop-blur-xl"
       >
         <AnimatePresence mode="wait" initial={false}>
           <m.div

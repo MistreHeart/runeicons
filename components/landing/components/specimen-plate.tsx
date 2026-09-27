@@ -247,9 +247,9 @@ const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps)
   return (
     <div
       ref={rootRef}
-      className="relative flex h-full min-h-[400px] w-full flex-col overflow-hidden rounded-2xl border border-border bg-background"
+      className="relative flex h-full min-h-[400px] w-full flex-col overflow-hidden rounded-3xl border border-border bg-background pad-panel"
     >
-      <div className="relative z-10 flex items-center justify-between gap-4 px-5 pt-5">
+      <div className="relative z-10 flex items-center justify-between gap-4">
         <div className="flex min-w-0 items-center gap-2 text-body-sm">
           <AnimatePresence mode="wait" initial={false}>
             <m.span
@@ -445,7 +445,7 @@ const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps)
         </svg>
       </div>
 
-      <div className="relative z-10 flex flex-col items-center gap-3 px-4 pb-5">
+      <div className="relative z-10 flex flex-col items-center gap-4">
         <p className="font-mono text-label text-muted-foreground tabular-nums">
           {stats.join("  ·  ")}
         </p>

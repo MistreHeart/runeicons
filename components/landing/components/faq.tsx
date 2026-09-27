@@ -55,8 +55,8 @@ const faqItems: FAQItem[] = [
 export default function Faq() {
   return (
     <section className="w-full">
-      <div className="relative w-full overflow-hidden px-4 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-10">
-        <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:gap-20">
+      <div className="relative w-full overflow-hidden">
+        <div className="relative z-10 flex flex-col gap-10 sm:gap-12 lg:flex-row lg:gap-20">
           <div className="flex shrink-0 flex-col gap-8 lg:w-[440px]">
             <div className="flex flex-col">
               <span className="text-label font-medium tracking-[0.08em] text-muted-foreground uppercase">
@@ -79,14 +79,14 @@ export default function Faq() {
           </div>
 
           <div className="w-full flex-1">
-            <Accordion type="single" collapsible defaultValue="item-1" className="w-full space-y-3">
+            <Accordion type="single" collapsible defaultValue="item-1" className="flex w-full flex-col gap-4">
               {faqItems.map((item) => (
                 <AccordionItem
                   key={item.id}
                   value={item.id}
-                  className="rounded-2xl border border-border bg-white px-6 last:border-b dark:bg-background"
+                  className="rounded-2xl border border-border bg-white px-5 last:border-b sm:px-6 dark:bg-background"
                 >
-                  <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline">
+                  <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline sm:py-6">
                     <div className="flex items-center gap-4">
                       <span className="text-body-sm font-medium text-muted-foreground tabular-nums">
                         {item.number}
@@ -96,7 +96,7 @@ export default function Faq() {
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pb-5">
+                  <AccordionContent className="pb-5 sm:pb-6">
                     <TextHighlightWave
                       as="p"
                       className="pl-10 text-body text-muted-foreground"

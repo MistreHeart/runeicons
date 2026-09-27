@@ -78,7 +78,7 @@ const Footer = () => {
       <Screw className="bottom-3 left-3 sm:bottom-6 sm:left-6" />
       <Screw className="right-3 bottom-3 sm:right-6 sm:bottom-6" />
 
-      <div className="relative z-10 flex flex-col gap-10 px-6 pt-12 sm:px-12 lg:px-16 lg:pt-16">
+      <div className="relative z-10 flex flex-col gap-10 pad-panel sm:gap-12">
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
           <h2 className="text-h2">
             Draw less. Ship more.
@@ -129,7 +129,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <FooterWordmark className="mt-16 translate-y-[6%] px-2 sm:mt-24" />
+      <FooterWordmark className="mt-8 translate-y-[6%] px-2 sm:mt-12" />
     </footer>
   );
 };
