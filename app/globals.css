@@ -49,6 +49,15 @@
   --font-weight-bold: "wght" 700;
 }
 
+/* The UI is flat: drop Tailwind's shadow scales so shadow-sm, drop-shadow-md,
+   text-shadow-lg and friends don't generate any CSS. */
+@theme {
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+}
+
 @theme inline {
   --color-brand: var(--brand);
   --color-blue-500: var(--brand);
@@ -502,7 +511,8 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.35'/%3E%3C/svg%3E") !important;
   background-size: 200px 200px !important;
   background-blend-mode: overlay !important;
-  box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.2) !important;
+  outline: 1px solid rgba(128, 128, 128, 0.2) !important;
+  outline-offset: -1px;
 }
 
 .dark .noise-track-custom {

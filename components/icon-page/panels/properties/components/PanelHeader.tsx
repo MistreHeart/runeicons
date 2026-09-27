@@ -109,7 +109,7 @@ export function PanelHeader({ onExport, onImport, onReset }: PanelHeaderProps) {
                   className={cn(
                     "h-7 w-7 rounded-md transition-all active:scale-[0.96]",
                     isResetArmed
-                      ? "bg-primary text-primary-foreground shadow-sm"
+                      ? "bg-primary text-primary-foreground"
                       : "text-foreground/60 hover:bg-destructive/10 hover:text-destructive"
                   )}
                 >
@@ -125,11 +125,11 @@ export function PanelHeader({ onExport, onImport, onReset }: PanelHeaderProps) {
                   initial={{ opacity: 0, y: -4, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -4, scale: 0.95 }}
-                  className="absolute right-0 top-[calc(100%+6px)] flex items-center gap-1 rounded-lg bg-popover p-1 border border-border shadow-xl z-[100] whitespace-nowrap"
+                  className="absolute right-0 top-[calc(100%+6px)] flex items-center gap-1 rounded-lg bg-popover p-1 border border-border z-[100] whitespace-nowrap"
                 >
                   <button
                     onClick={handleResetClick}
-                    className="flex h-7 px-3 items-center gap-2 rounded-md bg-foreground text-background hover:bg-foreground/90 transition-all font-bold text-[10px] shadow-sm"
+                    className="flex h-7 px-3 items-center gap-2 rounded-md bg-foreground text-background hover:bg-foreground/90 transition-all font-bold text-[10px]"
                   >
                     <Check className="h-3.5 w-3.5" />
                     <span>Reset</span>

@@ -13,6 +13,7 @@ import { GlassIcon } from "../../icons/GlassIcon";
 import { NormalIcon } from "../../icons/NormalIcon";
 import { PixelatedIcon } from "../../icons/PixelatedIcon";
 import { Button } from "../../ui/button";
+import TextHighlightWave from "../../ui/text-highlight-wave";
 import { useCountUp } from "../hooks/use-count-up";
 import HeroSvg from "../svg/hero";
 import Mascot from "../svg/mascot";
@@ -37,7 +38,7 @@ const HeroSection = () => {
   return (
     <div className="grid min-h-[60vh] grid-cols-1 gap-10 lg:h-[calc(100vh-104px)] lg:max-h-[780px] lg:grid-cols-2 lg:gap-6">
       <div className="flex h-full flex-col justify-center py-8 lg:py-0">
-        <div className="flex w-fit -rotate-2 items-center gap-2 rounded-md border p-0.5 pl-2.5 text-xs">
+        <div className="flex w-fit items-center gap-2 rounded-md border p-0.5 pl-2.5 text-xs">
           <span className="flex items-center font-semibold">
             <span className="text-blue-700">Added&nbsp;</span>
             <NumberFlow value={iconCount} suffix="+" />
@@ -47,10 +48,17 @@ const HeroSection = () => {
             <Check size={15} />
           </div>
         </div>
-        <div className="mt-4 text-2xl leading-tight font-medium sm:text-4xl sm:leading-none md:text-5xl lg:text-6xl">
-          Modern <span className="text-blue-700">icon</span> <br />
-          <span className="text-blue-700">system</span> for products
-        </div>
+        <TextHighlightWave
+          as="h1"
+          className="mt-4 text-2xl leading-tight font-medium sm:text-4xl sm:leading-none md:text-5xl lg:text-6xl"
+          text={[
+            "Modern ",
+            { text: "icon", className: "text-blue-700" },
+            "\n",
+            { text: "system", className: "text-blue-700" },
+            " for products",
+          ]}
+        />
         <div className="mt-4 max-w-lg text-xs leading-tight text-muted-foreground sm:text-sm sm:leading-5 md:text-base">
           One glyph, five moods: outline, duotone, fill, pixel, and glass. Tune it
           in your browser, paste it as SVG or JSX.

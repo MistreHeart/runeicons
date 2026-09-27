@@ -69,8 +69,8 @@ export function IconTray({
                   type="button"
                   className={cn(
                     "w-11 h-11 rounded-lg border flex items-center justify-center p-2",
-                    "transition-[colors,transform,box-shadow] duration-150 ease-out hover:scale-105 active:scale-[0.97]",
-                    "shadow-sm cursor-pointer outline-none",
+                    "transition-[colors,transform] duration-150 ease-out hover:scale-105 active:scale-[0.97]",
+                    "cursor-pointer outline-none",
                     isDesigned && slotType !== "pixelated"
                       ? "bg-white dark:bg-zinc-200"
                       : "bg-card",
@@ -148,7 +148,7 @@ export function IconTray({
                     e.stopPropagation();
                     onRemoveFromTray(trayIcon.id);
                   }}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 z-10"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center hover:scale-110 active:scale-90 z-10"
                   aria-label={`Remove ${trayIcon.name}`}
                 >
                   <X className="w-2.5 h-2.5" />

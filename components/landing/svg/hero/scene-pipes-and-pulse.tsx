@@ -30,7 +30,7 @@ const ScenePipesAndPulse = () => (
         }}
       ></div>
     </foreignObject>
-    <g filter="url(#filter0_ii_4_2)" data-figma-bg-blur-radius="4">
+    <g data-figma-bg-blur-radius="4">
       <path
         className="beamPipeFill"
         d={BEAM_PIPE_UPPER_D}
@@ -51,7 +51,7 @@ const ScenePipesAndPulse = () => (
         }}
       ></div>
     </foreignObject>
-    <g filter="url(#filter1_ii_4_2)" data-figma-bg-blur-radius="4">
+    <g data-figma-bg-blur-radius="4">
       <path
         className="beamPipeFill"
         d={BEAM_PIPE_LOWER_D}

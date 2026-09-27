@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { useArmedReset } from "./use-armed-reset";
 
 const PILL_CLASS =
-  "flex items-center rounded-[10px] bg-[#1d1d1f] p-[3px] shadow-[inset_0_1px_1px_rgba(0,0,0,0.4),0_0_0_1px_rgba(0,0,0,0.5)]";
+  "flex items-center rounded-[10px] bg-[#1d1d1f] p-[3px] outline outline-1 outline-black/50";
 
 const ICON_SIZES = [16, 20, 24, 28, 32, 48, 64, 96, 128];
 
@@ -136,11 +136,11 @@ export function HistoryControls({
               initial={{ opacity: 0, y: 0, scale: 0.95 }}
               animate={{ opacity: 1, y: -80, scale: 1 }}
               exit={{ opacity: 0, y: 0, scale: 0.95 }}
-              className="absolute left-1/2 z-[100] flex -translate-x-1/2 items-center gap-1 rounded-[9px] bg-[#2c2c2e] p-1 whitespace-nowrap shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.1)]"
+              className="absolute left-1/2 z-[100] flex -translate-x-1/2 items-center gap-1 rounded-[9px] bg-[#2c2c2e] p-1 whitespace-nowrap outline outline-1 outline-white/10"
             >
               <button
                 onClick={handleConfirmReset}
-                className="flex h-7 items-center gap-2 rounded-[6px] bg-white px-3 text-[10px] font-bold text-black shadow-sm transition-all hover:bg-white/90"
+                className="flex h-7 items-center gap-2 rounded-[6px] bg-white px-3 text-[10px] font-bold text-black transition-all hover:bg-white/90"
               >
                 <Check className="h-3.5 w-3.5" />
                 <span>Reset</span>
@@ -192,7 +192,7 @@ export function SizeGridControls({
         </DropdownMenuTrigger>
         <DropdownMenuContent
           align="center"
-          className="w-[85px] border-white/10 bg-[#2c2c2e] p-1 text-white shadow-xl"
+          className="w-[85px] border-white/10 bg-[#2c2c2e] p-1 text-white"
         >
           {ICON_SIZES.map((size) => (
             <DropdownMenuItem
@@ -213,7 +213,7 @@ export function SizeGridControls({
             className={cn(
               "flex h-full w-9 items-center justify-center rounded-[7px] transition-all active:translate-y-[0.5px]",
               showGrid
-                ? "bg-[#1d1d1f] text-white shadow-[inset_0_0_0_1.5px_rgba(255,255,255,0.95),0_1px_2px_rgba(0,0,0,0.4)]"
+                ? "bg-[#1d1d1f] text-white outline outline-[1.5px] -outline-offset-[1.5px] outline-white/95"
                 : "text-[#c9c9cb] hover:bg-white/5 hover:text-white",
             )}
           >

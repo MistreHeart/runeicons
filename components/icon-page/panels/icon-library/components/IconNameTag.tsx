@@ -53,7 +53,7 @@ export function IconNameTag({
       transition={reduceMotion ? { duration: 0 } : NAME_TAG_SPRING}
       style={style}
       className={cn(
-        "pointer-events-none absolute z-30 rounded-md bg-white px-3 py-1.5 text-xs leading-none font-medium whitespace-nowrap text-zinc-900 shadow-xl dark:bg-[#111111] dark:text-white",
+        "pointer-events-none absolute z-30 rounded-md bg-white px-3 py-1.5 text-xs leading-none font-medium whitespace-nowrap text-zinc-900 outline outline-1 outline-black/10 dark:bg-[#111111] dark:text-white dark:outline-white/10",
         align === "center" && "-translate-x-1/2",
         above ? "-translate-y-[calc(100%+8px)]" : "translate-y-2",
       )}

@@ -31,7 +31,7 @@ const ICON_TYPES: { value: IconType; label: string; Icon: TypeIcon }[] = [
 ];
 
 const HIGHLIGHT_CLASS =
-  "absolute inset-0 rounded-xl bg-zinc-100 shadow-[0.222px_0.222px_0.314px_-0.5px_rgba(0,0,0,0.2),0.605px_0.605px_0.856px_-1px_rgba(0,0,0,0.18),1.329px_1.329px_1.88px_-1.5px_rgba(0,0,0,0.25),2.95px_2.95px_4.172px_-2px_rgba(0,0,0,0.1),2.5px_2.5px_3px_-2.5px_rgba(0,0,0,0.15),-0.5px_-0.5px_0px_rgba(0,0,0,0.1),inset_0.5px_0.5px_1px_#FFFFFF,inset_-0.5px_-0.5px_1px_rgba(0,0,0,0.15)] dark:bg-zinc-800 dark:shadow-[0.222px_0.222px_0.314px_-0.5px_rgba(0,0,0,0.35),0.605px_0.605px_0.856px_-1px_rgba(0,0,0,0.3),1.329px_1.329px_1.88px_-1.5px_rgba(0,0,0,0.35),2.95px_2.95px_4.172px_-2px_rgba(0,0,0,0.28),2.5px_2.5px_3px_-2.5px_rgba(0,0,0,0.35),inset_0.5px_0.5px_1px_rgba(255,255,255,0.08),inset_-0.5px_-0.5px_1px_rgba(0,0,0,0.4)]";
+  "absolute inset-0 rounded-xl border border-black/10 bg-zinc-100 dark:border-white/10 dark:bg-zinc-800";
 
 const Search = () => {
   const [iconType, setIconType] = useState<IconType>("normal");
@@ -66,7 +66,7 @@ const Search = () => {
           }}
         >
           <div className="w-full max-w-md">
-            <div className="rounded-3xl border border-border/50 bg-background/20 p-4 shadow-lg backdrop-blur-[2px]">
+            <div className="rounded-3xl border border-border/50 bg-background/20 p-4 backdrop-blur-[2px]">
               <div className="flex h-11 items-center overflow-hidden rounded-xl border border-input bg-background/80 focus-within:ring-2 focus-within:ring-ring/50">
                 <div className="flex h-full items-center px-3 text-muted-foreground dark:text-white/80">
                   <SearchIcon className="h-4 w-4" />
@@ -78,7 +78,7 @@ const Search = () => {
                     setPreviewed(undefined);
                   }}
                   placeholder="Search for icons..."
-                  className="h-full flex-1 rounded-r-xl border-0 bg-transparent pr-4 pl-2 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-0 dark:text-white dark:placeholder:text-white/70"
+                  className="h-full flex-1 rounded-r-xl border-0 bg-transparent pr-4 pl-2 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 dark:text-white dark:placeholder:text-white/70"
                 />
               </div>
 
@@ -148,7 +148,7 @@ const Search = () => {
 
               <div className="mt-4 border-t border-border/40 pt-4">
                 <div className="rounded-xl bg-white dark:bg-zinc-900">
-                  <div className="flex w-full gap-1 rounded-xl bg-black/10 p-1 shadow-[0px_1px_0px_rgba(255,255,255,0.25),inset_0px_1px_2px_rgba(0,0,0,0.15)] dark:bg-white/10 dark:shadow-[0px_1px_0px_rgba(0,0,0,0.25),inset_0px_1px_2px_rgba(255,255,255,0.08)]">
+                  <div className="flex w-full gap-1 rounded-xl bg-black/10 p-1 dark:bg-white/10">
                     {ICON_TYPES.map(({ value, label, Icon }) => {
                       const isActive = iconType === value;
                       return (

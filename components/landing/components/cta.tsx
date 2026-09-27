@@ -9,6 +9,7 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
 import { Button } from "@/components/ui/button";
+import TextHighlightWave from "@/components/ui/text-highlight-wave";
 import { EASE_OUT_QUART } from "@/lib/easing";
 import { GITHUB_REPO } from "@/lib/site";
 
@@ -74,7 +75,7 @@ const CTA = () => {
         {icons.map((item, i) => (
           <m.div
             key={`${item.x}-${item.y}`}
-            className="text-white/75 drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
+            className="text-white/75"
             initial={{ opacity: 0 }}
             animate={
               shouldReduceMotion
@@ -130,9 +131,15 @@ const CTA = () => {
           transition={{ duration: ENTRANCE_DURATION, ease: EASE_OUT_QUART, delay: 0.08 }}
           className="mb-8 text-3xl leading-[1.1] font-medium tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
         >
-          <span className="bg-linear-to-b from-white to-white/70 bg-clip-text text-transparent">
-            900+ icons. Five styles. Free forever.
-          </span>
+          <TextHighlightWave
+            as="span"
+            text={[
+              {
+                text: "900+ icons. Five styles. Free forever.",
+                className: "bg-linear-to-b from-white to-white/70 bg-clip-text text-transparent",
+              },
+            ]}
+          />
         </m.h2>
 
         <m.div

@@ -41,7 +41,7 @@ export function CertificateCard({
       className={
         flush
           ? "relative w-full overflow-hidden bg-card text-card-foreground"
-          : "relative mt-2 w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:shadow-lg"
+          : "relative mt-2 w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground"
       }
     >
       <div className="relative flex flex-col gap-5 overflow-hidden px-6 py-6 sm:flex-row sm:items-center sm:gap-10 sm:px-10 sm:py-10">

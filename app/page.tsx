@@ -26,7 +26,7 @@ const Page = async () => {
           "relative col-start-2 row-start-1 flex flex-col overflow-hidden",
         )}
       >
-        <Navbar showBanner showDashedBorder links={NAV_LINKS} />
+        <Navbar links={NAV_LINKS} />
       </div>
 
       <div

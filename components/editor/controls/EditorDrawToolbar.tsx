@@ -46,7 +46,7 @@ export const EditorDrawToolbar = memo(function EditorDrawToolbar({
   onToggleReference,
 }: EditorDrawToolbarProps) {
   return (
-    <div className="flex flex-col items-center gap-0.5 p-0.5 bg-background/90 backdrop-blur-xl border border-border rounded-lg shadow-sm">
+    <div className="flex flex-col items-center gap-0.5 p-0.5 bg-background/90 backdrop-blur-xl border border-border rounded-lg">
       {TOOLS.map(({ id, label, Icon }) => {
         const isActive = activeTool === id;
         return (

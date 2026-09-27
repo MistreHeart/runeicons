@@ -52,7 +52,7 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
               {!isEditorPage && (
                 <motion.div
                   layoutId="header-nav-indicator"
-                  className="absolute inset-0 rounded-[4px] border border-border/50 bg-white shadow-sm dark:bg-[#2a2a2a]"
+                  className="absolute inset-0 rounded-[4px] border border-border/50 bg-white dark:bg-[#2a2a2a]"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
@@ -69,7 +69,7 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
               {isEditorPage && (
                 <motion.div
                   layoutId="header-nav-indicator"
-                  className="absolute inset-0 rounded-[4px] border border-border/50 bg-white shadow-sm dark:bg-[#2a2a2a]"
+                  className="absolute inset-0 rounded-[4px] border border-border/50 bg-white dark:bg-[#2a2a2a]"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                 />
               )}
@@ -86,7 +86,7 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
           >
             <Button
               variant="outline"
-              className="h-8 gap-2 border-border bg-white px-3 text-[11px] font-medium opacity-100 shadow-none dark:bg-[#1a1a1a]"
+              className="h-8 gap-2 border-border bg-white px-3 text-[11px] font-medium opacity-100 dark:bg-[#1a1a1a]"
               aria-label="GitHub"
             >
               <Github className="size-3.5" />{" "}
@@ -96,7 +96,7 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
             </Button>
           </Link>
           <div className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white dark:bg-[#1a1a1a]">
-            <LightDarkMode className="size-4 border-none bg-transparent text-muted-foreground shadow-none transition-colors duration-150 ease-out hover:text-foreground" />
+            <LightDarkMode className="size-4 border-none bg-transparent text-muted-foreground transition-colors duration-150 ease-out hover:text-foreground" />
           </div>
         </div>
       </div>

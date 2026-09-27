@@ -1,4 +1,4 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://runeicons.com";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.runeicons.com";
 
 export const GITHUB_REPO = "https://github.com/Nexvyn/runeicons";
 export const GITHUB_ISSUES_NEW = `${GITHUB_REPO}/issues/new`;

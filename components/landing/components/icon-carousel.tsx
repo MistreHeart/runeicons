@@ -63,9 +63,9 @@ const IconCarousel = () => {
   return (
     <div className="flex h-full w-full flex-col gap-4 self-stretch">
       <div className="no-scrollbar flex h-12 items-center gap-2 overflow-x-auto mask-r-from-90% mask-l-from-90% px-4">
-        <div className="flex h-8 shrink-0 items-center overflow-hidden rounded-md border shadow-sm">
+        <div className="flex h-8 shrink-0 items-center overflow-hidden rounded-md border">
           <Select value={animation} onValueChange={setAnimation}>
-            <SelectTrigger className="h-full w-24 shrink-0 justify-between gap-1 rounded-none border-none px-3 text-[10px] shadow-none transition-colors hover:bg-accent focus:ring-0 sm:text-xs">
+            <SelectTrigger className="h-full w-24 shrink-0 justify-between gap-1 rounded-none border-none px-3 text-[10px] transition-colors hover:bg-accent focus:ring-0 sm:text-xs">
               <SelectValue placeholder="Anim" />
             </SelectTrigger>
             <SelectContent>
@@ -77,7 +77,7 @@ const IconCarousel = () => {
           </Select>
         </div>
 
-        <div className="flex h-8 shrink-0 items-center overflow-hidden rounded-md border bg-background shadow-sm">
+        <div className="flex h-8 shrink-0 items-center overflow-hidden rounded-md border bg-background">
           <Button
             variant="ghost"
             size="icon"
@@ -101,14 +101,14 @@ const IconCarousel = () => {
           </Button>
         </div>
 
-        <div className="flex h-8 shrink-0 items-center gap-2 rounded-md border bg-background px-3 shadow-sm">
+        <div className="flex h-8 shrink-0 items-center gap-2 rounded-md border bg-background px-3">
           {COLORS.map((c) => (
             <button
               key={c.value}
               onClick={() => setStrokeColor(c.value)}
               className={`h-3.5 w-3.5 rounded-full ${c.bg} border border-black/5 transition-all duration-200 ${
                 strokeColor === c.value
-                  ? "scale-110 shadow-sm ring-2 ring-foreground/20 ring-offset-1"
+                  ? "scale-110 ring-2 ring-foreground/20 ring-offset-1"
                   : "opacity-70 hover:scale-105 hover:opacity-100"
               }`}
               title={c.label}
@@ -116,7 +116,7 @@ const IconCarousel = () => {
           ))}
         </div>
 
-        <div className="ml-auto flex h-8 min-w-[110px] shrink-0 items-center gap-3 rounded-md border bg-background px-3 shadow-sm">
+        <div className="ml-auto flex h-8 min-w-[110px] shrink-0 items-center gap-3 rounded-md border bg-background px-3">
           <span className="text-[10px] font-semibold tracking-tight whitespace-nowrap text-muted-foreground uppercase">
             Size
           </span>
@@ -131,7 +131,7 @@ const IconCarousel = () => {
             <SliderPrimitive.Track className="relative h-1 w-full grow overflow-hidden rounded-full bg-muted">
               <SliderPrimitive.Range className="absolute h-full bg-foreground" />
             </SliderPrimitive.Track>
-            <SliderPrimitive.Thumb className="block h-3 w-3 rounded-full border border-border bg-background shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none" />
+            <SliderPrimitive.Thumb className="block h-3 w-3 rounded-full border border-border bg-background transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none" />
           </SliderPrimitive.Root>
           <span className="w-4 text-right font-mono text-[10px] font-medium text-muted-foreground">
             {iconSize}

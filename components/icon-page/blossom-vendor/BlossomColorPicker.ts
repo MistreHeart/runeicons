@@ -424,7 +424,6 @@ export class BlossomColorPicker {
             rotationOffset: rotation,
             alpha: 1,
             pointerEvents: 'none',
-            hasShadow: false,
             noRing: true,
           })
           this.petalRenderers.push(underlayPetal)
@@ -453,7 +452,6 @@ export class BlossomColorPicker {
             alpha: 1,
             clip: 'left',
             pointerEvents: 'none',
-            hasShadow: false,
           })
           this.petalRenderers.push(leftPetal)
           this.containerEl.appendChild(leftPetal.el)
@@ -481,7 +479,6 @@ export class BlossomColorPicker {
             alpha: 1,
             clip: 'right',
             pointerEvents: 'none',
-            hasShadow: false,
           })
           this.petalRenderers.push(rightPetal)
           this.containerEl.appendChild(rightPetal.el)
@@ -501,7 +498,6 @@ export class BlossomColorPicker {
               rotationOffset: rotation,
               alpha: 0,
               pointerEvents: 'auto',
-              hasShadow: false,
             },
             () => this.handlePetalClick(color, layerIdx),
             () => {
@@ -535,7 +531,6 @@ export class BlossomColorPicker {
               rotationOffset: rotation,
               alpha: 1,
               pointerEvents: 'auto',
-              hasShadow: false,
             },
             () => this.handlePetalClick(color, layerIdx),
             () => {

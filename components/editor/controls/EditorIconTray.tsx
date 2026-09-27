@@ -60,8 +60,8 @@ export const EditorIconTray = memo(function EditorIconTray({
                   type="button"
                   className={cn(
                     "w-11 h-11 rounded-lg border flex items-center justify-center p-2",
-                    "transition-[colors,transform,box-shadow] duration-150 ease-out hover:scale-105 active:scale-[0.97]",
-                    "bg-card shadow-sm cursor-pointer",
+                    "transition-[colors,transform] duration-150 ease-out hover:scale-105 active:scale-[0.97]",
+                    "bg-card cursor-pointer",
                     isSelected
                       ? "border-primary ring-2 ring-primary/30"
                       : "border-border/50 hover:border-border",
@@ -77,7 +77,7 @@ export const EditorIconTray = memo(function EditorIconTray({
                     e.stopPropagation();
                     onRemoveAsset(asset.id);
                   }}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 z-10"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center hover:scale-110 active:scale-90 z-10"
                   aria-label={`Remove ${asset.name}`}
                 >
                   <X className="w-2.5 h-2.5" />

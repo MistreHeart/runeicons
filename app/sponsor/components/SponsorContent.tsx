@@ -51,7 +51,7 @@ export default function SponsorContent() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 flex w-full max-w-3xl flex-col items-center"
         >
-          <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-[11px] font-medium tracking-wide text-foreground uppercase shadow-sm dark:bg-card">
+          <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-[11px] font-medium tracking-wide text-foreground uppercase dark:bg-card">
             <svg
               className="size-3.5"
               viewBox="0 0 24 24"
@@ -98,7 +98,7 @@ export default function SponsorContent() {
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="flex w-full max-w-3xl flex-col items-center"
         >
-          <div className="w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground shadow-sm transition-shadow duration-300 hover:shadow-lg">
+          <div className="w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground">
             <div className="px-6 pt-6 pb-5 sm:px-8 sm:pt-8 sm:pb-6">
               <AmountSelector
                 selectedAmount={selectedAmount}

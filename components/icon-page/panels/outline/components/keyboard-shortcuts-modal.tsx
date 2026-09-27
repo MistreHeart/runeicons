@@ -65,7 +65,7 @@ export function KeyboardShortcutsModal({ isOpen, onClose }: KeyboardShortcutsMod
             transition={{ duration: 0.1 }}
             className={cn(
               "relative flex w-full max-w-sm flex-col",
-              "rounded-lg border border-border bg-background shadow-xl",
+              "rounded-lg border border-border bg-background",
             )}
           >
             <div className="flex items-center justify-between border-b border-border p-2.5">

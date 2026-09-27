@@ -43,7 +43,7 @@ function DropdownMenuContent({
         data-slot="dropdown-menu-content"
         sideOffset={sideOffset}
         className={cn(
-          'z-50 min-w-[8rem] overflow-hidden rounded-md bg-foreground px-1 py-1.5 text-background shadow-md',
+          'z-50 min-w-[8rem] overflow-hidden rounded-md bg-foreground px-1 py-1.5 text-background',
           'duration-0',
           className,
         )}
@@ -241,7 +241,7 @@ function DropdownMenuSubContent({
     <DropdownMenuPrimitive.SubContent
       data-slot="dropdown-menu-sub-content"
       className={cn(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md bg-foreground px-1 py-1.5 text-background shadow-md',
+        'z-50 min-w-[8rem] overflow-hidden rounded-md bg-foreground px-1 py-1.5 text-background',
         'duration-0',
         className,
       )}

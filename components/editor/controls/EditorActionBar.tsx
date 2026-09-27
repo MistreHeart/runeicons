@@ -165,7 +165,7 @@ export function EditorActionBar({
       <LayoutGroup>
         <div
           className={cn(
-            "flex h-[46px] items-stretch gap-1.5 rounded-[14px] p-1 border border-black/5 dark:border-white/10 shadow-[inset_0_2px_4px_rgba(0,0,0,0.15)]",
+            "flex h-[46px] items-stretch gap-1.5 rounded-[14px] p-1 border border-black/5 dark:border-white/10",
             "bg-[#f5f5f5] dark:bg-[#1a1a1a]",
             className,
           )}
@@ -226,7 +226,7 @@ export function EditorActionBar({
                     }
               }
               style={{ originX: 0.5, originY: 0.5 }}
-              className="flex items-center gap-0.5 rounded-[10px] bg-[#1d1d1f] p-[3px] shadow-[inset_0_1px_1px_rgba(0,0,0,0.4),0_0_0_1px_rgba(0,0,0,0.5)]"
+              className="flex items-center gap-0.5 rounded-[10px] bg-[#1d1d1f] p-[3px] outline outline-1 outline-black/50"
             >
               <motion.div
                 variants={reduceMotion ? undefined : toolsParent}
@@ -321,7 +321,7 @@ export function EditorActionBar({
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white shadow-2xl"
+              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white"
             >
               <ActionMenuItem
                 disabled={isPending}

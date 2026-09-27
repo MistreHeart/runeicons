@@ -33,12 +33,9 @@ export class CoreButtonRenderer {
     setStyles(this.el, {
       backgroundColor: coreColor,
       transform: isExpanded ? 'scale(1)' : isHovering ? 'scale(1.08)' : 'scale(1)',
-      boxShadow: isExpanded
-        ? '0 0 0 2px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.15)'
-        : isHovering
-          ? '0 4px 16px rgba(0,0,0,0.2)'
-          : '0 2px 8px rgba(0,0,0,0.15)',
-      transition: `transform 150ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 150ms ease`,
+      outline: '1px solid rgba(0,0,0,0.1)',
+      outlineOffset: '-1px',
+      transition: `transform 150ms cubic-bezier(0.22, 1, 0.36, 1)`,
     })
   }
 

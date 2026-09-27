@@ -71,7 +71,7 @@ export function FeedbackForm({ onClose }: FeedbackFormProps) {
         transition={
           reduceMotion ? { duration: 0.15 } : { type: "spring", duration: 0.5, bounce: 0.16 }
         }
-        className="relative w-full max-w-sm overflow-hidden rounded-md border border-border bg-background text-foreground shadow-xl"
+        className="relative w-full max-w-sm overflow-hidden rounded-md border border-border bg-background text-foreground"
       >
         <textarea
           ref={textareaRef}

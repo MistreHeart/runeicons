@@ -26,7 +26,7 @@ export const EditorModeToggle = memo(function EditorModeToggle({
 
   return (
     <LayoutGroup>
-      <div className="flex items-center gap-0.5 p-0.5 bg-background/90 backdrop-blur-xl border border-border rounded-lg shadow-sm">
+      <div className="flex items-center gap-0.5 p-0.5 bg-background/90 backdrop-blur-xl border border-border rounded-lg">
         {MODES.map(({ id, label, Icon }) => {
           const active = mode === id;
           return (

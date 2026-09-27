@@ -151,7 +151,7 @@ const IconVarietyShowcase = () => {
           {ghost && (
             <m.div
               key={`ghost-${ghost.idx}`}
-              className="absolute overflow-hidden rounded-xl border border-border bg-card shadow-sm"
+              className="absolute overflow-hidden rounded-xl border border-border bg-card"
               initial={{
                 top: 0,
                 left: 0,
@@ -208,7 +208,7 @@ const IconVarietyShowcase = () => {
             return (
               <m.div
                 key={cardIdx}
-                className="absolute overflow-hidden rounded-xl border border-border bg-card shadow-sm"
+                className="absolute overflow-hidden rounded-xl border border-border bg-card"
                 initial={false}
                 animate={animateValues}
                 transition={transitionValues}

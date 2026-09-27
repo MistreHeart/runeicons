@@ -54,89 +54,9 @@ const HeroDefs = () => (
     <filter id="rocketHaloBlur" x="-20%" y="-20%" width="140%" height="140%">
       <feGaussianBlur stdDeviation="6" />
     </filter>
-    <filter
-      id="filter0_ii_4_2"
-      x="336.094"
-      y="391.609"
-      width="241.075"
-      height="101.726"
-      filterUnits="userSpaceOnUse"
-      colorInterpolationFilters="sRGB"
-    >
-      <feFlood floodOpacity="0" result="BackgroundImageFix" />
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-      <feColorMatrix
-        in="SourceAlpha"
-        type="matrix"
-        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        result="hardAlpha"
-      />
-      <feOffset dx="4" dy="8" />
-      <feGaussianBlur stdDeviation="2" />
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-      <feColorMatrix
-        type="matrix"
-        values="0 0 0 0 1 0 0 0 0 0.984314 0 0 0 0 0.933333 0 0 0 0.6 0"
-      />
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_4_2" />
-      <feColorMatrix
-        in="SourceAlpha"
-        type="matrix"
-        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        result="hardAlpha"
-      />
-      <feOffset dy="-2" />
-      <feGaussianBlur stdDeviation="4" />
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-      <feColorMatrix
-        type="matrix"
-        values="0 0 0 0 0.215382 0 0 0 0 0.208333 0 0 0 0 0.520833 0 0 0 0.2 0"
-      />
-      <feBlend mode="normal" in2="effect1_innerShadow_4_2" result="effect2_innerShadow_4_2" />
-    </filter>
     <clipPath id="bgblur_0_4_2_clip_path" transform="translate(-336.094 -391.609)">
       <path d={BEAM_PIPE_UPPER_D} />
     </clipPath>
-    <filter
-      id="filter1_ii_4_2"
-      x="331.681"
-      y="408.46"
-      width="282.649"
-      height="102.087"
-      filterUnits="userSpaceOnUse"
-      colorInterpolationFilters="sRGB"
-    >
-      <feFlood floodOpacity="0" result="BackgroundImageFix" />
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-      <feColorMatrix
-        in="SourceAlpha"
-        type="matrix"
-        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        result="hardAlpha"
-      />
-      <feOffset dx="4" dy="8" />
-      <feGaussianBlur stdDeviation="2" />
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-      <feColorMatrix
-        type="matrix"
-        values="0 0 0 0 1 0 0 0 0 0.984314 0 0 0 0 0.933333 0 0 0 0.6 0"
-      />
-      <feBlend mode="normal" in2="shape" result="effect1_innerShadow_4_2" />
-      <feColorMatrix
-        in="SourceAlpha"
-        type="matrix"
-        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        result="hardAlpha"
-      />
-      <feOffset dy="-2" />
-      <feGaussianBlur stdDeviation="4" />
-      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-      <feColorMatrix
-        type="matrix"
-        values="0 0 0 0 0.215382 0 0 0 0 0.208333 0 0 0 0 0.520833 0 0 0 0.2 0"
-      />
-      <feBlend mode="normal" in2="effect1_innerShadow_4_2" result="effect2_innerShadow_4_2" />
-    </filter>
     <clipPath id="bgblur_1_4_2_clip_path" transform="translate(-331.681 -408.46)">
       <path d={BEAM_PIPE_LOWER_D} />
     </clipPath>

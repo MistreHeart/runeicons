@@ -1,5 +1,7 @@
 import React from "react";
 
+import TextHighlightWave from "@/components/ui/text-highlight-wave";
+
 import BentoCenterSvg from "../svg/bento-center-svg";
 import BentoSvg from "../svg/bento-svg";
 import RocketInteractive from "../svg/rocket-interactive";
@@ -35,14 +37,14 @@ const BentoCard = ({
           : "pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 md:px-8 md:pb-6"
       }
     >
-      <h3 className="mb-1 text-sm font-semibold md:text-base">{title}</h3>
+      <TextHighlightWave as="h3" className="mb-1 text-sm font-semibold md:text-base" text={title} />
       <p className="text-sm text-muted-foreground md:text-base">{description}</p>
     </div>
   );
 
   return (
     <div
-      className={`relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border ${transparentBg ? "bg-transparent" : "bg-card"} ease text-card-foreground transition-shadow duration-150 hover:shadow-lg md:rounded-3xl ${className}`}
+      className={`relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border ${transparentBg ? "bg-transparent" : "bg-card"} ease text-card-foreground transition-colors duration-150 hover:border-foreground/20 md:rounded-3xl ${className}`}
     >
       <div
         className={

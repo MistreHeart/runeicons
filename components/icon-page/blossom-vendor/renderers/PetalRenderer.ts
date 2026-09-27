@@ -17,7 +17,6 @@ export interface PetalConfig {
   alpha: number
   clip?: 'left' | 'right'
   pointerEvents: 'auto' | 'none'
-  hasShadow: boolean
   noRing?: boolean
 }
 
@@ -170,16 +169,7 @@ export class PetalRenderer {
       transition: `${transformTransition},
                    opacity ${c.animationDuration}ms ${BLOOM_EASING} ${isExpanded && !isHovered ? c.staggerDelay : 0}ms,
                    background-color 150ms ease,
-                   box-shadow 150ms ease,
                    filter 150ms ease`,
-      boxShadow:
-        c.hasShadow && !isInvisible
-          ? isHovered
-            ? '0 6px 16px rgba(0,0,0,0.3)'
-            : this.isSelected
-              ? '0 0 0 2.5px rgba(255,255,255,0.95), 0 4px 12px rgba(0,0,0,0.2)'
-              : '0 2px 6px rgba(0,0,0,0.15)'
-          : 'none',
       zIndex: String(c.zIndex),
       pointerEvents: c.pointerEvents,
     })

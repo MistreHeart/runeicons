@@ -142,10 +142,10 @@ export function WorkspaceActionBar({
     <TooltipProvider delayDuration={400}>
       <div
         className={cn(
-          "flex h-[46px] items-stretch gap-1.5 rounded-[14px] border border-black/5 p-1 shadow-[inset_0_2px_4px_rgba(0,0,0,0.15)] dark:border-white/10",
+          "flex h-[46px] items-stretch gap-1.5 rounded-[14px] border border-black/5 p-1 dark:border-white/10",
           "bg-[#f5f5f5] dark:bg-[#1a1a1a]",
           exportOnly &&
-            "border-transparent bg-transparent shadow-none dark:border-transparent dark:bg-transparent",
+            "border-transparent bg-transparent dark:border-transparent dark:bg-transparent",
           className,
         )}
       >
@@ -166,7 +166,7 @@ export function WorkspaceActionBar({
             />
           </>
         )}
-        <div className="flex items-center gap-1 rounded-[10px] bg-[#1d1d1f] p-[3px] shadow-[inset_0_1px_1px_rgba(0,0,0,0.4),0_0_0_1px_rgba(0,0,0,0.5)]">
+        <div className="flex items-center gap-1 rounded-[10px] bg-[#1d1d1f] p-[3px] outline outline-1 outline-black/50">
           <button
             disabled={isPending}
             onClick={isAnimated ? downloadJsx : downloadSvg}
@@ -186,7 +186,7 @@ export function WorkspaceActionBar({
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white shadow-2xl"
+              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white"
             >
               {isAnimated ? (
                 <>

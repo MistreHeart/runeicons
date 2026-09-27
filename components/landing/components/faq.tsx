@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import TextHighlightWave from "@/components/ui/text-highlight-wave";
 import { X_URL } from "@/lib/site";
 
 type FAQItem = {
@@ -58,10 +59,11 @@ export default function Faq() {
         <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:gap-20">
           <div className="flex shrink-0 flex-col gap-8 lg:w-[440px]">
             <div className="flex flex-col gap-2">
-              <span className="text-4xl font-medium">
-                Frequently asked <br />
-                <span className="text-blue-700">questions</span>
-              </span>
+              <TextHighlightWave
+                as="h2"
+                className="text-4xl font-medium"
+                text={["Frequently asked\n", { text: "questions", className: "text-blue-700" }]}
+              />
               <p className="text-sm text-muted-foreground">
                 Can’t find the answer you’re looking for? <br /> I’m here to help.
               </p>

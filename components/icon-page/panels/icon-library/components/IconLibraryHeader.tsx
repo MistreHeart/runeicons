@@ -59,7 +59,7 @@ export function IconLibraryHeader({
             placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-9 rounded-md border border-border bg-muted/20 pr-12 pl-9 text-xs font-medium text-foreground shadow-none transition-[background-color,border-color,box-shadow,ring] outline-none placeholder:text-muted-foreground focus:border-brand/40 focus:bg-muted/40 focus:ring-4 focus:ring-brand/10"
+            className="h-9 rounded-md border border-border bg-muted/20 pr-12 pl-9 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,ring] outline-none placeholder:text-muted-foreground focus:border-brand/40 focus:bg-muted/40 focus:ring-4 focus:ring-brand/10"
             aria-label="Search icons and shapes"
           />
           <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-1.5 px-0.5">

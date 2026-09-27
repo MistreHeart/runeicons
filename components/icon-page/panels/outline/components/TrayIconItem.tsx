@@ -26,7 +26,7 @@ export function TrayIconItem({ icon, index, isSelected, onSelect, onRemove }: Tr
         delay: Math.min(index * 0.05, 0.3),
       }}
       className={cn(
-        "group flex w-full items-center gap-2 rounded-md border px-2 py-2 shadow-sm outline outline-1 -outline-offset-1 outline-black/5 transition-[background-color,border-color,scale,box-shadow] duration-150 ease-out active:scale-[0.96] dark:outline-white/5",
+        "group flex w-full items-center gap-2 rounded-md border px-2 py-2 outline outline-1 -outline-offset-1 outline-black/5 transition-[background-color,border-color,scale] duration-150 ease-out active:scale-[0.96] dark:outline-white/5",
         isSelected
           ? "border-border/60 bg-accent"
           : "border-transparent bg-background hover:border-border/30 hover:bg-muted/40",
