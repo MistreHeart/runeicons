@@ -13,11 +13,6 @@ node_modules/
 # testing
 /coverage
 
-# Ai files
-.agents/
-.claude/
-unused/
-
 # next.js
 /.next/
 /out/
@@ -49,6 +44,5 @@ dev-tools.tsx
 
 
 #files/
-.agents
-.hermes
+
 
