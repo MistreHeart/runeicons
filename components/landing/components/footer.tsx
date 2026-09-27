@@ -1,29 +1,32 @@
 import Link from "next/link";
 
-import { cn } from "@/lib/utils";
 import { GITHUB_REPO, X_URL } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
-import FooterWordmark from "./footer-wordmark";
-
-const socialLinks = [
-  { title: "GitHub", href: GITHUB_REPO },
-  { title: "X / Twitter", href: X_URL },
-];
-
-const pageLinks = [
-  { title: "Icons", href: "/icons" },
-  { title: "Packages", href: "/packages" },
-  { title: "Changelog", href: "/changelog" },
+// Everything else lives in the navbar; the footer only carries what the navbar
+// doesn't.
+const links = [
+  { title: "GitHub", href: GITHUB_REPO, external: true },
+  { title: "X", href: X_URL, external: true },
   { title: "Terms", href: "/terms" },
   { title: "Privacy", href: "/privacy" },
 ];
 
-const team = [
-  { title: "Nexvyn", href: X_URL },
-  { title: "Vansh", href: "https://x.com/vansh1029" },
-  { title: "Abhinav", href: "https://x.com/Abhinavstwt" },
-  { title: "Mohit", href: "https://x.com/mohitmehtre" },
-];
+const ArrowUpRight = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="size-[15px] shrink-0 transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+  >
+    <path d="M7 17 17 7" />
+    <path d="M7 7h10v10" />
+  </svg>
+);
 
 /**
  * On hover the label blurs up and out while a copy slides in from below.
@@ -43,7 +46,7 @@ const RollLink = ({
     href={href}
     prefetch={external ? undefined : false}
     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-    className={cn("group relative inline-flex items-center", className)}
+    className={cn("group relative inline-flex items-center gap-0.5", className)}
   >
     <span className="relative overflow-hidden">
       <span className="block transition-[translate,filter,opacity] duration-300 ease-out group-hover:-translate-y-full group-hover:opacity-0 group-hover:blur-[2px] motion-reduce:transition-none">
@@ -56,6 +59,7 @@ const RollLink = ({
         {children}
       </span>
     </span>
+    {external && <ArrowUpRight />}
   </Link>
 );
 
@@ -72,64 +76,31 @@ const Screw = ({ className }: { className: string }) => (
 
 const Footer = () => {
   return (
-    <footer className="relative w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground lg:rounded-4xl">
+    <footer className="@container relative w-full overflow-hidden rounded-3xl border border-border bg-card text-card-foreground lg:rounded-4xl">
       <Screw className="top-3 left-3 sm:top-6 sm:left-6" />
       <Screw className="top-3 right-3 sm:top-6 sm:right-6" />
       <Screw className="bottom-3 left-3 sm:bottom-6 sm:left-6" />
       <Screw className="right-3 bottom-3 sm:right-6 sm:bottom-6" />
 
-      <div className="relative z-10 flex flex-col gap-10 pad-panel sm:gap-12">
-        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-          <h2 className="text-h2">
-            Draw less. Ship more.
-          </h2>
-          <p className="text-body-sm text-muted-foreground">
-            © {new Date().getFullYear()} Rune Icons · Apache 2.0
-          </p>
-        </div>
-
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-          <div className="flex flex-col gap-3">
-            <RollLink
-              href={GITHUB_REPO}
-              external
-              className="w-fit text-lead text-foreground"
-            >
-              Star Rune Icons on GitHub
+      <div className="relative z-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-4 pad-panel">
+        <h2 className="text-h2">Draw less. Ship more.</h2>
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-2 text-body-sm">
+          {links.map((item) => (
+            <RollLink key={item.title} href={item.href} external={item.external}>
+              {item.title}
             </RollLink>
-            <p className="flex flex-wrap items-center gap-x-1.5 text-body-sm text-muted-foreground">
-              Made by
-              {team.map((person, i) => (
-                <span key={person.title} className="inline-flex items-center">
-                  <RollLink href={person.href} external className="text-foreground/80 hover:text-foreground">
-                    {person.title}
-                  </RollLink>
-                  {i < team.length - 1 && <span className="ml-0.5">,</span>}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          <nav aria-label="Footer" className="flex flex-col gap-3 lg:items-end">
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-lead">
-              {socialLinks.map((item) => (
-                <RollLink key={item.title} href={item.href} external>
-                  {item.title}
-                </RollLink>
-              ))}
-            </div>
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-body-sm text-muted-foreground">
-              {pageLinks.map((item) => (
-                <RollLink key={item.title} href={item.href} className="hover:text-foreground">
-                  {item.title}
-                </RollLink>
-              ))}
-            </div>
-          </nav>
-        </div>
+          ))}
+        </nav>
       </div>
 
-      <FooterWordmark className="mt-8 translate-y-[6%] px-2 sm:mt-12" />
+      {/* Oversized wordmark after cronicle.me: soft grey letters that fade out
+          and run off the bottom edge. Decorative, so hidden from assistive tech. */}
+      <p
+        aria-hidden="true"
+        className="mt-6 -mb-[0.2em] text-center font-special-gothic text-[17.5cqw] leading-[0.8] font-bold tracking-[-0.05em] whitespace-nowrap text-foreground/[0.08] uppercase select-none [mask-image:linear-gradient(to_bottom,black_30%,transparent_85%)] sm:mt-10"
+      >
+        Rune Icons
+      </p>
     </footer>
   );
 };

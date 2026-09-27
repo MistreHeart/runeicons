@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono } from "next/font/google";
+import { Geist_Mono, Special_Gothic } from "next/font/google";
 import localFont from "next/font/local";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -22,6 +22,15 @@ const satoshi = localFont({
   weight: "300 900",
   style: "normal",
   display: "swap",
+});
+
+// Footer display face, after cronicle.me. OFL-licensed Google Font.
+const specialGothic = Special_Gothic({
+  variable: "--font-special-gothic-face",
+  subsets: ["latin"],
+  weight: "variable",
+  // Next has no fallback metrics for this family; it is decorative only.
+  adjustFontFallback: false,
 });
 
 const geistMono = Geist_Mono({
@@ -130,7 +139,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${satoshi.variable} ${geistMono.variable} antialiased`}
+        className={`${satoshi.variable} ${geistMono.variable} ${specialGothic.variable} antialiased`}
       >
         <MotionProvider>
           <ShapeProvider>
