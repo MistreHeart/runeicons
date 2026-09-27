@@ -1,10 +1,9 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-import { Github, Heart } from "lucide-react";
+import { Github } from "lucide-react";
 import { motion } from "motion/react";
 
 import LightLogo from "@/components/landing/svg/light";
@@ -18,8 +17,6 @@ interface HeaderPanelProps {
   className?: string;
 }
 export function HeaderPanel({ className }: HeaderPanelProps) {
-  const { theme, setTheme } = useTheme();
-  const router = useRouter();
   const pathname = usePathname();
   const displayCount = useGitHubStars();
   const isEditorPage = pathname === "/editor";
@@ -98,15 +95,6 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
               </span>
             </Button>
           </Link>
-          {/* <Link href="/sponsor" rel="noopener noreferrer">
-            <Button
-              variant="outline"
-              className="h-8 gap-2 border-pink-500/40 bg-[#fff5f7] px-3 text-[11px] font-medium text-pink-500 opacity-100 shadow-none dark:border-pink-900 dark:bg-[#1f1114]"
-              aria-label="Sponsor"
-            >
-              <Heart className="size-3.5" /> Sponsor
-            </Button>
-          </Link> */}
           <div className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white dark:bg-[#1a1a1a]">
             <LightDarkMode className="size-4 border-none bg-transparent text-muted-foreground shadow-none transition-colors duration-150 ease-out hover:text-foreground" />
           </div>

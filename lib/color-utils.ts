@@ -8,20 +8,10 @@ export interface RGBColor {
     b: number;
 }
 
-export interface HSBColor {
-    hue: number;
-    saturation: number;
-    brightness: number;
-}
-
 export interface HSLColor {
     h: number;
     s: number;
     l: number;
-}
-
-export function clamp(value: number, min: number, max: number): number {
-    return Math.min(max, Math.max(min, value));
 }
 
 export function normalizeHexColor(value: string, defaultColor: HexColor = '#007aff'): HexColor {
@@ -37,11 +27,6 @@ export function normalizeHexColor(value: string, defaultColor: HexColor = '#007a
     return `#${expanded}` as HexColor;
 }
 
-export function rgbToHex({ r, g, b }: RGBColor): HexColor {
-    const parts = [r, g, b].map((channel) => clamp(Math.round(channel), 0, 255).toString(16).padStart(2, '0'));
-    return `#${parts.join('')}` as HexColor;
-}
-
 export function hexToRgb(value: string): RGBColor {
     const normalized = normalizeHexColor(value).slice(1);
     return {
@@ -49,115 +34,6 @@ export function hexToRgb(value: string): RGBColor {
         g: parseInt(normalized.slice(2, 4), 16),
         b: parseInt(normalized.slice(4, 6), 16),
     };
-}
-
-export function rgbToHsb({ r, g, b }: RGBColor): HSBColor {
-    const red = r / 255;
-    const green = g / 255;
-    const blue = b / 255;
-    const max = Math.max(red, green, blue);
-    const min = Math.min(red, green, blue);
-    const delta = max - min;
-
-    let hue = 0;
-
-    if (delta !== 0) {
-        if (max === red) {
-            hue = 60 * (((green - blue) / delta) % 6);
-        } else if (max === green) {
-            hue = 60 * ((blue - red) / delta + 2);
-        } else {
-            hue = 60 * ((red - green) / delta + 4);
-        }
-    }
-
-    if (hue < 0) {
-        hue += 360;
-    }
-
-    const saturation = max === 0 ? 0 : delta / max;
-
-    return {
-        hue,
-        saturation,
-        brightness: max * 100,
-    };
-}
-
-export function hexToHsb(value: string): HSBColor {
-    return rgbToHsb(hexToRgb(value));
-}
-
-export function hsbToRgb({ hue, saturation, brightness }: HSBColor): RGBColor {
-    const normalizedHue = ((hue % 360) + 360) % 360;
-    const safeSaturation = clamp(saturation, 0, 1);
-    const safeBrightness = clamp(brightness, 0, 100) / 100;
-    const chroma = safeBrightness * safeSaturation;
-    const huePrime = normalizedHue / 60;
-    const x = chroma * (1 - Math.abs((huePrime % 2) - 1));
-
-    let red = 0;
-    let green = 0;
-    let blue = 0;
-
-    if (huePrime >= 0 && huePrime < 1) {
-        red = chroma;
-        green = x;
-    } else if (huePrime < 2) {
-        red = x;
-        green = chroma;
-    } else if (huePrime < 3) {
-        green = chroma;
-        blue = x;
-    } else if (huePrime < 4) {
-        green = x;
-        blue = chroma;
-    } else if (huePrime < 5) {
-        red = x;
-        blue = chroma;
-    } else {
-        red = chroma;
-        blue = x;
-    }
-
-    const match = safeBrightness - chroma;
-
-    return {
-        r: Math.round((red + match) * 255),
-        g: Math.round((green + match) * 255),
-        b: Math.round((blue + match) * 255),
-    };
-}
-
-export function hsbToHex(hsb: HSBColor): HexColor {
-    return rgbToHex(hsbToRgb(hsb));
-}
-
-export function adjustBorderColor(
-    color: HexColor,
-    saturationMultiplier: number,
-    brightnessMultiplier: number
-): HexColor {
-    const hsb = hexToHsb(color);
-    return hsbToHex({
-        hue: hsb.hue,
-        saturation: clamp(hsb.saturation * saturationMultiplier, 0, 1),
-        brightness: clamp(hsb.brightness * brightnessMultiplier, 0, 100),
-    });
-}
-
-export function colorsMatch(left: string, right: string, tolerance = 0.01): boolean {
-    const a = hexToHsb(left);
-    const b = hexToHsb(right);
-    const hueA = a.hue / 360;
-    const hueB = b.hue / 360;
-    const hueDistance = Math.abs(hueA - hueB);
-
-    return (
-        (hueDistance < tolerance || hueDistance > 1 - tolerance) &&
-        Math.abs(a.saturation - b.saturation) < tolerance &&
-        Math.abs(a.brightness / 100 - b.brightness / 100) < tolerance
-    );
 }
 
 export function hslToRgb(h: number, s: number, l: number): RGBColor {
@@ -174,7 +50,37 @@ export function hslToRgb(h: number, s: number, l: number): RGBColor {
 }
 
 export function hslToHex(h: number, s: number, l: number): HexColor {
-    return rgbToHex(hslToRgb(h, s, l));
+    const sNorm = s / 100;
+    const lNorm = l / 100;
+    const c = (1 - Math.abs(2 * lNorm - 1)) * sNorm;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = lNorm - c / 2;
+
+    let r = 0;
+    let g = 0;
+    let b = 0;
+    if (h >= 0 && h < 60) {
+        r = c;
+        g = x;
+    } else if (h >= 60 && h < 120) {
+        r = x;
+        g = c;
+    } else if (h >= 120 && h < 180) {
+        g = c;
+        b = x;
+    } else if (h >= 180 && h < 240) {
+        g = x;
+        b = c;
+    } else if (h >= 240 && h < 300) {
+        r = x;
+        b = c;
+    } else {
+        r = c;
+        b = x;
+    }
+
+    const toHex = (n: number) => Math.round((n + m) * 255).toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}` as HexColor;
 }
 
 export function rgbToHsl({ r, g, b }: RGBColor): HSLColor {

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { IconCategory, IconData, CustomizationState } from "@/lib/types";
-import { DEFAULT_TRAY_ICONS } from "@/constants/workspace";
+import { DEFAULT_TRAY_ICONS, SELECTED_ICON_KEY, TRAY_ICON_IDS_KEY } from "@/constants/workspace";
 import { getIconDataById, type IconType } from "@/lib/icons";
 
 function customIconToData(customIcon: { id: string; name: string; url: string }): IconData {
@@ -76,10 +76,10 @@ export function useWorkspaceSelection(
 
     try {
       const savedSelected = parseSelectedStorage(
-        localStorage.getItem("rune_selected_icon_id"),
+        localStorage.getItem(SELECTED_ICON_KEY),
       );
       const savedTray = parseTrayStorage(
-        localStorage.getItem("rune_tray_icon_ids"),
+        localStorage.getItem(TRAY_ICON_IDS_KEY),
       );
 
       if (savedSelected) {
@@ -106,17 +106,17 @@ export function useWorkspaceSelection(
     try {
       if (selectedIcon) {
         localStorage.setItem(
-          "rune_selected_icon_id",
+          SELECTED_ICON_KEY,
           JSON.stringify({
             id: selectedIcon.id,
             iconType: selectedIcon.iconType,
           }),
         );
       } else {
-        localStorage.removeItem("rune_selected_icon_id");
+        localStorage.removeItem(SELECTED_ICON_KEY);
       }
       localStorage.setItem(
-        "rune_tray_icon_ids",
+        TRAY_ICON_IDS_KEY,
         JSON.stringify(
           trayIcons.map((icon) => ({
             id: icon.id,

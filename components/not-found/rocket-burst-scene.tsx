@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 
-import { burstRocket } from "@/components/landing/svg/hero/burst";
+import { burstRocket, getRocketFlames } from "@/components/landing/svg/hero/burst";
 import { BURST } from "@/components/landing/svg/hero/constants";
 import HeroDefs from "@/components/landing/svg/hero/defs";
 import { Rocket, RocketPad } from "@/components/landing/svg/hero/scene-cargo-and-rocket";
@@ -23,8 +23,8 @@ const RocketBurstScene = () => {
     if (!svg || !rocket) return;
 
     const fullMotion = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const cores = rocket.querySelectorAll<SVGPathElement>(".rocketTrail-core");
-    const glow = rocket.querySelectorAll<SVGPathElement>(".rocketTrail-plume, .rocketTrail-halo");
+    const { halo, plume, cores } = getRocketFlames(rocket);
+    const glow = [halo, plume].filter((el): el is SVGPathElement => el !== null);
     let timeline: gsap.core.Timeline | null = null;
     let cleanupBurst: (() => void) | null = null;
     let shake: gsap.core.Tween | null = null;

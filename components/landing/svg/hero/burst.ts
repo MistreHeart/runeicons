@@ -1,8 +1,11 @@
 import gsap from "gsap";
 
+import { cubicBezier, EASE_OUT_QUINT } from "@/lib/easing";
+
 import { BLAST_ICONS, BURST } from "./constants";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
+const ENTER_EASE = cubicBezier(EASE_OUT_QUINT);
 
 type Piece = {
   node: SVGGElement;
@@ -23,6 +26,33 @@ const make = <K extends keyof SVGElementTagNameMap>(
   for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, String(value));
   return el;
 };
+
+export type RocketFlames = {
+  halo: SVGPathElement | null;
+  plume: SVGPathElement | null;
+  cores: SVGPathElement[];
+  all: SVGPathElement[];
+};
+
+export function getRocketFlames(rocketEl: SVGGElement): RocketFlames {
+  const halo = rocketEl.querySelector<SVGPathElement>(".rocketTrail-halo");
+  const plume = rocketEl.querySelector<SVGPathElement>(".rocketTrail-plume");
+  const cores = gsap.utils.toArray<SVGPathElement>(rocketEl.querySelectorAll(".rocketTrail-core"));
+  const all = [halo, plume, ...cores].filter((el): el is SVGPathElement => el !== null);
+  return { halo, plume, cores, all };
+}
+
+// Stops any running flame tweens and hides the flames at their resting scale.
+export function resetFlames(flameEls: SVGPathElement[]) {
+  if (!flameEls.length) return;
+  flameEls.forEach((el) => gsap.killTweensOf(el));
+  gsap.set(flameEls, {
+    opacity: 0,
+    scaleY: 1,
+    scale: 1,
+    transformOrigin: "50% 0%",
+  });
+}
 
 const between = (min: number, max: number) => min + Math.random() * (max - min);
 
@@ -106,7 +136,7 @@ export function burstRocket(
       attr: { r: BURST.flashRadius, "stroke-width": 0.4 },
       opacity: 0,
       duration: 0.32,
-      ease: "cubic-bezier(0.23, 1, 0.32, 1)",
+      ease: ENTER_EASE,
     }),
   );
 
@@ -132,7 +162,7 @@ export function burstRocket(
           attr: { r: ring.radius, "stroke-width": 0.2 },
           opacity: 0,
           duration: ring.duration,
-          ease: "cubic-bezier(0.23, 1, 0.32, 1)",
+          ease: ENTER_EASE,
         }),
     );
   });
@@ -155,7 +185,7 @@ export function burstRocket(
         .to(circle, {
           attr: { r: puff.r * 2.1, cy: originY + puff.dy - puff.rise },
           duration: puff.life,
-          ease: "cubic-bezier(0.23, 1, 0.32, 1)",
+          ease: ENTER_EASE,
         })
         .to(
           circle,

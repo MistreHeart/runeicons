@@ -145,6 +145,60 @@ export const DEFAULT_STATE: CustomizationState = {
   strokeStyle: "round",
 };
 
+// localStorage keys for the icon workspace.
+export const WORKSPACE_STATE_KEY = "rune_workspace_state";
+export const SELECTED_ICON_KEY = "rune_selected_icon_id";
+export const TRAY_ICON_IDS_KEY = "rune_tray_icon_ids";
+
+const VALID_ICON_TYPES: CustomizationState["iconType"][] = [
+  "normal",
+  "duotone",
+  "fill",
+  "pixelated",
+  "glass",
+];
+const VALID_STROKE_STYLES: CustomizationState["strokeStyle"][] = [
+  "round",
+  "sharp",
+  "soft",
+  "medium",
+];
+
+// Merges saved or imported state over DEFAULT_STATE so older/newer configs
+// can't drop nested keys, inject invalid enum values, or restore dead blob: URLs.
+// Removed icon types (isometric, dither) fall back to "normal".
+export function sanitizeCustomizationState(raw: Record<string, unknown>): CustomizationState {
+  const parsed = raw as Partial<CustomizationState> & Record<string, unknown>;
+  return {
+    ...DEFAULT_STATE,
+    ...parsed,
+    iconType: VALID_ICON_TYPES.includes(parsed.iconType as CustomizationState["iconType"])
+      ? (parsed.iconType as CustomizationState["iconType"])
+      : DEFAULT_STATE.iconType,
+    strokeStyle: VALID_STROKE_STYLES.includes(
+      parsed.strokeStyle as CustomizationState["strokeStyle"],
+    )
+      ? (parsed.strokeStyle as CustomizationState["strokeStyle"])
+      : DEFAULT_STATE.strokeStyle,
+    motion: { ...DEFAULT_STATE.motion, ...(parsed.motion ?? {}) },
+    shadow: { ...DEFAULT_STATE.shadow, ...(parsed.shadow ?? {}) },
+    noise: { ...DEFAULT_STATE.noise, ...(parsed.noise ?? {}) },
+    texture: { ...DEFAULT_STATE.texture, ...(parsed.texture ?? {}) },
+    gradient: { ...DEFAULT_STATE.gradient, ...(parsed.gradient ?? {}) },
+    customIcons: Array.isArray(parsed.customIcons)
+      ? parsed.customIcons.filter(
+          (icon: unknown) =>
+            typeof icon === "object" &&
+            icon !== null &&
+            typeof (icon as { id?: unknown }).id === "string" &&
+            typeof (icon as { name?: unknown }).name === "string" &&
+            typeof (icon as { url?: unknown }).url === "string" &&
+            !(icon as { url: string }).url.startsWith("blob:"),
+        )
+      : [],
+  };
+}
+
 const DEFAULT_PLUS = getIconDataById("indicators-plus", "normal");
 export const DEFAULT_TRAY_ICONS: IconData[] = DEFAULT_PLUS
   ? [{ ...DEFAULT_PLUS, iconType: "normal" }]

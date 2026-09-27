@@ -6,6 +6,7 @@ import { Search as SearchIcon } from "lucide-react";
 import { AnimatePresence, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
+import { EASE_OUT_EXPO_SOFT } from "@/lib/easing";
 import type { IconType } from "@/lib/icons";
 import { getSpriteHref } from "@/lib/icons";
 import type { IconData } from "@/lib/types";
@@ -97,7 +98,7 @@ const Search = () => {
                           exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.9 }}
                           transition={{
                             duration: shouldReduceMotion ? 0 : 0.18,
-                            ease: [0.16, 1, 0.3, 1],
+                            ease: EASE_OUT_EXPO_SOFT,
                           }}
                         >
                           <button
@@ -125,7 +126,7 @@ const Search = () => {
                                 }`}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                                transition={{ duration: 0.16, ease: EASE_OUT_EXPO_SOFT }}
                               >
                                 <use href={getSpriteHref(icon.iconType ?? iconType, icon.id)} />
                               </m.svg>

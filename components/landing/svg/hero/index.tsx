@@ -5,7 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
-import { burstRocket } from "./burst";
+import { burstRocket, getRocketFlames, resetFlames } from "./burst";
 import {
   BLAST_ICONS,
   BLAST_ICONS_CFG,
@@ -203,17 +203,15 @@ const HeroSvg = ({ variant = "launch" }: HeroSvgProps) => {
             if (rocketEl) {
               const beamEndTime = 1.0 + (beams.length - 1) * 0.22;
               const rocketLaunchDelay = beamEndTime + 1;
-              const haloEl = rocketEl.querySelector<SVGPathElement>(".rocketTrail-halo");
-              const plumeEl = rocketEl.querySelector<SVGPathElement>(".rocketTrail-plume");
-              const coreEls = gsap.utils.toArray<SVGPathElement>(
-                rocketEl.querySelectorAll(".rocketTrail-core"),
-              );
-              const flameEls = [haloEl, plumeEl, ...coreEls].filter(
-                (el): el is SVGPathElement => el !== null,
-              );
+              const {
+                halo: haloEl,
+                plume: plumeEl,
+                cores: coreEls,
+                all: flameEls,
+              } = getRocketFlames(rocketEl);
 
               gsap.killTweensOf(rocketEl);
-              flameEls.forEach((el) => gsap.killTweensOf(el));
+              resetFlames(flameEls);
               gsap.set(rocketEl, {
                 transformOrigin: "50% 100%",
                 x: 0,
@@ -221,14 +219,6 @@ const HeroSvg = ({ variant = "launch" }: HeroSvgProps) => {
                 rotation: 0,
                 opacity: 1,
               });
-              if (flameEls.length) {
-                gsap.set(flameEls, {
-                  opacity: 0,
-                  scaleY: 1,
-                  scale: 1,
-                  transformOrigin: "50% 0%",
-                });
-              }
               rocketEl.style.willChange = "transform, opacity";
 
               let coreFlickerTl: gsap.core.Timeline | null = null;
@@ -1099,21 +1089,13 @@ const HeroSvg = ({ variant = "launch" }: HeroSvgProps) => {
 
     setIsResetting(true);
 
-    const coreEls = gsap.utils.toArray<SVGPathElement>(
-      rocketEl.querySelectorAll(".rocketTrail-core"),
-    );
-    const plumeEl = rocketEl.querySelector<SVGPathElement>(".rocketTrail-plume");
-    const haloEl = rocketEl.querySelector<SVGPathElement>(".rocketTrail-halo");
-    const flameEls = [...coreEls, plumeEl, haloEl].filter((el): el is SVGPathElement => el != null);
-    if (flameEls.length) {
-      flameEls.forEach((el) => gsap.killTweensOf(el));
-      gsap.set(flameEls, {
-        opacity: 0,
-        scaleY: 1,
-        scale: 1,
-        transformOrigin: "50% 0%",
-      });
-    }
+    const {
+      halo: haloEl,
+      plume: plumeEl,
+      cores: coreEls,
+      all: flameEls,
+    } = getRocketFlames(rocketEl);
+    resetFlames(flameEls);
 
     const emberEls = svgRef.current?.querySelectorAll<SVGCircleElement>(".rocketEmber");
     if (emberEls && emberEls.length) {

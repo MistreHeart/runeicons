@@ -7,8 +7,10 @@ import Footer from "@/components/landing/components/footer";
 import HeroSection from "@/components/landing/components/herosection";
 import Packages from "@/components/landing/components/packages";
 import Search from "@/components/landing/components/search";
+import { FRAME_WIDTH, FrameRails } from "@/components/layout/page-frame";
 import Navbar from "@/components/ui/navbar";
 import { NAV_LINKS } from "@/lib/nav-links";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "RuneIcons - Beautiful Icons for Your Next Project",
@@ -18,13 +20,21 @@ export const metadata: Metadata = {
 const Page = async () => {
   return (
     <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto_1px_auto] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
-      <div className="relative col-start-2 row-start-1 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+      <div
+        className={cn(
+          FRAME_WIDTH,
+          "relative col-start-2 row-start-1 flex flex-col overflow-hidden",
+        )}
+      >
         <Navbar showBanner showDashedBorder links={NAV_LINKS} />
       </div>
 
       <div
         id="home"
-        className="col-start-2 row-start-3 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col gap-2 px-3 pt-20 pb-4 sm:px-6 sm:pb-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-3 flex scroll-mt-24 flex-col gap-2 px-3 pt-20 pb-4 sm:px-6 sm:pb-6",
+        )}
       >
         <HeroSection />
       </div>
@@ -33,7 +43,10 @@ const Page = async () => {
 
       <div
         id="search"
-        className="col-start-2 row-start-5 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col gap-2 px-3 py-10 sm:px-6 sm:py-14 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-5 flex scroll-mt-24 flex-col gap-2 px-3 py-10 sm:px-6 sm:py-14",
+        )}
       >
         <Search />
       </div>
@@ -42,7 +55,7 @@ const Page = async () => {
 
       <div
         id="features"
-        className="col-start-2 row-start-7 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        className={cn(FRAME_WIDTH, "col-start-2 row-start-7 flex scroll-mt-24 flex-col p-3 sm:p-6")}
       >
         <Bento />
       </div>
@@ -51,7 +64,7 @@ const Page = async () => {
 
       <div
         id="packages"
-        className="col-start-2 row-start-9 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        className={cn(FRAME_WIDTH, "col-start-2 row-start-9 flex scroll-mt-24 flex-col p-3 sm:p-6")}
       >
         <Packages />
       </div>
@@ -60,24 +73,37 @@ const Page = async () => {
 
       <div
         id="faq"
-        className="col-start-2 row-start-11 flex w-[95vw] max-w-[1440px] scroll-mt-24 flex-col justify-center p-3 sm:p-6 md:w-[90vw] lg:min-h-[calc(100vh-104px)] 2xl:w-[85vw] 2xl:max-w-[1800px]"
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-11 flex scroll-mt-24 flex-col justify-center p-3 sm:p-6 lg:min-h-[calc(100vh-104px)]",
+        )}
       >
         <Faq />
       </div>
 
       <div className="pointer-events-none col-span-full col-start-1 row-start-12 border-b-2 border-dashed" />
 
-      <div className="col-start-2 row-start-13 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden p-3 sm:p-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+      <div
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-13 flex flex-col overflow-hidden p-3 sm:p-6",
+        )}
+      >
         <CTA />
       </div>
 
       <div className="pointer-events-none col-span-full col-start-1 row-start-14 border-b-2 border-dashed" />
 
-      <div className="col-start-2 row-start-15 flex w-[95vw] max-w-[1440px] flex-col px-3 py-10 sm:px-6 sm:py-14 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+      <div
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-15 flex flex-col px-3 py-10 sm:px-6 sm:py-14",
+        )}
+      >
         <Footer />
       </div>
 
-      <div className="pointer-events-none fixed inset-y-0 left-1/2 z-40 w-[95vw] max-w-[1440px] -translate-x-1/2 border-x-2 border-dashed md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]" />
+      <FrameRails />
     </div>
   );
 };

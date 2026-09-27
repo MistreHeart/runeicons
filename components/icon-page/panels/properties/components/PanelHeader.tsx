@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { Check, FileDown, FileUp, RotateCcw, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { toast } from "sonner";
-import { useTuning } from "@/components/icon-page/tuning";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -17,7 +16,6 @@ interface PanelHeaderProps {
 }
 
 export function PanelHeader({ onExport, onImport, onReset }: PanelHeaderProps) {
-  useTuning();
   const [isResetArmed, setIsResetArmed] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [resetTooltipOpen, setResetTooltipOpen] = useState(false);

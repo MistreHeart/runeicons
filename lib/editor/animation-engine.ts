@@ -1,4 +1,4 @@
-export const ANIMATION_TYPES = [
+const ANIMATION_TYPES = [
   { id: "draw", label: "Draw" },
   { id: "stroke", label: "Stroke" },
   { id: "bounce", label: "Bounce" },

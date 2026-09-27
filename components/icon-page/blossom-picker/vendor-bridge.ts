@@ -6,11 +6,8 @@ import {
 } from '@/components/icon-page/blossom-vendor/constants';
 import type { BlossomColorPickerOptions } from '@/components/icon-page/blossom-vendor/BlossomColorPicker';
 import type { BlossomColorPickerValue } from '@/components/icon-page/blossom-vendor/types';
-import {
-  hexToHsl,
-  lightnessToSliderValue,
-} from '@/components/icon-page/blossom-vendor/utils';
-import { HexColor } from '@/lib/color-utils';
+import { lightnessToSliderValue } from '@/components/icon-page/blossom-vendor/utils';
+import { HexColor, hexToHsl } from '@/lib/color-utils';
 
 export function hexToPickerValue(
   hex: HexColor,

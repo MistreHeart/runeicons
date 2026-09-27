@@ -1,9 +1,11 @@
 import { Marked, type Tokens } from "marked";
 import { createHighlighter, type Highlighter } from "shiki";
 
+import { githubRepoPath } from "@/lib/site";
+
 const LANGS = ["sh", "json", "ts", "tsx", "js", "html", "vue", "svelte", "astro", "dart"] as const;
 const ALIASES: Record<string, string> = { bash: "sh", shell: "sh", text: "text", "": "text" };
-const REPO = "https://github.com/Nexvyn/runeicons/blob/main/packages";
+const REPO = githubRepoPath("blob", "packages");
 
 let highlighterPromise: Promise<Highlighter> | null = null;
 

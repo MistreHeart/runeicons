@@ -2,7 +2,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useTheme } from "next-themes";
 
-import { DEFAULT_STATE, TYPE_DEFAULT_COLORS } from "@/constants/workspace";
+import {
+  DEFAULT_STATE,
+  sanitizeCustomizationState,
+  TYPE_DEFAULT_COLORS,
+  WORKSPACE_STATE_KEY,
+} from "@/constants/workspace";
 import { useHistory } from "@/hooks/use-history";
 import { CustomizationState } from "@/lib/types";
 
@@ -22,24 +27,6 @@ function createAdaptiveState(): CustomizationState {
       ],
     },
   };
-}
-
-function areStringArraysEqual(a: string[], b: string[]) {
-  return a.length === b.length && a.every((value, index) => value === b[index]);
-}
-
-function areGradientStopsEqual(
-  a: CustomizationState["gradient"]["stops"],
-  b: CustomizationState["gradient"]["stops"],
-) {
-  return (
-    a.length === b.length &&
-    a.every((stop, index) => stop.color === b[index]?.color && stop.position === b[index]?.position)
-  );
-}
-
-function areGradientsEqual(a: CustomizationState["gradient"], b: CustomizationState["gradient"]) {
-  return a.type === b.type && a.angle === b.angle && areGradientStopsEqual(a.stops, b.stops);
 }
 
 export function useWorkspaceState(options: UseWorkspaceStateOptions = {}) {
@@ -62,34 +49,9 @@ export function useWorkspaceState(options: UseWorkspaceStateOptions = {}) {
     if (typeof window === "undefined" || hasLoadedFromStorage) return;
 
     try {
-      const savedState = localStorage.getItem("rune_workspace_state");
+      const savedState = localStorage.getItem(WORKSPACE_STATE_KEY);
       if (savedState) {
-        const parsed = JSON.parse(savedState);
-        const migratedIconType =
-          parsed.iconType === "isometric" || parsed.iconType === "dither"
-            ? "normal"
-            : parsed.iconType;
-        setState({
-          ...DEFAULT_STATE,
-          ...parsed,
-          iconType: migratedIconType,
-          motion: { ...DEFAULT_STATE.motion, ...(parsed.motion ?? {}) },
-          shadow: { ...DEFAULT_STATE.shadow, ...(parsed.shadow ?? {}) },
-          noise: { ...DEFAULT_STATE.noise, ...(parsed.noise ?? {}) },
-          texture: { ...DEFAULT_STATE.texture, ...(parsed.texture ?? {}) },
-          gradient: { ...DEFAULT_STATE.gradient, ...(parsed.gradient ?? {}) },
-          customIcons: Array.isArray(parsed.customIcons)
-            ? parsed.customIcons.filter(
-                (icon: unknown) =>
-                  typeof icon === "object" &&
-                  icon !== null &&
-                  typeof (icon as { id?: unknown }).id === "string" &&
-                  typeof (icon as { name?: unknown }).name === "string" &&
-                  typeof (icon as { url?: unknown }).url === "string" &&
-                  !(icon as { url: string }).url.startsWith("blob:"),
-              )
-            : [],
-        });
+        setState(sanitizeCustomizationState(JSON.parse(savedState)));
       }
     } catch (error) {
       console.error("Failed to load state from storage:", error);
@@ -103,13 +65,13 @@ export function useWorkspaceState(options: UseWorkspaceStateOptions = {}) {
 
     const timeoutId = setTimeout(() => {
       try {
-        localStorage.setItem("rune_workspace_state", JSON.stringify(state));
+        localStorage.setItem(WORKSPACE_STATE_KEY, JSON.stringify(state));
       } catch (error) {
         // Data-URL uploads can blow the ~5MB localStorage budget. Retry
         // without them so the rest of the settings still persist.
         try {
           const { customIcons: _omitted, ...rest } = state;
-          localStorage.setItem("rune_workspace_state", JSON.stringify(rest));
+          localStorage.setItem(WORKSPACE_STATE_KEY, JSON.stringify(rest));
         } catch {
           console.error("Failed to save state to storage:", error);
         }
@@ -154,7 +116,7 @@ export function useWorkspaceState(options: UseWorkspaceStateOptions = {}) {
   useEffect(() => {
     if (!isMountedRef.current) return;
 
-    if (resolvedTheme && !hasInitializedTheme && !localStorage.getItem("rune_workspace_state")) {
+    if (resolvedTheme && !hasInitializedTheme && !localStorage.getItem(WORKSPACE_STATE_KEY)) {
       setHasInitializedTheme(true);
     }
 

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Github } from "lucide-react";
 
 import LightLogo from "@/components/landing/svg/light";
+import { XLogo } from "@/components/ui/x-logo";
+import { GITHUB_REPO, X_URL } from "@/lib/site";
 
 import FooterWordmark from "./footer-wordmark";
 
@@ -12,7 +14,7 @@ const legalLinks = [
 ];
 
 const collaboratorsLinks = [
-  { title: "Nexvyn", href: "https://x.com/nexvyn" },
+  { title: "Nexvyn", href: X_URL },
   { title: "Vansh", href: "https://x.com/vansh1029" },
   { title: "Abhinav", href: "https://x.com/Abhinavstwt" },
   { title: "Mohit", href: "https://x.com/mohitmehtre" },
@@ -54,29 +56,16 @@ const Footer = () => {
             <p className="text-xs font-semibold tracking-wide text-foreground uppercase">Social</p>
             <div className="flex items-center gap-4">
               <Link
-                href="https://x.com/nexvyn"
+                href={X_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="X/Twitter"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
-                <svg
-                  className="text-black dark:text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 21L10.5484 13.4516M21 3L13.4516 10.5484M13.4516 10.5484L8 3H3L10.5484 13.4516M13.4516 10.5484L21 21H16L10.5484 13.4516" />
-                </svg>
+                <XLogo className="size-4 text-black dark:text-white" />
               </Link>
               <Link
-                href="https://github.com/Nexvyn/runeicons"
+                href={GITHUB_REPO}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"

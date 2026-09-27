@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
 
 import Footer from "@/components/landing/components/footer";
+import { FRAME_WIDTH, FrameRails } from "@/components/layout/page-frame";
 import Navbar from "@/components/ui/navbar";
 import { NAV_LINKS } from "@/lib/nav-links";
+import { cn } from "@/lib/utils";
 
 type DocsShellProps = {
   title: string;
@@ -13,9 +15,9 @@ type DocsShellProps = {
 
 const DocsShell = ({ title, lead, wide = false, children }: DocsShellProps) => (
   <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
-    <div className="pointer-events-none fixed inset-y-0 left-1/2 z-40 w-[95vw] max-w-[1440px] -translate-x-1/2 border-x-2 border-dashed md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]" />
+    <FrameRails />
 
-    <div className="mx-auto flex w-[95vw] max-w-[1440px] flex-col md:w-[90vw] 2xl:w-[85vw]">
+    <div className={cn(FRAME_WIDTH, "mx-auto flex flex-col")}>
       <Navbar showDashedBorder links={NAV_LINKS} />
 
       <div

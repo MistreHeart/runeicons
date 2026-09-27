@@ -1,3 +1,5 @@
+import { BEAM_PIPE_LOWER_D, BEAM_PIPE_UPPER_D } from "./constants";
+
 const HeroDefs = () => (
   <defs>
     <mask id="pipeRevealMask" maskUnits="userSpaceOnUse">
@@ -93,7 +95,7 @@ const HeroDefs = () => (
       <feBlend mode="normal" in2="effect1_innerShadow_4_2" result="effect2_innerShadow_4_2" />
     </filter>
     <clipPath id="bgblur_0_4_2_clip_path" transform="translate(-336.094 -391.609)">
-      <path d="M512.232 467.826C412.654 509.509 359.092 441.774 343.505 400.085C343.164 399.173 341.844 399.225 341.565 400.158L340.635 403.278C340.576 403.476 340.581 403.692 340.647 403.888C368.614 486.21 450.308 505.384 514.659 475.657C565.88 451.996 574.485 416.844 572.385 401.932C572.358 401.743 572.277 401.576 572.151 401.432L567.786 396.451C567.124 395.695 565.831 396.289 565.919 397.29C568.935 431.93 531.805 458.598 512.232 467.826Z" />
+      <path d={BEAM_PIPE_UPPER_D} />
     </clipPath>
     <filter
       id="filter1_ii_4_2"
@@ -136,7 +138,7 @@ const HeroDefs = () => (
       <feBlend mode="normal" in2="effect1_innerShadow_4_2" result="effect2_innerShadow_4_2" />
     </filter>
     <clipPath id="bgblur_1_4_2_clip_path" transform="translate(-331.681 -408.46)">
-      <path d="M538.563 485.041C420.667 526.893 357.473 458.439 339.383 416.795C339.016 415.949 337.797 416.009 337.491 416.879L336.237 420.445C336.156 420.673 336.163 420.926 336.253 421.15C369.249 503.432 465.558 522.594 541.425 492.873C601.785 469.226 611.958 434.104 609.499 419.176C609.465 418.969 609.365 418.789 609.214 418.643L603.634 413.242C602.932 412.562 601.726 413.203 601.834 414.174C605.706 448.976 561.717 475.784 538.563 485.041Z" />
+      <path d={BEAM_PIPE_LOWER_D} />
     </clipPath>
     <linearGradient
       id="paint0_linear_4_2"

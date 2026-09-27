@@ -1,6 +1,6 @@
 "use client";
 
-import { type CSSProperties, useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 
 import Link from "next/link";
 
@@ -13,9 +13,11 @@ import { GlassIcon } from "../../icons/GlassIcon";
 import { NormalIcon } from "../../icons/NormalIcon";
 import { PixelatedIcon } from "../../icons/PixelatedIcon";
 import { Button } from "../../ui/button";
+import { useCountUp } from "../hooks/use-count-up";
 import HeroSvg from "../svg/hero";
 import Mascot from "../svg/mascot";
 import { TOTAL_ICON_COUNT } from "@/lib/icons";
+import { GITHUB_REPO } from "@/lib/site";
 
 const browseIconTypes = [
   { Icon: NormalIcon, label: "Normal" },
@@ -30,14 +32,7 @@ const FAN_SPREAD_DEG = 100;
 const FAN_STAGGER_MS = 45;
 
 const HeroSection = () => {
-  const [iconCount, setIconCount] = useState(0);
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() =>
-      setIconCount(Math.floor(TOTAL_ICON_COUNT / 100) * 100),
-    );
-    return () => cancelAnimationFrame(frame);
-  }, []);
+  const iconCount = useCountUp(Math.floor(TOTAL_ICON_COUNT / 100) * 100);
 
   return (
     <div className="grid min-h-[60vh] grid-cols-1 gap-10 lg:h-[calc(100vh-104px)] lg:max-h-[780px] lg:grid-cols-2 lg:gap-6">
@@ -91,7 +86,7 @@ const HeroSection = () => {
             </span>
           </Link>
           <Link
-            href="https://github.com/Nexvyn/runeicons"
+            href={GITHUB_REPO}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative isolate inline-block"

@@ -1,3 +1,5 @@
+import { hexToHsl, hslToHex, hslToRgb, rgbToHsl } from '@/lib/color-utils'
+
 import { BlossomColorPickerColor, ColorInput } from './types'
 
 export function lightnessToSliderValue(l: number): number {
@@ -11,74 +13,6 @@ export function sliderValueToLightness(sliderValue: number): number {
   const minLightness = 5
   const maxLightness = 95
   return maxLightness - (sliderValue / 100) * (maxLightness - minLightness)
-}
-
-export function hexToHsl(hex: string): { h: number; s: number; l: number } {
-  hex = hex.replace(/^#/, '')
-  const r = parseInt(hex.slice(0, 2), 16) / 255
-  const g = parseInt(hex.slice(2, 4), 16) / 255
-  const b = parseInt(hex.slice(4, 6), 16) / 255
-
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  const l = (max + min) / 2
-
-  if (max === min) {
-    return { h: 0, s: 0, l: Math.round(l * 100) }
-  }
-
-  const d = max - min
-  const s_val = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-
-  let h_val = 0
-  switch (max) {
-    case r:
-      h_val = ((g - b) / d + (g < b ? 6 : 0)) / 6
-      break
-    case g:
-      h_val = ((b - r) / d + 2) / 6
-      break
-    case b:
-      h_val = ((r - g) / d + 4) / 6
-      break
-  }
-
-  return {
-    h: Math.round(h_val * 360),
-    s: Math.round(s_val * 100),
-    l: Math.round(l * 100),
-  }
-}
-
-export function rgbToHsl(r: number, g: number, b: number): { h: number; s: number; l: number } {
-  r /= 255
-  g /= 255
-  b /= 255
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  const l = (max + min) / 2
-
-  if (max === min) return { h: 0, s: 0, l: Math.round(l * 100) }
-
-  const d = max - min
-  const s_val = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-  let h_val = 0
-  switch (max) {
-    case r:
-      h_val = ((g - b) / d + (g < b ? 6 : 0)) / 6
-      break
-    case g:
-      h_val = ((b - r) / d + 2) / 6
-      break
-    case b:
-      h_val = ((r - g) / d + 4) / 6
-      break
-  }
-  return {
-    h: Math.round(h_val * 360),
-    s: Math.round(s_val * 100),
-    l: Math.round(l * 100),
-  }
 }
 
 export function parseColor(input: ColorInput): {
@@ -103,54 +37,14 @@ export function parseColor(input: ColorInput): {
 
   const rgbMatch = str.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)/)
   if (rgbMatch) {
-    return rgbToHsl(parseFloat(rgbMatch[1]), parseFloat(rgbMatch[2]), parseFloat(rgbMatch[3]))
+    return rgbToHsl({
+      r: parseFloat(rgbMatch[1]),
+      g: parseFloat(rgbMatch[2]),
+      b: parseFloat(rgbMatch[3]),
+    })
   }
 
   return { h: 0, s: 0, l: 50 }
-}
-
-export function hslToHex(h: number, s: number, l: number): string {
-  const sNorm = s / 100
-  const lNorm = l / 100
-  const c = (1 - Math.abs(2 * lNorm - 1)) * sNorm
-  const x = c * (1 - Math.abs(((h / 60) % 2) - 1))
-  const m = lNorm - c / 2
-
-  let r = 0,
-    g = 0,
-    b = 0
-  if (h >= 0 && h < 60) {
-    r = c
-    g = x
-    b = 0
-  } else if (h >= 60 && h < 120) {
-    r = x
-    g = c
-    b = 0
-  } else if (h >= 120 && h < 180) {
-    r = 0
-    g = c
-    b = x
-  } else if (h >= 180 && h < 240) {
-    r = 0
-    g = x
-    b = c
-  } else if (h >= 240 && h < 300) {
-    r = x
-    g = 0
-    b = c
-  } else {
-    r = c
-    g = 0
-    b = x
-  }
-
-  const toHex = (n: number) => {
-    const hex = Math.round((n + m) * 255).toString(16)
-    return hex.length === 1 ? '0' + hex : hex
-  }
-
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`
 }
 
 export function getVisualSaturation(sliderValue: number, baseSaturation: number): number {
@@ -163,20 +57,6 @@ export function hslToString(h: number, s: number, l: number): string {
 
 export function hslaToString(h: number, s: number, l: number, a: number): string {
   return `hsla(${Math.round(h)}, ${Math.round(s)}%, ${Math.round(l)}%, ${(a / 100).toFixed(2)})`
-}
-
-export function hslToRgb(h: number, s: number, l: number): { r: number; g: number; b: number } {
-  const sNorm = s / 100
-  const lNorm = l / 100
-  const k = (n: number) => (n + h / 30) % 12
-  const a = sNorm * Math.min(lNorm, 1 - lNorm)
-  const f = (n: number) => lNorm - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
-
-  return {
-    r: Math.round(255 * f(0)),
-    g: Math.round(255 * f(8)),
-    b: Math.round(255 * f(4)),
-  }
 }
 
 export function rgbaToString(r: number, g: number, b: number, a: number): string {

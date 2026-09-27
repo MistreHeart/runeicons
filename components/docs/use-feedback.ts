@@ -3,7 +3,8 @@ import { useState } from "react";
 
 import { toast } from "sonner";
 
-const NEW_ISSUE_URL = "https://github.com/Nexvyn/runeicons/issues/new";
+import { GITHUB_ISSUES_NEW as NEW_ISSUE_URL } from "@/lib/site";
+
 const TITLE_MAX = 72;
 export interface UseFeedbackOptions {
   onSuccess?: () => void;

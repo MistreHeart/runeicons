@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
+import { FRAME_WIDTH, FrameRails } from "@/components/layout/page-frame";
 import NotFoundContent from "@/components/not-found/content";
 import Navbar from "@/components/ui/navbar";
 import { NAV_LINKS } from "@/lib/nav-links";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "404: Page not found",
@@ -12,15 +14,22 @@ export const metadata: Metadata = {
 
 const NotFoundPage = () => (
   <div className="relative grid min-h-dvh w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1fr] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
-    <div className="relative col-start-2 row-start-1 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+    <div
+      className={cn(FRAME_WIDTH, "relative col-start-2 row-start-1 flex flex-col overflow-hidden")}
+    >
       <Navbar showBanner showDashedBorder links={NAV_LINKS} />
     </div>
 
-    <main className="col-start-2 row-start-2 flex w-[95vw] max-w-[1440px] flex-col items-center justify-center px-3 pt-20 pb-10 sm:px-6 md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]">
+    <main
+      className={cn(
+        FRAME_WIDTH,
+        "col-start-2 row-start-2 flex flex-col items-center justify-center px-3 pt-20 pb-10 sm:px-6",
+      )}
+    >
       <NotFoundContent />
     </main>
 
-    <div className="pointer-events-none fixed inset-y-0 left-1/2 z-40 w-[95vw] max-w-[1440px] -translate-x-1/2 border-x-2 border-dashed md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]" />
+    <FrameRails />
   </div>
 );
 

@@ -16,7 +16,7 @@ export type {
   SliderPosition,
 } from './types';
 export { computeAdaptivePosition } from './adaptive';
-export { hexToHsl, lightnessToSliderValue, sliderValueToLightness } from './utils';
+export { lightnessToSliderValue, sliderValueToLightness } from './utils';
 export { ArcSliderRenderer } from './renderers/ArcSliderRenderer';
 export { BackgroundRenderer } from './renderers/BackgroundRenderer';
 export { ColorBarRenderer } from './renderers/ColorBarRenderer';

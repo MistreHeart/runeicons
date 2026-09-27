@@ -15,7 +15,7 @@ export function injectPathIndices(svgHtml: string): { tagged: string; count: num
   return { tagged, count };
 }
 
-export function computeTotalDuration(pathCount: number, state: CustomizationState): number {
+function computeTotalDuration(pathCount: number, state: CustomizationState): number {
   const { motion } = state;
   if (pathCount === 0) return motion.duration;
   let maxEnd = 0;

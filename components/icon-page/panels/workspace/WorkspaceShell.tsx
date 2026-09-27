@@ -8,6 +8,7 @@ import { IconLibraryPanel } from "@/components/icon-page/panels/icon-library";
 import { ToolRail } from "@/components/icon-page/panels/outline";
 import { KeyboardShortcutsModal } from "@/components/icon-page/panels/outline/components/keyboard-shortcuts-modal";
 import { PropertiesPanel } from "@/components/icon-page/panels/properties";
+import { useConfigPersistence } from "@/components/icon-page/panels/properties/hooks/use-config-persistence";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useWorkspaceState } from "@/hooks/use-workspace-state";
 import { getIconDataById, resolveLibraryIconType, type StateIconType } from "@/lib/icons";
@@ -161,17 +162,7 @@ export function WorkspaceShell() {
 
   const [showGrid, setShowGrid] = useState(true);
 
-  const handleExport = useCallback(() => {
-    const configJson = JSON.stringify(state, null, 2);
-    const blob = new Blob([configJson], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = `customization-${Date.now()}.json`;
-    anchor.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast.success("Configuration exported");
-  }, [state]);
+  const { handleExport } = useConfigPersistence(state, handleChange);
 
   const handleCopySvg = useCallback(async () => {
     if (!selectedIcon) {

@@ -9,10 +9,11 @@ import { useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
 import { Button } from "@/components/ui/button";
+import { EASE_OUT_QUART } from "@/lib/easing";
+import { GITHUB_REPO } from "@/lib/site";
 
 import Mascot from "../svg/mascot";
 
-const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
 const ENTRANCE_DURATION = 0.35;
 const HOVER_DURATION = 0.15;
 
@@ -161,11 +162,7 @@ const CTA = () => {
             onMouseEnter={() => setStage(4)}
             onMouseLeave={() => setStage(2)}
           >
-            <Link
-              href="https://github.com/Nexvyn/runeicons"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href={GITHUB_REPO} target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="secondary">
                 Star On GitHub <Github />
               </Button>

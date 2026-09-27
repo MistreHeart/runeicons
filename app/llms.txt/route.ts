@@ -1,6 +1,6 @@
 import { GLASS_ICONS_MANIFEST, NORMAL_ICONS_MANIFEST } from "@/lib/icons";
 
-import { SITE_URL } from "../layout";
+import { GITHUB_REPO, SITE_URL, X_URL } from "@/lib/site";
 
 const STROKE_STYLES = ["normal", "duotone", "fill", "pixelated"] as const;
 
@@ -70,8 +70,8 @@ inherit the text colour of whatever they are placed inside.
 
 ## Source
 
-- [GitHub](https://github.com/Nexvyn/runeicons)
-- [X](https://x.com/nexvyn)
+- [GitHub](${GITHUB_REPO})
+- [X](${X_URL})
 `;
 
   return new Response(body, {

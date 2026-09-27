@@ -9,7 +9,7 @@ import {
   EditorActionBar,
   EDITOR_TRANSITION,
 } from "@/components/editor/controls/EditorActionBar";
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { ActionMenuItem } from "@/components/shared/action-bar/action-bar-controls";
 import type { CustomizationState } from "@/lib/types";
 import type {
   EditorAssetSummary,
@@ -408,13 +408,10 @@ export function EditorWorkspacePanel({
             showReference={showReference}
             onToggleReference={() => setShowReference((v) => !v)}
             additionalDropdownItems={
-              <DropdownMenuItem
-                className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-[11px] font-medium transition-colors focus:bg-white/10 focus:text-white"
-                onClick={() => onSaveDialogOpenChange(true)}
-              >
+              <ActionMenuItem onClick={() => onSaveDialogOpenChange(true)}>
                 <Save className="h-4 w-4 text-white/40" />
                 <span>Save as Snapshot</span>
-              </DropdownMenuItem>
+              </ActionMenuItem>
             }
           />
         </div>

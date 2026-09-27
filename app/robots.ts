@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { SITE_URL } from "./layout";
+import { SITE_URL } from "@/lib/site";
 
 const DISALLOW = ["/api/", "/checkout"];
 

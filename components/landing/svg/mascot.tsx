@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 import { useAnimation, useReducedMotion } from "motion/react";
 import { motion as m } from "motion/react";
 
+import { EASE_OUT_QUINT } from "@/lib/easing";
+
 const blinkTransition = {
   duration: 3.4,
   times: [0, 0.94, 0.97, 1],
@@ -128,7 +130,7 @@ const Mascot = ({ stage = 1 }: MascotProps) => {
     const goingUp = stage > from;
     bodyControls.start(goingUp ? REACT_UP : REACT_DOWN, {
       duration: goingUp ? 0.52 : 0.26,
-      ease: [0.23, 1, 0.32, 1],
+      ease: EASE_OUT_QUINT,
     });
   }, [stage, bodyControls, shouldReduceMotion]);
 

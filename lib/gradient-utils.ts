@@ -1,3 +1,6 @@
+import type { ViewBox } from "@/lib/svg-utils";
+import type { CustomizationState } from "@/lib/types";
+
 export interface GradientStop {
   color: string;
   position: number;
@@ -13,7 +16,7 @@ function lerpHex(c1: string, c2: string, t: number): string {
   return `rgb(${Math.round(r1 + (r2 - r1) * t)},${Math.round(g1 + (g2 - g1) * t)},${Math.round(b1 + (b2 - b1) * t)})`;
 }
 
-export function interpolateStops(stops: GradientStop[], t: number): string {
+function interpolateStops(stops: GradientStop[], t: number): string {
   const s = [...stops].sort((a, b) => a.position - b.position);
   const pos = t * 100;
   if (!s.length) return "#000000";
@@ -56,4 +59,41 @@ export function buildConicSegments(
       color: interpolateStops(stops, t),
     };
   });
+}
+
+type IconGradient = CustomizationState["gradient"];
+
+// Builds the `icon-gradient` paint server for an icon, in userSpaceOnUse
+// coordinates scaled to the icon's viewBox. Angular gradients have no SVG
+// primitive, so they are drawn as a pattern of conic wedges.
+export function buildIconGradientDefs(gradient: IconGradient, vb: ViewBox): string {
+  const stops = [...gradient.stops]
+    .sort((a, b) => a.position - b.position)
+    .map((s) => `<stop offset="${s.position}%" stop-color="${s.color || "#000000"}"/>`)
+    .join("");
+  const spreadMethod = gradient.spreadMethod ?? "pad";
+
+  if (gradient.type === "linear") {
+    const centreX = vb.x + vb.w / 2;
+    const centreY = vb.y + vb.h / 2;
+    const rad = (gradient.angle * Math.PI) / 180;
+    const x1 = (centreX - (vb.w / 2) * Math.sin(rad)).toFixed(3);
+    const y1 = (centreY + (vb.h / 2) * Math.cos(rad)).toFixed(3);
+    const x2 = (centreX + (vb.w / 2) * Math.sin(rad)).toFixed(3);
+    const y2 = (centreY - (vb.h / 2) * Math.cos(rad)).toFixed(3);
+    return `<linearGradient id="icon-gradient" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" gradientUnits="userSpaceOnUse" spreadMethod="${spreadMethod}">${stops}</linearGradient>`;
+  }
+
+  const cx = vb.x + ((gradient.cx ?? 50) / 100) * vb.w;
+  const cy = vb.y + ((gradient.cy ?? 50) / 100) * vb.h;
+
+  if (gradient.type === "radial") {
+    const r = ((gradient.r ?? 50) / 100) * vb.w;
+    return `<radialGradient id="icon-gradient" cx="${cx.toFixed(3)}" cy="${cy.toFixed(3)}" r="${r.toFixed(3)}" gradientUnits="userSpaceOnUse" spreadMethod="${spreadMethod}">${stops}</radialGradient>`;
+  }
+
+  const polys = buildConicSegments(gradient.stops, gradient.angle, cx, cy, 17)
+    .map((s) => `<polygon points="${s.points}" fill="${s.color}"/>`)
+    .join("");
+  return `<pattern id="icon-gradient" width="${vb.w}" height="${vb.h}" patternUnits="userSpaceOnUse">${polys}</pattern>`;
 }

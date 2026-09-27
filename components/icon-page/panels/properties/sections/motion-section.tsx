@@ -1,17 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
-import { Button } from "@/components/ui/button";
 import { Scrubber } from "@/components/ui/scrubber";
 import { Switch } from "@/components/ui/switch";
 import { EASING_PRESETS } from "@/lib/editor/animation-engine";
-import { type MotionPreset } from "@/lib/editor/motion-presets";
 import type { PathAnimationOverride } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -36,17 +34,6 @@ const INTERACTION_MODES = [
 ] as const;
 
 type InteractionMode = (typeof INTERACTION_MODES)[number]["id"];
-
-const MODE_DEFAULTS: Record<
-  InteractionMode,
-  Partial<{ loop: boolean; trigger: PathAnimationOverride["trigger"]; animationType: string }>
-> = {
-  animate: { loop: false, trigger: "auto" },
-  hover: { loop: false, trigger: "hover" },
-  loading: { loop: true, trigger: "auto" },
-  success: { loop: false, trigger: "once", animationType: "draw" },
-  error: { loop: false, trigger: "once", animationType: "shake" },
-};
 
 const ALLOWED_ANIMATIONS: Record<
   string,
@@ -339,13 +326,7 @@ function BouncePreview() {
 export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationSectionProps) {
   const motionState = state.motion;
   const isEnabled = motionState?.enabled ?? false;
-  const perPathOverrides = (motionState?.perPathAnimations ?? {}) as Record<
-    string,
-    PathAnimationOverride
-  >;
   const isPaused = motionState?.isPaused ?? false;
-  const scrubProgress = motionState?.scrubProgress ?? null;
-  const interactionMode = (motionState?.interactionMode ?? "animate") as InteractionMode;
 
   const buildMotionState = useCallback(
     (updates: Partial<typeof state.motion>) => ({
@@ -380,31 +361,6 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
 
   const handleGlobalChange = (updates: Partial<typeof state.motion>) => {
     onChange({ motion: buildMotionState(updates) });
-  };
-
-  const applyPreset = (preset: MotionPreset) => {
-    const modeDefaults = MODE_DEFAULTS[preset.interactionMode] ?? {};
-    const perPath = preset.buildPerPath?.(pathCount) ?? {};
-    handleGlobalChange({
-      ...preset.config,
-      ...modeDefaults,
-      presetId: preset.id,
-      interactionMode: preset.interactionMode,
-      perPathAnimations: perPath,
-      selectedPathIndex: -1,
-      isPaused: false,
-      scrubProgress: null,
-      replayNonce: (motionState?.replayNonce ?? 0) + 1,
-    });
-  };
-
-  const handleInteractionModeChange = (mode: InteractionMode) => {
-    const defaults = MODE_DEFAULTS[mode];
-    handleGlobalChange({
-      interactionMode: mode,
-      ...defaults,
-      presetId: null,
-    });
   };
 
   const currentEasingId = (motionState?.easingId ?? "ease-in-out") as EasingId;

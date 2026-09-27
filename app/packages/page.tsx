@@ -4,6 +4,7 @@ import DocsShell from "@/components/docs/docs-shell";
 import PackageList, { type PackageRow } from "@/components/docs/package-list";
 import { renderReadme } from "@/lib/docs/markdown";
 import { PACKAGE_READMES } from "@/lib/docs/package-readmes.generated";
+import { githubRepoPath } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Packages",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
     "Rune Icons for React, Vue, Svelte, Astro, React Native, Flutter, plain JS, VS Code, Figma, and MCP.",
 };
 
-const REPO = "https://github.com/Nexvyn/runeicons/tree/main/packages";
+const REPO = githubRepoPath("tree", "packages");
 
 const LOGOS: Record<string, string> = {
   runeicons: "/brand/javascript.svg",

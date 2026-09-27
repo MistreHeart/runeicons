@@ -1,3 +1,5 @@
+import { GITHUB_REPO } from "@/lib/site";
+
 export const dynamic = "force-static";
 
 export function GET() {
@@ -16,7 +18,7 @@ Everyone who requested icons and starred the repo.
 /* SITE */
 Standards: HTML, CSS, JavaScript
 Built with: Next.js, React, Tailwind CSS
-https://github.com/Nexvyn/runeicons
+${GITHUB_REPO}
 `;
 
   return new Response(body, {

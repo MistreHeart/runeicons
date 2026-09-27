@@ -5,12 +5,12 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, useInView, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
 
+import { EASE_OUT_QUART } from "@/lib/easing";
 import { getIconUrlById, type IconType } from "@/lib/icons";
 import type { IconData } from "@/lib/types";
 
 import { SPEC_DETAILS_D, SPEC_MAIN_D } from "../svg/specimen-data";
 
-const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
 const CYCLE_MS = 4000;
 const HAND = { fontFamily: "var(--font-caveat)" };
 const DEFAULT_ID = "documents-file-text";

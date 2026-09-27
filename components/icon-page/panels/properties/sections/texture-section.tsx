@@ -16,8 +16,8 @@ function TexturePreview({ texId }: { texId: string }) {
   return (
     <div
       className="w-5 h-5 rounded-sm border border-border/40 overflow-hidden bg-muted/10 flex items-center justify-center"
-      style={tex && tex.id !== 'none' ? {
-        backgroundImage: `url(${tex.path || `/placeholder.svg?height=100&width=100&query=${tex.id}-texture`})`,
+      style={tex?.path ? {
+        backgroundImage: `url(${tex.path})`,
         backgroundSize: 'cover'
       } : {}}
     >

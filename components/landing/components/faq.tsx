@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { X_URL } from "@/lib/site";
 
 type FAQItem = {
   id: string;
@@ -64,7 +65,7 @@ export default function Faq() {
               <p className="text-sm text-muted-foreground">
                 Can’t find the answer you’re looking for? <br /> I’m here to help.
               </p>
-              <Link href="https://x.com/nexvyn" target="_blank" rel="noopener noreferrer">
+              <Link href={X_URL} target="_blank" rel="noopener noreferrer">
                 <Button className="mt-6 w-fit">
                   Contact us <MessageCircle />
                 </Button>

@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { CustomizationState, IconData } from "@/lib/types";
 import { motion } from "motion/react";
-import { useTuning } from "@/components/icon-page/tuning";
 
 interface UploadSectionProps {
   state: CustomizationState;
@@ -47,8 +46,6 @@ export function UploadSection({
   deleteIcon,
   maxIcons,
 }: UploadSectionProps) {
-  useTuning();
-
   const handleDeleteClick = useCallback((id: string) => {
     deleteIcon(id);
   }, [deleteIcon]);
@@ -179,11 +176,13 @@ export function UploadSection({
                   })}
                 >
                   <div className="w-10 h-10 flex items-center justify-center rounded-[4px] bg-background border border-border p-1.5 overflow-hidden outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10">
-                    <img
-                      src={icon.url || "/placeholder.svg"}
-                      alt={icon.name}
-                      className="w-full h-full object-contain"
-                    />
+                    {icon.url && (
+                      <img
+                        src={icon.url}
+                        alt={icon.name}
+                        className="w-full h-full object-contain"
+                      />
+                    )}
                   </div>
                   <span
                     className="text-xs font-medium text-foreground flex-1 truncate pr-2"

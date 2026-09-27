@@ -3,10 +3,10 @@ import { forwardRef, memo, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { renderToStaticMarkup } from "react-dom/server";
 
-import { resolveEffectiveIconType, TYPE_EFFECT_SUPPORT } from "@/constants/workspace";
 import { resolveAnimationType, resolveEasingValue } from "@/lib/editor/animation-engine";
 import { buildPerPathAnimationCss, injectPathIndices } from "@/lib/editor/path-animation";
 import { STROKE_STYLE_MAP } from "@/lib/stroke-style";
+import { parseViewBox } from "@/lib/svg-utils";
 import {
   applyTextureToSvgContent,
   colorizeSvgContent,
@@ -190,11 +190,12 @@ export const PreviewContent = memo(
         }
 
         if (isTextureActive) {
-          const viewBoxParts = svgData.viewBox.split(/\s+/).map(Number);
-          const viewBoxX = viewBoxParts[0] || 0;
-          const viewBoxY = viewBoxParts[1] || 0;
-          const viewBoxWidth = viewBoxParts[2] || 24;
-          const viewBoxHeight = viewBoxParts[3] || 24;
+          const {
+            x: viewBoxX,
+            y: viewBoxY,
+            w: viewBoxWidth,
+            h: viewBoxHeight,
+          } = parseViewBox(svgData.viewBox);
           const patternId = "preview-texture-pattern";
           result = applyTextureToSvgContent(result, patternId);
           result = `<defs><pattern id="${patternId}" x="${viewBoxX}" y="${viewBoxY}" width="${viewBoxWidth}" height="${viewBoxHeight}" patternUnits="userSpaceOnUse"><image href="/textures/${state.texture.selected}.webp" x="${viewBoxX}" y="${viewBoxY}" width="${viewBoxWidth}" height="${viewBoxHeight}" opacity="${state.texture.opacity / 100}" preserveAspectRatio="xMidYMid slice"/></pattern></defs>${result}`;

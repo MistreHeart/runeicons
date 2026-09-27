@@ -5,9 +5,10 @@ import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
 
+import { EASE_OUT_QUART } from "@/lib/easing";
+
 import { Button } from "./button";
 
-const EASE_OUT_QUART = [0.165, 0.84, 0.44, 1] as const;
 const DURATION_IN = 0.25;
 const DURATION_OUT = 0.2;
 

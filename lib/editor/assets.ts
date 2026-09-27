@@ -100,10 +100,3 @@ export const getEditorAssets = cache(async (): Promise<EditorAssetSummary[]> => 
   const full = await getFullAssets();
   return full.map(toSummary);
 });
-
-export async function getEditorAssetById(
-  assetId: string,
-): Promise<EditorIconAsset | null> {
-  const full = await getFullAssets();
-  return full.find((asset) => asset.id === assetId) ?? null;
-}

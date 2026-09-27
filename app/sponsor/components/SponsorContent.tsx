@@ -3,8 +3,10 @@ import { useState } from "react";
 
 import * as m from "motion/react-m";
 
+import { FRAME_WIDTH } from "@/components/layout/page-frame";
 import Navbar from "@/components/ui/navbar";
 import { getCheckoutForAmount } from "@/lib/creem";
+import { cn } from "@/lib/utils";
 
 import { AmountSelector } from "./ui/amount-selector";
 import { CertificateCard } from "./ui/certificate-card";
@@ -20,7 +22,12 @@ export default function SponsorContent() {
 
   return (
     <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_1fr] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
-      <div className="relative col-start-2 row-start-1 flex w-[95vw] max-w-[1440px] flex-col overflow-hidden md:w-[90vw] 2xl:w-[85vw]">
+      <div
+        className={cn(
+          FRAME_WIDTH,
+          "relative col-start-2 row-start-1 flex flex-col overflow-hidden",
+        )}
+      >
         <Navbar
           showDashedBorder
           links={[
@@ -32,7 +39,12 @@ export default function SponsorContent() {
 
       <div className="pointer-events-none col-span-full col-start-1 row-start-2 border-b-2 border-dashed" />
 
-      <div className="col-start-2 row-start-3 flex w-[95vw] max-w-[1440px] flex-col items-center justify-center px-3 py-14 sm:px-6 sm:py-16 md:w-[90vw] 2xl:w-[85vw]">
+      <div
+        className={cn(
+          FRAME_WIDTH,
+          "col-start-2 row-start-3 flex flex-col items-center justify-center px-3 py-14 sm:px-6 sm:py-16",
+        )}
+      >
         <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

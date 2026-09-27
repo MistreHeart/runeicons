@@ -1,3 +1,11 @@
+import { cubicBezier, EASE_OUT_CUBIC, EASE_OUT_QUINT } from "@/lib/easing";
+
+// Outlines of the two glass beam pipes; reused for fill, strokes, and backdrop clip.
+export const BEAM_PIPE_UPPER_D =
+  "M512.232 467.826C412.654 509.509 359.092 441.774 343.505 400.085C343.164 399.173 341.844 399.225 341.565 400.158L340.635 403.278C340.576 403.476 340.581 403.692 340.647 403.888C368.614 486.21 450.308 505.384 514.659 475.657C565.88 451.996 574.485 416.844 572.385 401.932C572.358 401.743 572.277 401.576 572.151 401.432L567.786 396.451C567.124 395.695 565.831 396.289 565.919 397.29C568.935 431.93 531.805 458.598 512.232 467.826Z";
+export const BEAM_PIPE_LOWER_D =
+  "M538.563 485.041C420.667 526.893 357.473 458.439 339.383 416.795C339.016 415.949 337.797 416.009 337.491 416.879L336.237 420.445C336.156 420.673 336.163 420.926 336.253 421.15C369.249 503.432 465.558 522.594 541.425 492.873C601.785 469.226 611.958 434.104 609.499 419.176C609.465 418.969 609.365 418.789 609.214 418.643L603.634 413.242C602.932 412.562 601.726 413.203 601.834 414.174C605.706 448.976 561.717 475.784 538.563 485.041Z";
+
 export const LAUNCH = {
   ignition: 0,
   plumeIn: 0.12,
@@ -9,10 +17,10 @@ export const LAUNCH = {
 } as const;
 
 export const EASING = {
-  enter: "cubic-bezier(0.23, 1, 0.32, 1)",
+  enter: cubicBezier(EASE_OUT_QUINT),
   stretch: "cubic-bezier(0.645, 0.045, 0.355, 1)",
   flicker: "sine.inOut",
-  exit: "cubic-bezier(0.215, 0.61, 0.355, 1)",
+  exit: cubicBezier(EASE_OUT_CUBIC),
 } as const;
 
 export const STATE_TRANSITION = {
@@ -35,7 +43,7 @@ export const IDLE_LEAK = {
   stopDuration: 0.3,
 } as const;
 
-export const EMBERS_CFG = {
+const EMBERS_CFG = {
   count: 22,
   coreCount: 14,
   spawnStagger: 0.045,
@@ -62,7 +70,7 @@ const seededRand = (i: number, n: number) => {
 };
 const emberRand = seededRand;
 
-export const NOZZLE_COLUMNS = [657, 684, 710] as const;
+const NOZZLE_COLUMNS = [657, 684, 710] as const;
 
 export const ROCKET_DETAILS = {
   readyStagger: 0.11,

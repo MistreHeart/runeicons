@@ -16,7 +16,8 @@ const KNOWN_VARIANTS: readonly EditorVariant[] = [
 import type { CustomizationState } from "@/lib/types";
 import { STROKE_STYLE_MAP, type StrokeStyle } from "@/lib/stroke-style";
 import { normalizeEditorPathData } from "./path-data";
-import { buildConicSegments } from "@/lib/gradient-utils";
+import { buildIconGradientDefs } from "@/lib/gradient-utils";
+import { escapeAttr, parseViewBox } from "@/lib/svg-utils";
 
 type StackEntry = {
   inDefs: boolean;
@@ -50,7 +51,7 @@ function normalizeEditorPaintValue(value?: string) {
   return value?.trim().toLowerCase() ?? "";
 }
 
-export function isDefaultEditorPaint(value?: string) {
+function isDefaultEditorPaint(value?: string) {
   const normalizedValue = normalizeEditorPaintValue(value);
 
   return (
@@ -389,58 +390,6 @@ function serializePathAttributes(
   return attributes.join(" ");
 }
 
-function buildGradientDefs(
-  state: CustomizationState,
-  vbX: number,
-  vbY: number,
-  vbW: number,
-  vbH: number,
-) {
-  if (!state.iconGradient || state.gradient.stops.length === 0) {
-    return "";
-  }
-
-  // Mirrors the gradient coordinate math in lib/svg-export-utils.ts
-  // (generateStandaloneSvg) and components/icon-page/panels/workspace/
-  // components/SvgDefinitions.tsx (live preview), scaled to this
-  // document's own viewBox instead of a hardcoded 24x24 canvas, and
-  // switched on gradient.type instead of always emitting a linear
-  // gradient in objectBoundingBox units.
-  const centreX = vbX + vbW / 2;
-  const centreY = vbY + vbH / 2;
-  const stops = [...state.gradient.stops]
-    .sort((a, b) => a.position - b.position)
-    .map(
-      (stop) =>
-        `<stop offset="${stop.position}%" stop-color="${stop.color || "#000000"}" />`,
-    )
-    .join("");
-  const spreadMethod = state.gradient.spreadMethod ?? "pad";
-
-  if (state.gradient.type === "radial") {
-    const cx = vbX + ((state.gradient.cx ?? 50) / 100) * vbW;
-    const cy = vbY + ((state.gradient.cy ?? 50) / 100) * vbH;
-    const r = ((state.gradient.r ?? 50) / 100) * vbW;
-    return `<radialGradient id="icon-gradient" cx="${cx.toFixed(3)}" cy="${cy.toFixed(3)}" r="${r.toFixed(3)}" gradientUnits="userSpaceOnUse" spreadMethod="${spreadMethod}">${stops}</radialGradient>`;
-  }
-
-  if (state.gradient.type === "angular") {
-    const cx = vbX + ((state.gradient.cx ?? 50) / 100) * vbW;
-    const cy = vbY + ((state.gradient.cy ?? 50) / 100) * vbH;
-    const segs = buildConicSegments(state.gradient.stops, state.gradient.angle, cx, cy, 17);
-    const polys = segs.map((s) => `<polygon points="${s.points}" fill="${s.color}"/>`).join("");
-    return `<pattern id="icon-gradient" width="${vbW}" height="${vbH}" patternUnits="userSpaceOnUse">${polys}</pattern>`;
-  }
-
-  const angleInRadians = (state.gradient.angle * Math.PI) / 180;
-  const x1 = (centreX - (vbW / 2) * Math.sin(angleInRadians)).toFixed(3);
-  const y1 = (centreY + (vbH / 2) * Math.cos(angleInRadians)).toFixed(3);
-  const x2 = (centreX + (vbW / 2) * Math.sin(angleInRadians)).toFixed(3);
-  const y2 = (centreY - (vbH / 2) * Math.cos(angleInRadians)).toFixed(3);
-
-  return `<linearGradient id="icon-gradient" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" gradientUnits="userSpaceOnUse" spreadMethod="${spreadMethod}">${stops}</linearGradient>`;
-}
-
 function buildExportFilter(state: CustomizationState) {
   const shadowActive = state.shadow.enabled && state.shadow.opacity > 0;
   if (!state.blur && !shadowActive) {
@@ -644,16 +593,12 @@ export function createEditorSvgMarkup(
   // rather than the origin. `state.scale` is deliberately not applied here:
   // the editor preview does not apply it either, and honouring it would make
   // every export diverge from what the canvas shows.
-  const [vbX, vbY, vbW, vbH] = (() => {
-    const parts = (document.viewBox || "0 0 24 24").split(/\s+/).map(Number);
-    return [
-      parts[0] || 0,
-      parts[1] || 0,
-      parts[2] || 24,
-      parts[3] || 24,
-    ] as const;
-  })();
-  const gradientDefs = buildGradientDefs(state, vbX, vbY, vbW, vbH);
+  const viewBox = parseViewBox(document.viewBox);
+  const { x: vbX, y: vbY, w: vbW, h: vbH } = viewBox;
+  const gradientDefs =
+    state.iconGradient && state.gradient.stops.length > 0
+      ? buildIconGradientDefs(state.gradient, viewBox)
+      : "";
   const exportFilter = buildExportFilter(state);
   const defs = [document.defs, gradientDefs, exportFilter].filter(Boolean).join("");
   const centreX = vbX + vbW / 2;
@@ -701,12 +646,7 @@ export function createEditorSvgMarkup(
   const iconScaleFactor = vbW > 0 ? (vbW - 2 * paddingVB) / vbW : 1;
   const hasPadding = paddingVB !== 0 && iconScaleFactor !== 1;
   const rx = ((state.cornerRadius / Math.max(state.width, 1)) * vbW).toFixed(3);
-  const backgroundFill = (state.backgroundColor || "transparent").replace(
-    /[&"<>]/g,
-    (character) =>
-      ({ "&": "&amp;", '"': "&quot;", "<": "&lt;", ">": "&gt;" })[character] ||
-      character,
-  );
+  const backgroundFill = escapeAttr(state.backgroundColor || "transparent");
   const hasBackground =
     backgroundFill !== "transparent" && backgroundFill !== "none";
 

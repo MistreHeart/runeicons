@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-import Footer from "@/components/landing/components/footer";
-import Navbar from "@/components/ui/navbar";
+import DocsShell from "@/components/docs/docs-shell";
 
 export const metadata: Metadata = {
   title: "Changelog",
@@ -230,87 +229,62 @@ const CHANGELOG: ChangelogEntry[] = [
   },
 ];
 
-const ChangelogPage = () => {
-  return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
-      <div className="pointer-events-none fixed inset-y-0 left-1/2 z-40 w-[95vw] max-w-[1440px] -translate-x-1/2 border-x-2 border-dashed md:w-[90vw] 2xl:w-[85vw] 2xl:max-w-[1800px]" />
-
-      <div className="mx-auto flex w-[95vw] max-w-[1440px] flex-col md:w-[90vw] 2xl:w-[85vw]">
-        <Navbar showDashedBorder />
-
-        <div className="mx-auto flex w-full max-w-2xl flex-col gap-10 px-3 pt-32 pb-20 sm:px-6">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-medium sm:text-4xl">Changelog</h1>
-            <p className="text-sm text-muted-foreground">
-              A history of what shipped, newest first.
-            </p>
-          </div>
-
-          <div className="flex flex-col">
-            {CHANGELOG.map((entry, i) => (
-              <div
-                key={`${entry.date}-${entry.title}`}
-                className={`flex flex-col gap-3 py-8 ${
-                  i !== 0 ? "border-t border-border" : "pt-0"
-                }`}
-              >
-                <div className="flex flex-col gap-1.5">
-                  <span className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-widest text-muted-foreground uppercase">
-                    {entry.date}
-                    {i === 0 && (
-                      <span className="rounded-full bg-blue-700 px-2 py-0.5 text-[10px] font-semibold tracking-normal text-white normal-case">
-                        Latest
-                      </span>
-                    )}
-                    {entry.authors && entry.authors.length > 0 && (
-                      <span className="flex -space-x-1.5 normal-case">
-                        {entry.authors.map((author) => (
-                          <a
-                            key={author}
-                            href={`https://github.com/${author}`}
-                            target="_blank"
-                            rel="noreferrer"
-                            title={author}
-                            aria-label={`GitHub profile of ${author}`}
-                            className="rounded-full border border-background transition-transform duration-150 ease-out hover:-translate-y-0.5"
-                          >
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={`https://github.com/${author}.png?size=64`}
-                              alt=""
-                              width={20}
-                              height={20}
-                              loading="lazy"
-                              className="size-5 rounded-full bg-muted"
-                            />
-                          </a>
-                        ))}
-                      </span>
-                    )}
-                  </span>
-                  <h2 className="text-xl font-semibold text-balance text-foreground">
-                    {entry.title}
-                  </h2>
-                </div>
-                <ul className="flex flex-col gap-2 text-sm leading-relaxed text-balance text-muted-foreground">
-                  {entry.items.map((item) => (
-                    <li key={item} className="flex gap-2">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
-                      <span>{item}</span>
-                    </li>
+const ChangelogPage = () => (
+  <DocsShell title="Changelog" lead="A history of what shipped, newest first.">
+    <div className="flex flex-col">
+      {CHANGELOG.map((entry, i) => (
+        <div
+          key={`${entry.date}-${entry.title}`}
+          className={`flex flex-col gap-3 py-8 ${i !== 0 ? "border-t border-border" : "pt-0"}`}
+        >
+          <div className="flex flex-col gap-1.5">
+            <span className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+              {entry.date}
+              {i === 0 && (
+                <span className="rounded-full bg-blue-700 px-2 py-0.5 text-[10px] font-semibold tracking-normal text-white normal-case">
+                  Latest
+                </span>
+              )}
+              {entry.authors && entry.authors.length > 0 && (
+                <span className="flex -space-x-1.5 normal-case">
+                  {entry.authors.map((author) => (
+                    <a
+                      key={author}
+                      href={`https://github.com/${author}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      title={author}
+                      aria-label={`GitHub profile of ${author}`}
+                      className="rounded-full border border-background transition-transform duration-150 ease-out hover:-translate-y-0.5"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://github.com/${author}.png?size=64`}
+                        alt=""
+                        width={20}
+                        height={20}
+                        loading="lazy"
+                        className="size-5 rounded-full bg-muted"
+                      />
+                    </a>
                   ))}
-                </ul>
-              </div>
-            ))}
+                </span>
+              )}
+            </span>
+            <h2 className="text-xl font-semibold text-balance text-foreground">{entry.title}</h2>
           </div>
+          <ul className="flex flex-col gap-2 text-sm leading-relaxed text-balance text-muted-foreground">
+            {entry.items.map((item) => (
+              <li key={item} className="flex gap-2">
+                <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div className="px-3 pb-10 sm:px-6">
-          <Footer />
-        </div>
-      </div>
+      ))}
     </div>
-  );
-};
+  </DocsShell>
+);
 
 export default ChangelogPage;

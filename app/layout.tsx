@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { Toaster } from "@/components/ui/sonner";
 import { ShapeProvider } from "@/lib/shape-context";
+import { GITHUB_REPO, SITE_URL, X_URL } from "@/lib/site";
 import { MotionProvider } from "@/provider/motion-provider";
 import { ThemeProvider } from "@/provider/theme-provider";
 
@@ -40,8 +41,6 @@ const caveat = Caveat({
   variable: "--font-caveat",
   subsets: ["latin"],
 });
-
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://runeicons.com";
 
 const DESCRIPTION =
   "An open-source icon library where every glyph comes in five styles: outline, duotone, fill, pixelated and glass. Reshape any path in the browser, then copy it out as SVG or JSX. Apache 2.0 licensed.";
@@ -118,7 +117,7 @@ const ORG_JSON_LD = {
       name: "Rune Icons",
       url: SITE_URL,
       logo: `${SITE_URL}/icon`,
-      sameAs: ["https://x.com/nexvyn", "https://github.com/Nexvyn/runeicons"],
+      sameAs: [X_URL, GITHUB_REPO],
     },
     {
       "@type": "WebSite",
