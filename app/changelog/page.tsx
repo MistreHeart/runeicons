@@ -238,10 +238,10 @@ const ChangelogPage = () => (
           className={`flex flex-col gap-3 py-8 ${i !== 0 ? "border-t border-border" : "pt-0"}`}
         >
           <div className="flex flex-col gap-1.5">
-            <span className="flex flex-wrap items-center gap-2 text-xs font-medium tracking-widest text-muted-foreground uppercase">
+            <span className="flex flex-wrap items-center gap-2 text-label tracking-[0.08em] text-muted-foreground tabular-nums uppercase">
               {entry.date}
               {i === 0 && (
-                <span className="rounded-full bg-blue-700 px-2 py-0.5 text-[10px] font-semibold tracking-normal text-white normal-case">
+                <span className="rounded-full bg-blue-700 px-2 py-0.5 text-micro font-medium tracking-normal text-white normal-case">
                   Latest
                 </span>
               )}
@@ -271,9 +271,9 @@ const ChangelogPage = () => (
                 </span>
               )}
             </span>
-            <h2 className="text-xl font-semibold text-balance text-foreground">{entry.title}</h2>
+            <h2 className="text-h3 text-foreground">{entry.title}</h2>
           </div>
-          <ul className="flex flex-col gap-2 text-sm leading-relaxed text-balance text-muted-foreground">
+          <ul className="flex max-w-[65ch] flex-col gap-2 text-body-sm text-pretty text-muted-foreground">
             {entry.items.map((item) => (
               <li key={item} className="flex gap-2">
                 <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground" />

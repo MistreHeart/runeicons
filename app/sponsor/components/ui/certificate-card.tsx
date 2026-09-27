@@ -23,7 +23,7 @@ export function CertificateCard({
   const sponsorButton = (
     <Button
       disabled={amount <= 0}
-      className="w-full cursor-pointer gap-1 bg-blue-700 px-6 text-[14px] font-medium text-white hover:bg-blue-700/90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+      className="w-full cursor-pointer gap-1 bg-blue-700 px-6 text-body-sm font-medium text-white hover:bg-blue-700/90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
     >
       <span>Sponsor</span>
       {amount > 0 ? (
@@ -52,10 +52,10 @@ export function CertificateCard({
         </div>
 
         <div className="z-10 flex flex-col justify-center">
-          <m.h3
+          <m.h2
             layout
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
-            className="flex w-fit items-baseline gap-1.5 text-[22px] leading-none font-medium tracking-tight sm:text-[28px]"
+            className="flex w-fit items-baseline gap-1.5 text-h3 tabular-nums sm:text-h2"
           >
             {amount > 0 ? (
               <>
@@ -72,8 +72,8 @@ export function CertificateCard({
                 <span className="text-blue-700">Custom</span> contribution
               </m.span>
             )}
-          </m.h3>
-          <p className="mt-3 max-w-[320px] text-[13px] leading-relaxed text-muted-foreground sm:mt-4">
+          </m.h2>
+          <p className="mt-3 max-w-[36ch] text-body-sm text-muted-foreground sm:mt-4">
             {amount > 0
               ? "RuneIcons stays free and open-source, always. Your sponsorship helps me ship new icons, refine every stroke, and keep the library evolving."
               : "Enter any amount above. RuneIcons stays free and open-source, always. Sponsor whatever feels right."}

@@ -13,16 +13,16 @@ const NotFoundContent = () => (
       <RocketBurstScene />
     </div>
 
-    <div className="mt-8 flex w-fit -rotate-2 items-center gap-2 rounded-md border px-2.5 py-1 text-xs">
+    <div className="mt-8 flex w-fit -rotate-2 items-center gap-2 rounded-md border px-2.5 py-1 text-label">
       <span className="font-semibold text-blue-700">404</span>
       <span className="text-muted-foreground">page not found</span>
     </div>
 
-    <h1 className="mt-4 text-2xl leading-tight font-medium sm:text-4xl sm:leading-none md:text-5xl">
+    <h1 className="mt-4 text-h1">
       This page never made it <span className="text-blue-700">off the pad</span>
     </h1>
 
-    <p className="mt-4 max-w-md text-xs leading-tight text-muted-foreground sm:text-sm sm:leading-5 md:text-base">
+    <p className="mt-4 max-w-md text-lead text-muted-foreground">
       The link is broken, or the page moved somewhere we forgot to tell you about.
     </p>
 

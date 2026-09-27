@@ -86,11 +86,11 @@ export function FeedbackForm({ onClose }: FeedbackFormProps) {
             }
           }}
           aria-label="Your feedback"
-          className="block min-h-[120px] w-full resize-none bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground"
+          className="block min-h-[120px] w-full resize-none bg-transparent px-3 py-3 text-base text-foreground sm:text-body-sm outline-none placeholder:text-muted-foreground"
         />
 
         <div className="flex items-center justify-between gap-2 px-3 pt-1 pb-3">
-          <p className="min-w-0 flex-1 truncate text-xs text-muted-foreground">
+          <p className="min-w-0 flex-1 truncate text-caption text-muted-foreground">
             Opens a prefilled GitHub issue.
           </p>
           <Button

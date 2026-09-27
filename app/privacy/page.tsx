@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const PrivacyPage = () => (
   <DocsShell title="Privacy Policy" lead="Last updated: July 29, 2026">
-    <div className="flex flex-col gap-6 text-sm leading-relaxed text-muted-foreground">
+    <div className="flex max-w-[65ch] flex-col gap-8 text-body text-muted-foreground">
       <p>
         This Privacy Policy explains what information RuneIcons collects and how it is used. We aim
         to collect{" "}
@@ -22,7 +22,7 @@ const PrivacyPage = () => (
       </p>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">1. Information We Collect</h2>
+        <h2 className="text-h3 text-foreground">1. Information We Collect</h2>
         <p>
           We <strong className="font-medium text-foreground">do not require an account</strong> to
           browse or download icons. If you sponsor the project or contact us, we may receive the
@@ -33,7 +33,7 @@ const PrivacyPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">2. Cookies & Analytics</h2>
+        <h2 className="text-h3 text-foreground">2. Cookies & Analytics</h2>
         <p>
           We may use{" "}
           <strong className="font-medium text-foreground">
@@ -48,7 +48,7 @@ const PrivacyPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">3. Third-Party Services</h2>
+        <h2 className="text-h3 text-foreground">3. Third-Party Services</h2>
         <p>
           Sponsorships and payments are processed by third-party providers, and interactions with
           our GitHub repository are governed by{" "}
@@ -57,7 +57,7 @@ const PrivacyPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">4. Changes to This Policy</h2>
+        <h2 className="text-h3 text-foreground">4. Changes to This Policy</h2>
         <p>
           We may update this Privacy Policy from time to time. Continued use of the site after
           changes are posted{" "}
@@ -69,7 +69,7 @@ const PrivacyPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">5. Contact</h2>
+        <h2 className="text-h3 text-foreground">5. Contact</h2>
         <p>
           Questions about this policy can be raised via our{" "}
           <a

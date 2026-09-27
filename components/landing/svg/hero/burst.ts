@@ -2,7 +2,7 @@ import gsap from "gsap";
 
 import { cubicBezier, EASE_OUT_QUINT } from "@/lib/easing";
 
-import { BLAST_ICONS, BURST } from "./constants";
+import { BURST, BURST_GLYPHS } from "./constants";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 const ENTER_EASE = cubicBezier(EASE_OUT_QUINT);
@@ -233,13 +233,13 @@ export function burstRocket(
     );
   }
 
-  const glyphs = [...BLAST_ICONS].sort(() => Math.random() - 0.5).slice(0, BURST.glyphs);
-  glyphs.forEach((icon) => {
+  const glyphs = [...BURST_GLYPHS].sort(() => Math.random() - 0.5).slice(0, BURST.glyphs);
+  glyphs.forEach((d) => {
     const node = make("g", {});
     const inner = make("g", { transform: "scale(0.62) translate(-12 -12)" });
     inner.appendChild(
       make("path", {
-        d: icon.d,
+        d,
         fill: "none",
         stroke: "black",
         "stroke-width": 2,

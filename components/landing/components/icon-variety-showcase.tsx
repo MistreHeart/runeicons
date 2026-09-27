@@ -241,10 +241,10 @@ function CardContent({ variant }: { variant: Variant }) {
         <Icon className="h-7 w-7 text-foreground" />
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <span className="truncate text-[15px] leading-tight font-semibold text-foreground">
+        <span className="truncate text-body font-medium text-foreground">
           {variant.title}
         </span>
-        <span className="truncate text-[11px] leading-snug text-muted-foreground">
+        <span className="truncate text-label text-muted-foreground">
           {variant.description}
         </span>
       </div>

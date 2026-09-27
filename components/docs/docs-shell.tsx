@@ -14,7 +14,7 @@ type DocsShellProps = {
 };
 
 const DocsShell = ({ title, lead, wide = false, children }: DocsShellProps) => (
-  <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
+  <div className="relative flex min-h-screen w-full flex-col overflow-hidden bg-[#F5F5F5] dark:bg-background">
     <FrameRails />
 
     <div className={cn(FRAME_WIDTH, "mx-auto flex flex-col")}>
@@ -23,9 +23,9 @@ const DocsShell = ({ title, lead, wide = false, children }: DocsShellProps) => (
       <div
         className={`mx-auto flex w-full flex-col gap-10 px-3 pt-32 pb-20 sm:px-6 ${wide ? "max-w-6xl" : "max-w-2xl"}`}
       >
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-medium sm:text-4xl">{title}</h1>
-          <p className="text-sm leading-relaxed text-muted-foreground">{lead}</p>
+        <div className="flex flex-col gap-3">
+          <h1 className="text-h1">{title}</h1>
+          <p className="max-w-[65ch] text-lead text-muted-foreground">{lead}</p>
         </div>
 
         {children}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { AnimatePresence, useInView, useReducedMotion } from "motion/react";
 import * as m from "motion/react-m";
@@ -9,13 +9,22 @@ import { EASE_OUT_QUART } from "@/lib/easing";
 import { getIconUrlById, type IconType } from "@/lib/icons";
 import type { IconData } from "@/lib/types";
 
-import { SPEC_DETAILS_D, SPEC_MAIN_D } from "../svg/specimen-data";
-
 const CYCLE_MS = 4000;
-const HAND = { fontFamily: "var(--font-caveat)" };
-const DEFAULT_ID = "documents-file-text";
-const DEFAULT_NAME = "file-text";
-const DEFAULT_GLASS = "/glass-icons/FileText.svg";
+// Shield-check shows off every style well: it mixes curves, sharp corners and
+// a check, and it has a matching glass file (glass ids don't share the
+// normal manifest's ids, so the match is set by hand).
+const DEFAULT_ID = "identity-shield-check";
+const DEFAULT_NAME = "shield-check";
+const DEFAULT_GLASS = "/glass-icons/ShieldCheck%201.svg";
+// Inlined so the first frame renders before any fetch.
+const DEFAULT_PATHS: ParsedPath[] = [
+  {
+    d: "M9 12L11 14L15 10M20 13C20 18 16.5 20.5 12.34 21.95C12.1222 22.0238 11.8855 22.0202 11.67 21.94C7.5 20.5 4 18 4 13V5.99996C4 5.73474 4.10536 5.48039 4.29289 5.29285C4.48043 5.10532 4.73478 4.99996 5 4.99996C7 4.99996 9.5 3.79996 11.24 2.27996C11.4519 2.09896 11.7214 1.99951 12 1.99951C12.2786 1.99951 12.5481 2.09896 12.76 2.27996C14.51 3.80996 17 4.99996 19 4.99996C19.2652 4.99996 19.5196 5.10532 19.7071 5.29285C19.8946 5.48039 20 5.73474 20 5.99996V13Z",
+    stroke: "black",
+    fill: null,
+    strokeWidth: "2",
+  },
+];
 
 const STYLE_ORDER: IconType[] = ["normal", "duotone", "fill", "pixelated", "glass"];
 
@@ -25,14 +34,6 @@ const STYLE_LABELS: Record<IconType, string> = {
   fill: "fill",
   pixelated: "pixelated",
   glass: "glass",
-};
-
-const NOTE_POS: Record<IconType, { pos: string; rotate: number; arrow: "left" | "right" }> = {
-  normal: { pos: "top-[20%] right-[4%] w-[130px] text-right", rotate: -2, arrow: "left" },
-  duotone: { pos: "top-[24%] left-[5%] w-[120px]", rotate: 1.5, arrow: "right" },
-  fill: { pos: "bottom-[26%] right-[5%] w-[110px] text-right", rotate: -1.5, arrow: "left" },
-  pixelated: { pos: "bottom-[24%] left-[5%] w-[130px]", rotate: 2, arrow: "right" },
-  glass: { pos: "top-[22%] right-[5%] w-[110px] text-right", rotate: -2.5, arrow: "left" },
 };
 
 interface ParsedPath {
@@ -58,52 +59,54 @@ interface Glass {
 
 type View = Vector | Glass;
 
-const FILE_TEXT_HANDLES: [number, number, number, number][] = [
-  [4, 4, 4.59, 2.59],
-  [4, 20, 4.59, 21.41],
-  [18, 22, 19.41, 21.41],
-  [20, 8, 19.82, 7.08],
-];
+// Values each path command consumes per segment.
+const ARITY: Record<string, number> = { M: 2, L: 2, T: 2, H: 1, V: 1, C: 6, S: 4, Q: 4, A: 7 };
 
+// The path's real anchor points: where every segment ends and every subpath
+// starts, in absolute coordinates. Control handles are skipped, so this matches
+// the points a vector editor shows on the path.
 const extractAnchors = (paths: ParsedPath[]): [number, number][] => {
-  const seen = new Set<string>();
   const out: [number, number][] = [];
+  const push = (x: number, y: number) => {
+    if (out.some(([ox, oy]) => Math.hypot(ox - x, oy - y) < 0.05)) return;
+    out.push([x, y]);
+  };
   for (const p of paths) {
     if (!p.stroke) continue;
-    const tokens = p.d.match(/[MLHVCSQTAZ][^MLHVCSQTAZ]*/gi) || [];
     let x = 0;
     let y = 0;
-    for (const t of tokens) {
-      const cmd = t[0];
-      const nums = (t.slice(1).match(/-?[\d.]+(?:e-?\d+)?/g) || []).map(Number);
-      if (cmd === "M" || cmd === "L") {
-        for (let i = 0; i + 1 < nums.length; i += 2) {
-          x = nums[i];
-          y = nums[i + 1];
-          const k = `${Math.round(x * 2)},${Math.round(y * 2)}`;
-          if (!seen.has(k)) {
-            seen.add(k);
-            out.push([x, y]);
-          }
+    let startX = 0;
+    let startY = 0;
+    for (const [, cmd, args] of p.d.matchAll(/([MLHVCSQTAZ])([^MLHVCSQTAZ]*)/gi)) {
+      const type = cmd.toUpperCase();
+      const relative = cmd !== type;
+      if (type === "Z") {
+        x = startX;
+        y = startY;
+        continue;
+      }
+      const nums = (args.match(/-?(?:\d+\.?\d*|\.\d+)(?:e[-+]?\d+)?/gi) ?? []).map(Number);
+      const arity = ARITY[type];
+      for (let i = 0; i + arity <= nums.length; i += arity) {
+        if (type === "H") {
+          x = relative ? x + nums[i] : nums[i];
+        } else if (type === "V") {
+          y = relative ? y + nums[i] : nums[i];
+        } else {
+          const endX = nums[i + arity - 2];
+          const endY = nums[i + arity - 1];
+          x = relative ? x + endX : endX;
+          y = relative ? y + endY : endY;
         }
-      } else if (cmd === "H") {
-        x = nums[nums.length - 1];
-      } else if (cmd === "V") {
-        y = nums[nums.length - 1];
-      } else if (cmd === "C") {
-        for (let i = 0; i + 5 < nums.length; i += 6) {
-          x = nums[i + 4];
-          y = nums[i + 5];
-          const k = `${Math.round(x * 2)},${Math.round(y * 2)}`;
-          if (!seen.has(k)) {
-            seen.add(k);
-            out.push([x, y]);
-          }
+        if (type === "M" && i === 0) {
+          startX = x;
+          startY = y;
         }
+        push(x, y);
       }
     }
   }
-  return out.slice(0, 30);
+  return out;
 };
 
 const svgCache = new Map<string, { vb: string; paths: ParsedPath[] }>();
@@ -127,8 +130,7 @@ const loadSvg = async (url: string) => {
   return parsed;
 };
 
-const fillClass = (fill: string | null) =>
-  fill === "#DDDDDD" ? "fill-muted-foreground" : "";
+const fillClass = (fill: string | null) => (fill === "#DDDDDD" ? "fill-muted-foreground" : "");
 
 const strokeProps = (p: ParsedPath) => {
   if (!p.stroke) return { stroke: undefined, className: "" };
@@ -141,34 +143,6 @@ const strokeProps = (p: ParsedPath) => {
   return { stroke: p.stroke, className: "" };
 };
 
-const HandArrow = ({ flip, reduced }: { flip?: boolean; reduced: boolean }) => (
-  <svg
-    viewBox="0 0 80 34"
-    className={`mt-1 h-8 w-16 text-brand/70 ${flip ? "-scale-x-100 self-start" : "self-end"}`}
-    fill="none"
-  >
-    <m.path
-      d="M76 4 Q48 2 30 12 Q12 22 5 29"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      initial={reduced ? false : { pathLength: 0 }}
-      animate={{ pathLength: 1 }}
-      transition={{ duration: 0.5, delay: 0.15, ease: EASE_OUT_QUART }}
-    />
-    <m.path
-      d="M13.6 26.4 L5 29 L7.6 20.4"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      initial={reduced ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.2, delay: 0.6 }}
-    />
-  </svg>
-);
-
 interface SpecimenPlateProps {
   iconType: IconType;
   onChange: (t: IconType) => void;
@@ -178,6 +152,9 @@ interface SpecimenPlateProps {
 
 const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps) => {
   const shouldReduceMotion = useReducedMotion();
+  const uid = useId();
+  const gridFadeId = `${uid}-grid-fade`;
+  const gridMaskId = `${uid}-grid-mask`;
   const rootRef = useRef<HTMLDivElement>(null);
   const inView = useInView(rootRef, { amount: 0.35 });
 
@@ -188,14 +165,8 @@ const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps)
   const [view, setView] = useState<View>({
     kind: "vector",
     vb: "0 0 24 24",
-    paths: [
-      { d: SPEC_MAIN_D, stroke: "black", fill: null, strokeWidth: "2" },
-      { d: SPEC_DETAILS_D, stroke: "black", fill: null, strokeWidth: "2" },
-    ],
-    anchors: extractAnchors([
-      { d: SPEC_MAIN_D, stroke: "black", fill: null, strokeWidth: "2" },
-      { d: SPEC_DETAILS_D, stroke: "black", fill: null, strokeWidth: "2" },
-    ]),
+    paths: DEFAULT_PATHS,
+    anchors: extractAnchors(DEFAULT_PATHS),
     key: `${DEFAULT_ID}:normal`,
   });
 
@@ -254,17 +225,18 @@ const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps)
     };
   }, [activeId, iconType, icon?.url]);
 
-  const notePos = NOTE_POS[iconType];
-  const noteText =
-    iconType === "normal"
-      ? `${view.kind === "vector" ? view.anchors.length : 16} anchors, grab & drag any of them`
-      : iconType === "duotone"
-        ? "two layers: base + a 40% tint"
-        : iconType === "fill"
-          ? "one solid path, that's it"
-          : iconType === "pixelated"
-            ? `${view.kind === "vector" ? view.paths.length : 49} little squares, placed by hand`
-            : "blur + shine... still 24px";
+  const strokeWidth = view.kind === "vector" ? view.paths.find((p) => p.stroke)?.strokeWidth : null;
+  const stats =
+    view.kind === "glass"
+      ? ["layered", "blur + highlight"]
+      : iconType === "pixelated"
+        ? [`${view.paths.length} cells`, "no curves"]
+        : iconType === "normal"
+          ? [`${view.anchors.length} anchors`, `${strokeWidth ?? 2}px stroke`]
+          : iconType === "duotone"
+            ? [`${view.paths.length} paths`, "2 layers"]
+            : [`${view.paths.length} paths`, "solid"];
+  const cycling = !paused && !shouldReduceMotion && inView;
 
   const strokePaths = view.kind === "vector" ? view.paths.filter((p) => p.stroke) : [];
   const isDetailStroke = (s: string | null) => s === "#DDDDDD" || s === "#F3F3F3";
@@ -277,333 +249,260 @@ const SpecimenPlate = ({ iconType, onChange, paused, icon }: SpecimenPlateProps)
       ref={rootRef}
       className="relative flex h-full min-h-[400px] w-full flex-col overflow-hidden rounded-2xl border border-border bg-background"
     >
-      <svg
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full text-brand"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <pattern id="spec-grid" width="24" height="24" patternUnits="userSpaceOnUse">
-            <path
-              d="M 24 0 L 0 0 0 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="0.5"
-              opacity="0.06"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#spec-grid)" />
-      </svg>
-
-      <div className="pointer-events-none absolute inset-3 text-brand/40">
-        <span className="absolute top-0 left-0 h-3 w-3 border-t border-l border-current" />
-        <span className="absolute top-0 right-0 h-3 w-3 border-t border-r border-current" />
-        <span className="absolute bottom-0 left-0 h-3 w-3 border-b border-l border-current" />
-        <span className="absolute right-0 bottom-0 h-3 w-3 border-r border-b border-current" />
-      </div>
-
-      <div className="relative z-10 flex items-start justify-between px-6 pt-5">
-        <div style={HAND} className="-rotate-1">
-          <p className="text-xl leading-none text-foreground/85">
-            <AnimatePresence mode="wait" initial={false}>
-              <m.span
-                key={activeName}
-                className="inline-block"
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={shouldReduceMotion ? undefined : { opacity: 0, y: -5 }}
-                transition={{ duration: 0.18, ease: EASE_OUT_QUART }}
-              >
-                {activeName}
-              </m.span>
-            </AnimatePresence>{" "}
-            <span className="text-muted-foreground">, same glyph, five moods</span>
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground/80">
-            {isDefault
-              ? "flips on its own every 4s (or search something →)"
-              : "that's your search, dissected"}
-          </p>
+      <div className="relative z-10 flex items-center justify-between gap-4 px-5 pt-5">
+        <div className="flex min-w-0 items-center gap-2 text-body-sm">
+          <AnimatePresence mode="wait" initial={false}>
+            <m.span
+              key={activeName}
+              className="truncate font-medium text-foreground"
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, y: -4 }}
+              transition={{ duration: 0.18, ease: EASE_OUT_QUART }}
+            >
+              {activeName}
+            </m.span>
+          </AnimatePresence>
+          <span className="rounded-md bg-brand/10 px-1.5 py-0.5 text-label font-medium text-brand">
+            {STYLE_LABELS[iconType]}
+          </span>
         </div>
-        <div style={HAND} className="rotate-2 text-right">
-          <p className="text-base leading-none text-brand/80">24 × 24 px</p>
-          <svg viewBox="0 0 26 26" className="mt-1 ml-auto h-5 w-5 text-brand/50" fill="none">
-            <path
-              d="M4 5 Q13 3 22 4.5 Q23.5 13 22.5 21.5 Q13 23.5 4.5 22 Q3 13 4 5Z"
-              stroke="currentColor"
-              strokeWidth="1.4"
-            />
-          </svg>
-        </div>
+        <span className="shrink-0 font-mono text-label text-muted-foreground tabular-nums">
+          24 × 24
+        </span>
       </div>
 
       <div className="relative z-10 flex flex-1 items-center justify-center py-2">
         <svg
-          viewBox="-5 -5 34 34"
+          viewBox="-3 -3 30 30"
           className="h-auto w-[58%] max-w-[320px] min-w-[200px] text-foreground"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {view.kind === "glass" ? (
-              <m.g
-                key={view.key}
-                initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 1.06 }}
-                transition={{ duration: 0.3, ease: EASE_OUT_QUART }}
-              >
-                <rect
-                  x="-4"
-                  y="-4"
-                  width="32"
-                  height="32"
-                  rx="7"
-                  className="fill-black/[0.05] stroke-current stroke-opacity-10 stroke-[0.5] dark:fill-white/[0.06]"
-                />
-                <image href={view.url} x="0" y="0" width="24" height="24" />
-              </m.g>
-            ) : iconType === "pixelated" ? (
-              <m.g
-                key={view.key}
-                exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <svg x="-1" y="-1" width="26" height="26" viewBox={view.vb} overflow="visible">
-                  {view.paths.map((cell, i) => (
-                    <m.path
-                      key={`${view.key}-${i}`}
-                      d={cell.d}
-                      fill="currentColor"
-                      initial={shouldReduceMotion ? false : { opacity: 0, y: -7 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.32,
-                        delay: shouldReduceMotion ? 0 : Math.min(i * 0.018, 1.1),
-                        ease: EASE_OUT_QUART,
-                      }}
-                    />
-                  ))}
-                </svg>
-              </m.g>
-            ) : iconType === "duotone" ? (
-              <m.g
-                key={view.key}
-                initial={shouldReduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <svg x="0" y="0" width="24" height="24" viewBox={view.vb} overflow="visible">
-                  <g>
-                    {duoBase.map((p, i) => (
-                      <path
-                        key={`b-${i}`}
-                        d={p.d}
-                        stroke={
-                          p.stroke === "white" || p.stroke === "#A4A5A6"
-                            ? undefined
-                            : (p.stroke ?? undefined)
-                        }
-                        className={
-                          p.stroke === "white"
-                            ? "stroke-background"
-                            : p.stroke === "#A4A5A6"
-                              ? "stroke-foreground"
-                              : undefined
-                        }
-                        strokeWidth={p.strokeWidth ?? undefined}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill={p.fill && p.fill !== "none" ? p.fill : "none"}
-                      />
-                    ))}
+          <defs>
+            {/* The grid dissolves toward the edges instead of ending in a hard box. */}
+            <radialGradient id={gridFadeId} cx="12" cy="12" r="15" gradientUnits="userSpaceOnUse">
+              <stop offset="0.55" stopColor="white" />
+              <stop offset="1" stopColor="white" stopOpacity="0" />
+            </radialGradient>
+            <mask id={gridMaskId} maskUnits="userSpaceOnUse" x="-3" y="-3" width="30" height="30">
+              <rect x="-3" y="-3" width="30" height="30" fill={`url(#${gridFadeId})`} />
+            </mask>
+          </defs>
+          <g aria-hidden="true" className="text-muted-foreground" mask={`url(#${gridMaskId})`}>
+            {/* Live area: the 20×20 zone icons are drawn inside. */}
+            <rect x="2" y="2" width="20" height="20" rx="1" fill="currentColor" opacity="0.05" />
+            {/* 1px device-pixel lines: fractional user-unit strokes blur when the
+                24-unit grid is scaled up, so strokes don't scale and snap to pixels. */}
+            <g stroke="currentColor" shapeRendering="crispEdges">
+              {Array.from({ length: 29 }, (_, n) => {
+                const i = n - 2;
+                const major = i % 4 === 0;
+                return (
+                  <g key={i} opacity={major ? 0.28 : 0.12}>
+                    <line x1={i} y1="-3" x2={i} y2="27" vectorEffect="non-scaling-stroke" />
+                    <line x1="-3" y1={i} x2="27" y2={i} vectorEffect="non-scaling-stroke" />
                   </g>
-                  <g>
-                    {duoDetail.map((p, i) => {
-                      const sp = strokeProps(p);
-                      return (
+                );
+              })}
+            </g>
+            {/* Centre axes and keylines, hairline and quiet so the glyph leads. */}
+            <g stroke="var(--brand)" strokeWidth="1" opacity="0.5" fill="none">
+              <g shapeRendering="crispEdges">
+                <line x1="12" y1="-3" x2="12" y2="27" vectorEffect="non-scaling-stroke" />
+                <line x1="-3" y1="12" x2="27" y2="12" vectorEffect="non-scaling-stroke" />
+              </g>
+              <rect x="2" y="2" width="20" height="20" rx="2" vectorEffect="non-scaling-stroke" />
+              <circle cx="12" cy="12" r="10" vectorEffect="non-scaling-stroke" />
+            </g>
+          </g>
+          {/* Canvas corner marks at 0 and 24. */}
+          <g
+            aria-hidden="true"
+            className="text-muted-foreground"
+            stroke="currentColor"
+            strokeWidth="1.25"
+            strokeLinecap="round"
+            opacity="0.7"
+            fill="none"
+          >
+            <path
+              d="M0 -1.2V0H-1.2M24 -1.2V0H25.2M0 25.2V24H-1.2M24 25.2V24H25.2"
+              vectorEffect="non-scaling-stroke"
+            />
+          </g>
+          <AnimatePresence mode="wait" initial={false}>
+            {/* One entrance for every style: the glyph fades up while settling
+                from slightly smaller, and leaves the same way. */}
+            <m.g
+              key={view.key}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.94 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: EASE_OUT_QUART }}
+            >
+              {view.kind === "glass" ? (
+                <image href={view.url} x="0" y="0" width="24" height="24" />
+              ) : (
+                <svg x="0" y="0" width="24" height="24" viewBox={view.vb} overflow="visible">
+                  {iconType === "pixelated" ? (
+                    view.paths.map((cell, i) => <path key={i} d={cell.d} fill="currentColor" />)
+                  ) : iconType === "duotone" ? (
+                    <>
+                      {duoBase.map((p, i) => (
                         <path
-                          key={`d-${i}`}
+                          key={`b-${i}`}
                           d={p.d}
-                          stroke={sp.stroke}
-                          className={sp.className}
+                          stroke={
+                            p.stroke === "white" || p.stroke === "#A4A5A6"
+                              ? undefined
+                              : (p.stroke ?? undefined)
+                          }
+                          className={
+                            p.stroke === "white"
+                              ? "stroke-background"
+                              : p.stroke === "#A4A5A6"
+                                ? "stroke-foreground"
+                                : undefined
+                          }
                           strokeWidth={p.strokeWidth ?? undefined}
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           fill={p.fill && p.fill !== "none" ? p.fill : "none"}
                         />
-                      );
-                    })}
-                  </g>
-                </svg>
-              </m.g>
-            ) : iconType === "fill" ? (
-              <m.g
-                key={view.key}
-                initial={shouldReduceMotion ? false : { opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.2 }}
-              >
-                <svg x="0" y="0" width="24" height="24" viewBox={view.vb} overflow="visible">
-                  {view.paths.map((p, i) => {
-                    const sp = strokeProps(p);
-                    return (
-                      <m.path
-                        key={`f-${i}`}
-                        d={p.d}
-                        stroke={sp.stroke}
-                        className={`${sp.className} ${fillClass(p.fill)}`}
-                        strokeWidth={p.strokeWidth ?? undefined}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill={
-                          p.fill && p.fill !== "#DDDDDD" && p.fill !== "none"
-                            ? p.fill
-                            : p.fill === "#DDDDDD"
-                              ? undefined
-                              : "none"
-                        }
-                        initial={shouldReduceMotion || !p.fill ? false : { opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.45, delay: p.fill ? 0.2 : 0 }}
-                      />
-                    );
-                  })}
-                </svg>
-              </m.g>
-            ) : (
-              <m.g
-                key={view.key}
-                exit={shouldReduceMotion ? undefined : { opacity: 0 }}
-                transition={{ duration: 0.15 }}
-              >
-                <svg x="0" y="0" width="24" height="24" viewBox={view.vb} overflow="visible">
-                  {strokePaths.map((p, i) => (
-                    <m.path
-                      key={`o-${i}`}
-                      d={p.d}
-                      stroke="currentColor"
-                      strokeWidth={p.strokeWidth ?? "2"}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      fill="none"
-                      initial={shouldReduceMotion ? false : { pathLength: 0 }}
-                      animate={{ pathLength: 1 }}
-                      transition={{
-                        duration: 0.75,
-                        delay: shouldReduceMotion ? 0 : i * 0.28,
-                        ease: EASE_OUT_QUART,
-                      }}
-                    />
-                  ))}
-                  <m.g
-                    initial={shouldReduceMotion ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{
-                      duration: 0.35,
-                      delay: shouldReduceMotion ? 0 : 0.8,
-                    }}
-                    className="text-brand"
-                  >
-                    {isDefault &&
-                      FILE_TEXT_HANDLES.map(([ax, ay, hx, hy]) => (
-                        <g key={`h-${ax}-${ay}`}>
-                          <line
-                            x1={ax}
-                            y1={ay}
-                            x2={hx}
-                            y2={hy}
-                            stroke="currentColor"
-                            strokeWidth="0.25"
-                            opacity="0.8"
-                          />
-                          <circle cx={hx} cy={hy} r="0.45" fill="currentColor" opacity="0.8" />
-                        </g>
                       ))}
-                    {view.anchors.map(([x, y]) => (
-                      <rect
-                        key={`a-${x}-${y}`}
-                        x={x - 0.55}
-                        y={y - 0.55}
-                        width="1.1"
-                        height="1.1"
-                        className="fill-background"
-                        stroke="currentColor"
-                        strokeWidth="0.3"
-                      />
-                    ))}
-                  </m.g>
+                      {duoDetail.map((p, i) => {
+                        const sp = strokeProps(p);
+                        return (
+                          <path
+                            key={`d-${i}`}
+                            d={p.d}
+                            stroke={sp.stroke}
+                            className={sp.className}
+                            strokeWidth={p.strokeWidth ?? undefined}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            fill={p.fill && p.fill !== "none" ? p.fill : "none"}
+                          />
+                        );
+                      })}
+                    </>
+                  ) : iconType === "fill" ? (
+                    view.paths.map((p, i) => {
+                      const sp = strokeProps(p);
+                      return (
+                        <path
+                          key={`f-${i}`}
+                          d={p.d}
+                          stroke={sp.stroke}
+                          className={`${sp.className} ${fillClass(p.fill)}`}
+                          strokeWidth={p.strokeWidth ?? undefined}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          fill={
+                            p.fill && p.fill !== "#DDDDDD" && p.fill !== "none"
+                              ? p.fill
+                              : p.fill === "#DDDDDD"
+                                ? undefined
+                                : "none"
+                          }
+                        />
+                      );
+                    })
+                  ) : (
+                    <>
+                      {strokePaths.map((p, i) => (
+                        <path
+                          key={`o-${i}`}
+                          d={p.d}
+                          stroke="currentColor"
+                          strokeWidth={p.strokeWidth ?? "2"}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          fill="none"
+                        />
+                      ))}
+                      <g className="text-brand">
+                        {view.anchors.map(([x, y]) => (
+                          <rect
+                            key={`a-${x}-${y}`}
+                            x={x - 0.4}
+                            y={y - 0.4}
+                            width="0.8"
+                            height="0.8"
+                            rx="0.1"
+                            className="fill-background"
+                            stroke="currentColor"
+                            strokeWidth="0.18"
+                          />
+                        ))}
+                      </g>
+                    </>
+                  )}
                 </svg>
-              </m.g>
-            )}
+              )}
+            </m.g>
           </AnimatePresence>
         </svg>
-
-        <AnimatePresence mode="wait" initial={false}>
-          <m.div
-            key={iconType}
-            style={{ ...HAND, rotate: `${notePos.rotate}deg` }}
-            className={`absolute flex flex-col ${notePos.pos}`}
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={shouldReduceMotion ? undefined : { opacity: 0, y: -4 }}
-            transition={{ duration: 0.25, ease: EASE_OUT_QUART }}
-          >
-            <p className="text-base leading-snug text-foreground/75">{noteText}</p>
-            <HandArrow flip={notePos.arrow === "right"} reduced={!!shouldReduceMotion} />
-          </m.div>
-        </AnimatePresence>
       </div>
 
-      <div className="relative z-10 flex items-end justify-center gap-1 px-4 pb-4 sm:gap-2">
-        {STYLE_ORDER.map((style, i) => {
-          const isActive = style === iconType;
-          return (
-            <button
-              key={style}
-              type="button"
-              onClick={() => onChange(style)}
-              style={{
-                ...HAND,
-                rotate: `${(i % 2 === 0 ? -1 : 1) * (1 + (i % 3) * 0.5)}deg`,
-              }}
-              className={`relative cursor-pointer px-2.5 py-1 text-lg leading-none transition-colors duration-150 ${
-                isActive
-                  ? "text-foreground"
-                  : "text-muted-foreground/60 hover:text-muted-foreground"
-              }`}
-            >
-              {isActive && (
-                <m.span
-                  layoutId="specimen-ticker"
-                  className="absolute inset-0 text-brand/70"
-                  transition={
-                    shouldReduceMotion
-                      ? { duration: 0 }
-                      : { type: "spring", stiffness: 500, damping: 40 }
-                  }
-                >
-                  <svg
-                    viewBox="0 0 100 34"
-                    className="h-full w-full"
-                    preserveAspectRatio="none"
-                    fill="none"
+      <div className="relative z-10 flex flex-col items-center gap-3 px-4 pb-5">
+        <p className="font-mono text-label text-muted-foreground tabular-nums">
+          {stats.join("  ·  ")}
+        </p>
+        <div
+          role="tablist"
+          aria-label="Icon style"
+          className="flex max-w-full gap-0.5 overflow-x-auto rounded-xl border border-border bg-muted/60 p-1"
+        >
+          {STYLE_ORDER.map((style) => {
+            const isActive = style === iconType;
+            return (
+              <button
+                key={style}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => onChange(style)}
+                className={`relative cursor-pointer rounded-lg px-3 py-1.5 text-body-sm transition-colors duration-150 ${
+                  isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {isActive && (
+                  // The pill slides between tabs; buttons must not clip it mid-flight.
+                  <m.span
+                    layoutId={`${uid}-tab`}
+                    className="absolute inset-0 rounded-lg bg-background ring-1 ring-border"
+                    transition={
+                      shouldReduceMotion
+                        ? { duration: 0 }
+                        : { type: "spring", duration: 0.4, bounce: 0.12 }
+                    }
+                  />
+                )}
+                {isActive && cycling && (
+                  // Autoplay progress lives outside the pill so the layout
+                  // animation doesn't stretch it; it fades in once the pill lands.
+                  <m.span
+                    aria-hidden="true"
+                    className="absolute inset-x-3 bottom-1 z-10 h-0.5 overflow-hidden rounded-full bg-foreground/10"
+                    initial={shouldReduceMotion ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2, delay: 0.15 }}
                   >
-                    <path
-                      d="M8 17 C6 7 30 3 52 4 C78 5 95 9 94 17 C93 27 68 31 46 30 C22 29 9 26 8 17Z"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      vectorEffect="non-scaling-stroke"
+                    <m.span
+                      key={iconType}
+                      className="absolute inset-0 origin-left rounded-full bg-brand"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: CYCLE_MS / 1000, ease: "linear" }}
                     />
-                  </svg>
-                </m.span>
-              )}
-              <span className="relative z-10">{STYLE_LABELS[style]}</span>
-            </button>
-          );
-        })}
+                  </m.span>
+                )}
+                <span className="relative z-10">{STYLE_LABELS[style]}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

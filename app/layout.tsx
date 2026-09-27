@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Caveat, Geist, Geist_Mono, Gemunu_Libre, Inter, Inter_Tight } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
 import { Analytics } from "@vercel/analytics/next";
 
+import { DevToolbar } from "@/components/dev-toolbar";
 import { Toaster } from "@/components/ui/sonner";
 import { ShapeProvider } from "@/lib/shape-context";
 import { GITHUB_REPO, SITE_URL, X_URL } from "@/lib/site";
@@ -11,34 +13,19 @@ import { ThemeProvider } from "@/provider/theme-provider";
 
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// Satoshi (Indian Type Foundry, ITF Free Font License, via fontshare.com) for
+// UI, body and display; Geist Mono for ids, sizes and code. Both are variable
+// fonts, so every weight comes from one file.
+const satoshi = localFont({
+  src: "./fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  weight: "300 900",
+  style: "normal",
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const gemunuLibre = Gemunu_Libre({
-  variable: "--font-gemunu-libre",
-  subsets: ["latin"],
-  weight: ["700"],
-});
-
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
-  subsets: ["latin"],
-});
-
-const caveat = Caveat({
-  variable: "--font-caveat",
   subsets: ["latin"],
 });
 
@@ -143,7 +130,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} ${gemunuLibre.variable} ${interTight.variable} ${caveat.variable} antialiased`}
+        className={`${satoshi.variable} ${geistMono.variable} antialiased`}
       >
         <MotionProvider>
           <ShapeProvider>
@@ -156,6 +143,7 @@ export default function RootLayout({
               {children}
               <Toaster position="top-center" />
               <Analytics />
+              <DevToolbar />
             </ThemeProvider>
           </ShapeProvider>
         </MotionProvider>

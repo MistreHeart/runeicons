@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const NotFoundPage = () => (
-  <div className="relative grid min-h-dvh w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1fr] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
+  <div className="relative grid min-h-dvh w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1fr] overflow-hidden bg-[#F5F5F5] dark:bg-background">
     <div
       className={cn(FRAME_WIDTH, "relative col-start-2 row-start-1 flex flex-col overflow-hidden")}
     >

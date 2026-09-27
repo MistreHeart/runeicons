@@ -20,7 +20,7 @@ const AudioControl = ({ isMuted, onToggle }: AudioControlProps) => {
       transition={{ duration: 0.15 }}
     >
       {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-      <span className="text-sm font-medium">M</span>
+      <span className="text-body-sm font-medium">M</span>
     </m.button>
   );
 };

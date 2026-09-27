@@ -132,7 +132,7 @@ const Search = () => {
                               </m.svg>
                             )}
                           </button>
-                          <span className="w-full truncate text-center text-[10px] text-white/85">
+                          <span className="w-full truncate text-center text-micro text-white/85">
                             {icon.name}
                           </span>
                         </m.div>
@@ -140,7 +140,7 @@ const Search = () => {
                     </AnimatePresence>
                   </div>
                 ) : (
-                  <div className="flex flex-1 items-center justify-center text-center text-[12px] text-white/80">
+                  <div className="flex flex-1 items-center justify-center text-center text-caption text-white/80">
                     No icons match &ldquo;{query}&rdquo;.
                   </div>
                 )}

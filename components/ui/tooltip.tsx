@@ -47,7 +47,7 @@ function TooltipContent({
           "data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
           "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-          "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs",
+          "inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-label",
           "has-data-[slot=kbd]:pr-1.5 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate",
           "**:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm",
           "z-[110] w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) bg-foreground text-background",

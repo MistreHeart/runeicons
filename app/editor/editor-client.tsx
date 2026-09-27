@@ -46,11 +46,11 @@ export function EditorClient({ assetsUrl }: { assetsUrl: string }) {
 
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-2 bg-background px-8 text-center">
-      <p className="text-lg font-medium text-foreground lg:hidden">Please switch to a laptop</p>
-      <p className="max-w-xs text-sm text-muted-foreground lg:hidden">
+      <p className="text-h3 text-foreground lg:hidden">Please switch to a laptop</p>
+      <p className="max-w-xs text-body-sm text-muted-foreground lg:hidden">
         This needs a bigger screen to work properly.
       </p>
-      <p className="hidden text-sm text-muted-foreground lg:block">
+      <p className="hidden text-body-sm text-muted-foreground lg:block">
         {failed ? "Couldn't load the icon set. Refresh to try again." : "Loading editor…"}
       </p>
     </div>

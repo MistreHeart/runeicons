@@ -129,16 +129,11 @@ const CTA = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10% 0px" }}
           transition={{ duration: ENTRANCE_DURATION, ease: EASE_OUT_QUART, delay: 0.08 }}
-          className="mb-8 text-3xl leading-[1.1] font-medium tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
+          className="mb-8 text-h2 text-white"
         >
           <TextHighlightWave
             as="span"
-            text={[
-              {
-                text: "900+ icons. Five styles. Free forever.",
-                className: "bg-linear-to-b from-white to-white/70 bg-clip-text text-transparent",
-              },
-            ]}
+            text={"900+ icons. Five styles.\nFree forever."}
           />
         </m.h2>
 
@@ -176,17 +171,6 @@ const CTA = () => {
             </Link>
           </m.div>
         </m.div>
-
-        <m.p
-          initial={shouldReduceMotion ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-10% 0px" }}
-          transition={{ duration: ENTRANCE_DURATION, ease: EASE_OUT_QUART, delay: 0.3 }}
-          className="mt-8 max-w-md text-sm text-white/70"
-        >
-          Every set I liked had one style. Mine has five, all editable.
-          <span className="mt-2 block font-medium text-white/85">Nexvyn</span>
-        </m.p>
       </div>
     </section>
   );

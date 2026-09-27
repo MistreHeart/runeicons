@@ -65,7 +65,7 @@ const IconCarousel = () => {
       <div className="no-scrollbar flex h-12 items-center gap-2 overflow-x-auto mask-r-from-90% mask-l-from-90% px-4">
         <div className="flex h-8 shrink-0 items-center overflow-hidden rounded-md border">
           <Select value={animation} onValueChange={setAnimation}>
-            <SelectTrigger className="h-full w-24 shrink-0 justify-between gap-1 rounded-none border-none px-3 text-[10px] transition-colors hover:bg-accent focus:ring-0 sm:text-xs">
+            <SelectTrigger className="h-full w-24 shrink-0 justify-between gap-1 rounded-none border-none px-3 text-micro transition-colors hover:bg-accent focus:ring-0">
               <SelectValue placeholder="Anim" />
             </SelectTrigger>
             <SelectContent>
@@ -87,7 +87,7 @@ const IconCarousel = () => {
             <Minus className="h-3 w-3" />
           </Button>
           <div className="flex h-full w-8 items-center justify-center border-x bg-muted/10">
-            <span className="font-mono text-[10px] font-medium text-muted-foreground">
+            <span className="font-mono text-micro font-medium text-muted-foreground tabular-nums">
               {strokeWidth}
             </span>
           </div>
@@ -117,7 +117,7 @@ const IconCarousel = () => {
         </div>
 
         <div className="ml-auto flex h-8 min-w-[110px] shrink-0 items-center gap-3 rounded-md border bg-background px-3">
-          <span className="text-[10px] font-semibold tracking-tight whitespace-nowrap text-muted-foreground uppercase">
+          <span className="text-micro font-medium whitespace-nowrap text-muted-foreground uppercase">
             Size
           </span>
           <SliderPrimitive.Root
@@ -133,7 +133,7 @@ const IconCarousel = () => {
             </SliderPrimitive.Track>
             <SliderPrimitive.Thumb className="block h-3 w-3 rounded-full border border-border bg-background transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none" />
           </SliderPrimitive.Root>
-          <span className="w-4 text-right font-mono text-[10px] font-medium text-muted-foreground">
+          <span className="w-4 text-right font-mono text-micro font-medium text-muted-foreground tabular-nums">
             {iconSize}
           </span>
         </div>

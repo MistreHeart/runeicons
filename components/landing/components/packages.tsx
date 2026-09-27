@@ -20,10 +20,10 @@ const Packages = () => (
     <div className="flex flex-col gap-2">
       <TextHighlightWave
         as="h2"
-        className="text-3xl font-medium sm:text-4xl"
-        text={["One set, ", { text: "every platform", className: "text-blue-700" }]}
+        className="text-h2"
+        text={["One set, every platform"]}
       />
-      <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+      <p className="max-w-2xl text-lead text-muted-foreground">
         The same 900+ icons in all five styles, packaged for the tools you already use. Nothing is
         fetched at runtime.
       </p>
@@ -48,8 +48,8 @@ const Packages = () => (
               loading="lazy"
             />
           </span>
-          <span className="mt-3 text-sm font-semibold">{platform.name}</span>
-          <span className="mt-1 truncate font-mono text-[11px] text-muted-foreground">
+          <h3 className="mt-3 text-h3">{platform.name}</h3>
+          <span className="mt-1 truncate font-mono text-label text-muted-foreground">
             {platform.install}
           </span>
         </Link>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const TermsPage = () => (
   <DocsShell title="Terms of Use" lead="Last updated: July 29, 2026">
-    <div className="flex flex-col gap-6 text-sm leading-relaxed text-muted-foreground">
+    <div className="flex max-w-[65ch] flex-col gap-8 text-body text-muted-foreground">
       <p>
         By accessing or using RuneIcons, you{" "}
         <strong className="font-medium text-foreground">
@@ -23,7 +23,7 @@ const TermsPage = () => (
       </p>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">1. Use of Icons</h2>
+        <h2 className="text-h3 text-foreground">1. Use of Icons</h2>
         <p>
           RuneIcons are <strong className="font-medium text-foreground">open-source</strong> and the
           icons are distributed under the{" "}
@@ -56,7 +56,7 @@ const TermsPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">2. Acceptable Use</h2>
+        <h2 className="text-h3 text-foreground">2. Acceptable Use</h2>
         <p>
           You agree <strong className="font-medium text-foreground">not to misuse the site</strong>,
           attempt to disrupt its operation, or use it in any way that violates applicable laws or
@@ -65,7 +65,7 @@ const TermsPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">3. No Warranty</h2>
+        <h2 className="text-h3 text-foreground">3. No Warranty</h2>
         <p>
           RuneIcons is provided{" "}
           <strong className="font-medium text-foreground">
@@ -77,7 +77,7 @@ const TermsPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">4. Changes to These Terms</h2>
+        <h2 className="text-h3 text-foreground">4. Changes to These Terms</h2>
         <p>
           We may update these Terms of Use from time to time. Continued use of the site after
           changes are posted{" "}
@@ -89,7 +89,7 @@ const TermsPage = () => (
       </div>
 
       <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold text-foreground">5. Contact</h2>
+        <h2 className="text-h3 text-foreground">5. Contact</h2>
         <p>
           Questions about these terms can be raised via our{" "}
           <a

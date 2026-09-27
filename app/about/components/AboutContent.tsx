@@ -242,7 +242,7 @@ export default function AboutContent() {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-background text-foreground font-(family-name:--font-inter-tight)">
+    <section className="relative h-screen w-full overflow-hidden bg-background text-foreground">
       <BackButton />
       <AudioControl isMuted={isMuted} onToggle={() => setIsMuted(!isMuted)} />
       <LightDarkMode className="fixed top-6 right-6 z-50 border border-border bg-background/80 backdrop-blur-sm" />
@@ -299,14 +299,14 @@ export default function AboutContent() {
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <h1 className="text-center font-sans text-xl font-bold tracking-wider text-foreground sm:text-2xl md:text-4xl">
+        <h1 className="text-center text-h1 text-foreground">
           RUNE ICON
         </h1>
         <div className="flex items-center justify-center gap-2 md:gap-4">
           <a
             href="https://x.com/RuneIcon"
             target="_blank"
-            className="text-sm font-semibold text-muted-foreground"
+            className="text-body-sm font-medium text-muted-foreground"
           >
             X
           </a>

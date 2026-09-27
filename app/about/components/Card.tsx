@@ -149,7 +149,7 @@ const Card = ({
         {showTooltip && (
           <m.span
             key="tip"
-            className="pointer-events-none absolute left-1/2 z-10 rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium whitespace-nowrap text-foreground"
+            className="pointer-events-none absolute left-1/2 z-10 rounded-full border border-border bg-background px-3 py-1.5 text-body-sm font-medium whitespace-nowrap text-foreground"
             style={{
               bottom: "calc(100% + 8px)",
               translateX: "-50%",

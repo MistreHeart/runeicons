@@ -58,20 +58,23 @@ export default function Faq() {
       <div className="relative w-full overflow-hidden px-4 py-6 sm:px-10 sm:py-8 lg:px-16 lg:py-10">
         <div className="relative z-10 flex flex-col gap-10 lg:flex-row lg:gap-20">
           <div className="flex shrink-0 flex-col gap-8 lg:w-[440px]">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
+              <span className="text-label font-medium tracking-[0.08em] text-muted-foreground uppercase">
+                FAQ
+              </span>
               <TextHighlightWave
                 as="h2"
-                className="text-4xl font-medium"
-                text={["Frequently asked\n", { text: "questions", className: "text-blue-700" }]}
+                className="mt-3 text-h2"
+                text={["Frequently asked\nquestions"]}
               />
-              <p className="text-sm text-muted-foreground">
-                Can’t find the answer you’re looking for? <br /> I’m here to help.
+              <p className="mt-4 max-w-sm text-body text-muted-foreground">
+                Can’t find what you’re looking for? Ask us on X and we’ll get back to you.
               </p>
-              <Link href={X_URL} target="_blank" rel="noopener noreferrer">
-                <Button className="mt-6 w-fit">
+              <Button asChild variant="outline" className="mt-8 w-fit">
+                <Link href={X_URL} target="_blank" rel="noopener noreferrer">
                   Contact us <MessageCircle />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
 
@@ -85,18 +88,23 @@ export default function Faq() {
                 >
                   <AccordionTrigger className="cursor-pointer items-center py-5 hover:no-underline">
                     <div className="flex items-center gap-4">
-                      <span className="text-sm font-semibold text-blue-700 tabular-nums">
+                      <span className="text-body-sm font-medium text-muted-foreground tabular-nums">
                         {item.number}
                       </span>
-                      <span className="text-[15px] font-medium text-foreground">
+                      <span className="text-body font-medium text-foreground">
                         {item.question}
                       </span>
                     </div>
                   </AccordionTrigger>
                   <AccordionContent className="pb-5">
-                    <p className="pl-10 text-sm leading-relaxed text-muted-foreground">
-                      {item.answer}
-                    </p>
+                    <TextHighlightWave
+                      as="p"
+                      className="pl-10 text-body text-muted-foreground"
+                      text={item.answer}
+                      charStagger={0.008}
+                      lineStagger={0.06}
+                      restOpacity={0.25}
+                    />
                   </AccordionContent>
                 </AccordionItem>
               ))}

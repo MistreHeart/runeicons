@@ -17,6 +17,9 @@ const Toaster = ({ ...props }: ToasterProps) => {
           '--normal-border': 'var(--border)',
         } as React.CSSProperties
       }
+      toastOptions={{
+        classNames: { title: 'text-body-sm font-medium', description: 'text-caption' },
+      }}
       {...props}
     />
   )

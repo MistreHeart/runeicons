@@ -73,7 +73,7 @@ export function AmountSelector({
                 key={amount}
                 type="button"
                 onClick={() => handlePreset(amount)}
-                className="relative flex flex-1 cursor-pointer items-center justify-center py-3 text-[13px] font-medium"
+                className="relative flex flex-1 cursor-pointer items-center justify-center py-3 text-body-sm font-medium tabular-nums"
               >
                 {isActive && (
                   <m.div
@@ -95,7 +95,7 @@ export function AmountSelector({
           <button
             type="button"
             onClick={handleCustom}
-            className="relative flex flex-1 cursor-pointer items-center justify-center py-3 text-[13px] font-medium"
+            className="relative flex flex-1 cursor-pointer items-center justify-center py-3 text-body-sm font-medium tabular-nums"
           >
             {customMode && (
               <m.div
@@ -126,7 +126,7 @@ export function AmountSelector({
           >
             <div className="pt-3">
               <div className="flex items-center rounded-xl border border-border bg-white transition-shadow focus-within:ring-2 focus-within:ring-blue-700/30 dark:bg-zinc-900">
-                <span className="pl-4 text-lg font-medium text-muted-foreground">$</span>
+                <span className="pl-4 text-h3 text-muted-foreground">$</span>
                 <input
                   type="text"
                   inputMode="numeric"
@@ -135,7 +135,7 @@ export function AmountSelector({
                   onChange={handleCustomInput}
                   onBlur={handleCustomBlur}
                   autoFocus
-                  className="flex-1 bg-transparent px-2 py-3 text-lg font-medium text-foreground outline-none placeholder:text-muted-foreground/60"
+                  className="flex-1 bg-transparent px-2 py-3 text-h3 text-foreground tabular-nums outline-none placeholder:text-muted-foreground/60"
                   aria-label="Custom contribution amount"
                   aria-valuemin={MIN_AMOUNT}
                   aria-valuemax={MAX_AMOUNT}

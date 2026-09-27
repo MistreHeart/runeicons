@@ -47,14 +47,14 @@ const Logo = ({ row }: { row: PackageRow }) => (
 );
 
 const Badge = ({ label, value }: { label: string; value: string }) => (
-  <span className="inline-flex overflow-hidden rounded font-mono text-[11px] leading-none">
+  <span className="inline-flex overflow-hidden rounded font-mono text-micro leading-none tabular-nums">
     <span className="bg-foreground/10 px-1.5 py-1 text-foreground/80">{label}</span>
     <span className="bg-[#1346E7] px-1.5 py-1 text-white">{value}</span>
   </span>
 );
 
 const ghostButton =
-  "inline-flex h-9 items-center rounded-lg bg-foreground/[0.06] px-4 text-sm text-foreground/80 transition-[background-color,color,scale] duration-150 ease-out hover:bg-foreground/10 hover:text-foreground active:scale-[0.97]";
+  "inline-flex h-9 items-center rounded-lg bg-foreground/[0.06] px-4 text-body-sm font-medium text-foreground/80 transition-[background-color,color,scale] duration-150 ease-out hover:bg-foreground/10 hover:text-foreground active:scale-[0.97]";
 
 const PackageCard = ({
   row,
@@ -69,13 +69,13 @@ const PackageCard = ({
     className={`flex flex-col rounded-2xl bg-white p-6 transition-shadow duration-200 ease-out dark:bg-[#141414] ${open ? "ring-1 ring-[#1346E7]" : ""}`}
   >
     <Logo row={row} />
-    <h2 className="mt-5 text-lg font-semibold text-foreground">{row.name}</h2>
+    <h2 className="mt-5 text-h3 text-foreground">{row.name}</h2>
     <div className="mt-2 flex flex-wrap gap-1.5">
       <Badge label="status" value="live soon" />
       <Badge label="platform" value={row.platform} />
       {/* <Badge label="downloads" value="coming soon" /> */}
     </div>
-    <p className="mt-4 mb-6 text-sm leading-relaxed text-muted-foreground">{row.description}</p>
+    <p className="mt-4 mb-6 text-body-sm text-muted-foreground">{row.description}</p>
 
     <div className="mt-auto flex flex-wrap gap-2">
       <button
@@ -83,7 +83,7 @@ const PackageCard = ({
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`guide-${row.dir}`}
-        className="inline-flex h-9 items-center rounded-lg bg-[#1346E7] px-4 text-sm text-white transition-[background-color,scale] duration-150 ease-out hover:bg-[#1346E7]/90 active:scale-[0.97]"
+        className="inline-flex h-9 items-center rounded-lg bg-[#1346E7] px-4 text-body-sm font-medium text-white transition-[background-color,scale] duration-150 ease-out hover:bg-[#1346E7]/90 active:scale-[0.97]"
       >
         {open ? "Close guide" : "Guide"}
       </button>

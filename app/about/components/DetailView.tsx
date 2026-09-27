@@ -111,20 +111,20 @@ const DetailView = ({ user, isMobile = false, onClose, onNext, onPrev }: DetailV
               }}
               transition={{ duration: TIMING.info, ease: EASE_OUT }}
             >
-              <h2 className="mb-4 font-['Syne'] text-3xl font-bold text-foreground">{user.name}</h2>
-              <p className="mb-6 text-base leading-relaxed text-muted-foreground">
+              <h2 className="mb-4 text-h2 text-foreground">{user.name}</h2>
+              <p className="mb-6 max-w-[65ch] text-body text-muted-foreground">
                 {user.description}
               </p>
 
-              <div className="mb-6 grid grid-cols-2 gap-4 text-sm">
+              <div className="mb-6 grid grid-cols-2 gap-4 text-body-sm">
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs font-medium tracking-wider text-muted-foreground/70 uppercase">
+                  <span className="text-label tracking-[0.08em] text-muted-foreground/70 uppercase">
                     Industry
                   </span>
                   <span className="text-foreground">{user.industry}</span>
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs font-medium tracking-wider text-muted-foreground/70 uppercase">
+                  <span className="text-label tracking-[0.08em] text-muted-foreground/70 uppercase">
                     Status
                   </span>
                   <div className="flex items-center gap-2">
@@ -233,21 +233,21 @@ const DetailView = ({ user, isMobile = false, onClose, onNext, onPrev }: DetailV
             }}
             transition={{ duration: TIMING.info, ease: EASE_OUT }}
           >
-            <h2 className="mb-6 font-['Syne'] text-4xl font-bold text-foreground">{user.name}</h2>
+            <h2 className="mb-6 text-h1 text-foreground">{user.name}</h2>
 
-            <p className="mb-8 text-base leading-relaxed text-muted-foreground">
+            <p className="mb-8 max-w-[65ch] text-body text-muted-foreground">
               {user.description}
             </p>
 
-            <div className="mb-10 grid grid-cols-1 gap-y-6 text-sm">
+            <div className="mb-10 grid grid-cols-1 gap-y-6 text-body-sm">
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-medium tracking-wider text-muted-foreground/70 uppercase">
+                <span className="text-label tracking-[0.08em] text-muted-foreground/70 uppercase">
                   Industry
                 </span>
                 <span className="text-foreground">{user.industry}</span>
               </div>
               <div className="flex flex-col gap-1">
-                <span className="text-xs font-medium tracking-wider text-muted-foreground/70 uppercase">
+                <span className="text-label tracking-[0.08em] text-muted-foreground/70 uppercase">
                   Status
                 </span>
                 <div className="flex items-center gap-2">

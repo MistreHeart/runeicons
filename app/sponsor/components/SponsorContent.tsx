@@ -21,7 +21,7 @@ export default function SponsorContent() {
     selectedAmount >= 100 ? 4 : selectedAmount >= 20 ? 3 : selectedAmount >= 5 ? 2 : 1;
 
   return (
-    <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_1fr] overflow-hidden bg-[#F5F5F5] font-(family-name:--font-inter-tight) dark:bg-background">
+    <div className="relative grid min-h-screen w-full grid-cols-[1fr_auto_1fr] grid-rows-[auto_1px_1fr] overflow-hidden bg-[#F5F5F5] dark:bg-background">
       <div
         className={cn(
           FRAME_WIDTH,
@@ -51,7 +51,7 @@ export default function SponsorContent() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-12 flex w-full max-w-3xl flex-col items-center"
         >
-          <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-[11px] font-medium tracking-wide text-foreground uppercase dark:bg-card">
+          <span className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-border bg-white px-3 py-1 text-label font-medium tracking-[0.08em] text-foreground uppercase dark:bg-card">
             <svg
               className="size-3.5"
               viewBox="0 0 24 24"
@@ -81,11 +81,11 @@ export default function SponsorContent() {
             Open source forever
           </span>
 
-          <h1 className="mb-5 text-center text-[36px] leading-[1.1] font-medium tracking-tight sm:text-[52px]">
+          <h1 className="mb-5 text-center text-h1">
             Support <span className="text-blue-700">RuneIcons</span>
           </h1>
 
-          <p className="max-w-[480px] text-center text-[13px] leading-relaxed text-muted-foreground">
+          <p className="max-w-[56ch] text-center text-lead text-muted-foreground">
             RuneIcons will always be free and open-source. If the library has saved you time, or if
             you just want to see it keep growing, your support helps me design new icons, ship new
             styles, and keep everything sharp.

@@ -5,8 +5,11 @@ const HeroDefs = () => (
     <mask id="pipeRevealMask" maskUnits="userSpaceOnUse">
       <rect className="pipeRevealRect" x="336" y="395" width="0" height="110" fill="white" />
     </mask>
+    {/* Everything above the pad's centre line, plus the pad's top ellipse, so the
+        flame disappears along the pad's curved front edge instead of a flat cut. */}
     <clipPath id="rocketFlameClip" clipPathUnits="userSpaceOnUse">
-      <rect x="-200" y="-1000" width="1164" height="1490" />
+      <rect x="-200" y="-1000" width="1164" height="1466.754" />
+      <ellipse cx="682.39" cy="466.754" rx="57.56" ry="33.23" />
     </clipPath>
     <pattern
       id="hazardStripesPattern"

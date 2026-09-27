@@ -7,10 +7,10 @@ export function useGitHubStars() {
     let controls: ReturnType<typeof animate> | undefined;
     const fetchStars = async () => {
       try {
-        const response = await fetch("https://api.github.com/repos/Nexvyn/runeicons");
+        const response = await fetch("/api/github-stars");
         if (response.ok) {
-          const data = await response.json();
-          const stars = data.stargazers_count;
+          const { stars } = (await response.json()) as { stars: number | null };
+          if (stars == null) return;
           controls = animate(0, stars, {
             duration: 2,
             ease: "easeOut",

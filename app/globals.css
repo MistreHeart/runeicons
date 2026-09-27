@@ -43,10 +43,62 @@
   --color-3: #3366F0;
   --color-4: #5A8AF5;
   --color-5: #82AAFC;
-  --font-weight-normal: "wght" 400;
-  --font-weight-medium: "wght" 450;
-  --font-weight-semibold: "wght" 550;
-  --font-weight-bold: "wght" 700;
+}
+
+/* Type scale. Use these by role instead of raw sizes or text-[Npx]:
+     text-display  hero headline, one per page
+     text-h1       page title
+     text-h2       section title
+     text-h3       card / group title
+     text-lead     intro paragraph under a title
+     text-body     default copy (16px)
+     text-body-sm  secondary copy, dense UI (14px)
+     text-caption  meta, helper text (13px)
+     text-label    small UI labels, tabs, badges (12px); add `uppercase` for eyebrows
+     text-micro    dense tool chrome only: panels, trays, tooltips (11px)
+   Each step carries its own line-height, tracking and weight, so a class is
+   usually all a heading needs. */
+@theme {
+  --text-display: clamp(2.75rem, 1.6rem + 4.2vw, 4.75rem);
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.045em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(2.25rem, 1.8rem + 1.8vw, 3rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(1.75rem, 1.45rem + 1.2vw, 2.25rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 500;
+
+  --text-lead: 1.125rem;
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.005em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.45;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.35;
+  --text-label--letter-spacing: 0.01em;
+
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.3;
+  --text-micro--letter-spacing: 0.01em;
 }
 
 /* The UI is flat: drop Tailwind's shadow scales so shadow-sm, drop-shadow-md,
@@ -70,13 +122,10 @@
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
-  --font-sans:
-    var(--font-inter), var(--font-geist-sans), "Segoe UI", ui-sans-serif, system-ui;
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-mono:
-    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", "Courier New", monospace;
-  --font-tight: var(--font-inter-tight), "Segoe UI", sans-serif;
-  --font-gemunu: var(--font-gemunu-libre), sans-serif;
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -164,7 +213,20 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   ::-webkit-scrollbar {
@@ -337,7 +399,7 @@
 
 :root {
   --scene-launch: #1346e7;
-  --scene-relaunch: #4fe5ff;
+  --scene-relaunch: #5b78f2;
 
   --scene-beam-1: #84a2ff;
   --scene-beam-2: #1346e7;
@@ -349,17 +411,17 @@
   --scene-flame-4: #ff7b3c;
 
   --scene-pulse: #5b78f2;
-  --scene-pulse-hot: #7e97fa;
+  --scene-pulse-hot: #84a2ff;
 
-  --scene-arrow-1: #1565c0;
-  --scene-arrow-2: #229eff;
-  --scene-arrow-3: #7ac2ff;
-  --scene-arrow-line: #0f3d6b;
+  --scene-arrow-1: #1346e7;
+  --scene-arrow-2: #5b78f2;
+  --scene-arrow-3: #84a2ff;
+  --scene-arrow-line: #0b2a8f;
 }
 
 .dark {
-  --scene-launch: #a5750a;
-  --scene-relaunch: #b01a00;
+  --scene-launch: #ecb918;
+  --scene-relaunch: #a4870d;
 
   --scene-beam-1: #7b5d00;
   --scene-beam-2: #ecb918;
@@ -371,12 +433,12 @@
   --scene-flame-4: #0084c3;
 
   --scene-pulse: #a4870d;
-  --scene-pulse-hot: #816805;
+  --scene-pulse-hot: #7b5d00;
 
-  --scene-arrow-1: #ea9a3f;
-  --scene-arrow-2: #dd6100;
-  --scene-arrow-3: #853d00;
-  --scene-arrow-line: #f0c294;
+  --scene-arrow-1: #ecb918;
+  --scene-arrow-2: #a4870d;
+  --scene-arrow-3: #7b5d00;
+  --scene-arrow-line: #f4d570;
 }
 
 .LaunchButton path,
@@ -402,11 +464,11 @@
 }
 
 .buildingCubeFace.is-ready {
-  fill: #93ffbb;
+  fill: #b9c8ff;
 }
 
 .dark .buildingCubeFace.is-ready {
-  fill: #ef467e;
+  fill: #463700;
 }
 
 .rocketRivet {
@@ -598,13 +660,22 @@
   offset-rotate: 0deg;
 }
 
-.group:hover .fan-dot {
+/* Fine pointers only, so a tap on touch doesn't fire a burst; keyboard focus gets it too. */
+@media (hover: hover) and (pointer: fine) {
+  .group:hover .fan-dot {
+    animation: fan-burst 0.7s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+    animation-delay: var(--fan-delay, 0ms);
+  }
+}
+
+.group:has(:focus-visible) .fan-dot {
   animation: fan-burst 0.7s cubic-bezier(0.34, 1.3, 0.64, 1) both;
   animation-delay: var(--fan-delay, 0ms);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .group:hover .fan-dot {
+  .group:hover .fan-dot,
+  .group:has(:focus-visible) .fan-dot {
     animation: none;
     opacity: 0;
   }

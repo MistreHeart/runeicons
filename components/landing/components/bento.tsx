@@ -37,8 +37,8 @@ const BentoCard = ({
           : "pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 md:px-8 md:pb-6"
       }
     >
-      <TextHighlightWave as="h3" className="mb-1 text-sm font-semibold md:text-base" text={title} />
-      <p className="text-sm text-muted-foreground md:text-base">{description}</p>
+      <TextHighlightWave as="h3" className="mb-1 text-h3" text={title} />
+      <p className="text-body-sm text-muted-foreground">{description}</p>
     </div>
   );
 
