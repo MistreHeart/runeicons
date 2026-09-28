@@ -21,11 +21,7 @@ const Packages = () => (
       <span className="text-label font-medium tracking-[0.08em] text-muted-foreground uppercase">
         Packages
       </span>
-      <TextHighlightWave
-        as="h2"
-        className="mt-3 text-h2"
-        text={["One set, every platform"]}
-      />
+      <TextHighlightWave as="h2" className="mt-3 text-h2" text={["One set, every platform"]} />
       <p className="mt-4 max-w-2xl text-lead text-muted-foreground">
         The same 900+ icons in all five styles, packaged for the tools you already use. Nothing is
         fetched at runtime.
@@ -40,17 +36,22 @@ const Packages = () => (
           prefetch={false}
           className="group flex flex-col gap-4 rounded-2xl border border-border bg-card pad-card text-card-foreground transition-colors duration-150 ease-out hover:bg-foreground/[0.03]"
         >
-          <span className="flex size-10 items-center justify-center rounded-lg bg-foreground/[0.06]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={platform.logo}
-              alt={`${platform.name} logo`}
-              width={22}
-              height={22}
-              className="size-[22px]"
-              loading="lazy"
-            />
-          </span>
+          <div className="flex items-start justify-between gap-2">
+            <span className="flex size-10 items-center justify-center rounded-lg bg-foreground/[0.06]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={platform.logo}
+                alt={`${platform.name} logo`}
+                width={22}
+                height={22}
+                className="size-[22px]"
+                loading="lazy"
+              />
+            </span>
+            <span className="rounded-md bg-brand/10 px-1.5 py-0.5 text-label font-medium whitespace-nowrap text-brand">
+              Coming soon
+            </span>
+          </div>
           <div className="flex min-w-0 flex-col gap-2">
             <h3 className="text-h3">{platform.name}</h3>
             <span className="truncate font-mono text-label text-muted-foreground">
