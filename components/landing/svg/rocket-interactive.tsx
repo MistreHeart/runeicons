@@ -127,12 +127,12 @@ export default function RocketInteractive() {
         preserveAspectRatio="xMidYMid meet"
       >
         {paths.map((entry, pathIdx) => {
-          // One brand scale: body and fins lightest, porthole and flame stepping deeper.
+          // One grey scale: body and fins lightest, porthole and flame stepping deeper.
           const fills: Record<number, string> = {
-            0: "color-mix(in oklab, var(--brand) 10%, var(--background))",
-            3: "color-mix(in oklab, var(--brand) 22%, var(--background))",
-            4: "color-mix(in oklab, var(--brand) 32%, var(--background))",
-            5: "color-mix(in oklab, var(--brand) 18%, var(--background))",
+            0: "color-mix(in oklab, var(--foreground) 6%, var(--background))",
+            3: "color-mix(in oklab, var(--foreground) 14%, var(--background))",
+            4: "color-mix(in oklab, var(--foreground) 22%, var(--background))",
+            5: "color-mix(in oklab, var(--foreground) 10%, var(--background))",
           };
 
           return (
@@ -179,7 +179,7 @@ export default function RocketInteractive() {
                     y1={pts[anchorIdx].y}
                     x2={pt.x}
                     y2={pt.y}
-                    stroke="color-mix(in oklab, var(--brand) 40%, transparent)"
+                    stroke="color-mix(in oklab, var(--foreground) 35%, transparent)"
                     strokeWidth={0.6 * SCALE}
                   />
                 )}
@@ -187,8 +187,8 @@ export default function RocketInteractive() {
                   cx={pt.x}
                   cy={pt.y}
                   r={isAnchor ? 4 * SCALE : 2.8 * SCALE}
-                  fill={isAnchor ? "var(--brand)" : "var(--background)"}
-                  stroke={isAnchor ? "var(--background)" : "var(--brand)"}
+                  fill={isAnchor ? "var(--foreground)" : "var(--background)"}
+                  stroke={isAnchor ? "var(--background)" : "var(--foreground)"}
                   strokeWidth={0.8 * SCALE}
                   className="origin-center transition-transform duration-150 transform-fill hover:scale-150"
                   style={{ cursor: "move" }}

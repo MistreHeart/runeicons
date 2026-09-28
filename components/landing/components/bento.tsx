@@ -16,7 +16,6 @@ interface BentoCardProps {
   graphicClassName?: string;
   fullBackgroundGraphic?: boolean;
   inlineLabel?: boolean;
-  transparentBg?: boolean;
 }
 
 const BentoCard = ({
@@ -27,7 +26,6 @@ const BentoCard = ({
   graphicClassName,
   fullBackgroundGraphic,
   inlineLabel,
-  transparentBg,
 }: BentoCardProps) => {
   const label = (title || description) && (
     <div
@@ -44,7 +42,7 @@ const BentoCard = ({
 
   return (
     <div
-      className={`relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border ${transparentBg ? "bg-transparent" : "bg-card"} ease text-card-foreground transition-colors duration-150 hover:bg-foreground/[0.03] md:rounded-3xl ${className}`}
+      className={`ease relative flex min-h-0 flex-col overflow-hidden rounded-2xl border border-border bg-card text-card-foreground transition-colors duration-150 hover:bg-foreground/[0.03] md:rounded-3xl ${className}`}
     >
       <div
         className={
@@ -68,9 +66,8 @@ const Bento = () => {
           <BentoCard
             title="Five styles, one library"
             description="Outline, duotone, fill, pixel, glass. The same glyph, drawn five ways."
-            className="flex h-full items-center justify-center"
+            className="h-full"
             inlineLabel
-            transparentBg
           >
             <RocketInteractive />
           </BentoCard>
@@ -79,7 +76,6 @@ const Bento = () => {
             description="Grab a point, drag it, watch the path bend. No Figma round-trip."
             className="h-full"
             inlineLabel
-            transparentBg
           >
             <IconVarietyShowcase />
           </BentoCard>
@@ -90,7 +86,6 @@ const Bento = () => {
           description="Built on a 24px grid so nothing lands half a pixel off."
           className="h-full min-h-0 lg:col-span-3"
           inlineLabel
-          transparentBg
         >
           <BentoCenterSvg />
         </BentoCard>
@@ -102,7 +97,6 @@ const Bento = () => {
             className="h-full"
             graphicClassName="p-0!"
             inlineLabel
-            transparentBg
           >
             <IconCarousel />
           </BentoCard>
@@ -111,7 +105,6 @@ const Bento = () => {
             description="Every curve was placed on purpose. They stay sharp at any size."
             className="h-full max-lg:aspect-square"
             fullBackgroundGraphic
-            transparentBg
           >
             <BentoSvg />
           </BentoCard>
