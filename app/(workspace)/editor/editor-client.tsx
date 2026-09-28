@@ -9,8 +9,14 @@ import type { EditorAssetSummary } from "@/lib/editor/types";
 // shell only shows a "switch to a laptop" message, so the icon set isn't fetched.
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
+// Kept for the life of the tab, so switching back to the editor renders at
+// once instead of flashing the loading state while the JSON is re-read.
+let cachedAssets: { url: string; data: EditorAssetSummary[] } | null = null;
+
 export function EditorClient({ assetsUrl }: { assetsUrl: string }) {
-  const [assets, setAssets] = useState<EditorAssetSummary[] | null>(null);
+  const [assets, setAssets] = useState<EditorAssetSummary[] | null>(() =>
+    cachedAssets?.url === assetsUrl ? cachedAssets.data : null,
+  );
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
@@ -19,7 +25,7 @@ export function EditorClient({ assetsUrl }: { assetsUrl: string }) {
     let started = false;
 
     const load = () => {
-      if (started || !media.matches) return;
+      if (started || !media.matches || cachedAssets?.url === assetsUrl) return;
       started = true;
       fetch(assetsUrl)
         .then((res) => {
@@ -27,6 +33,7 @@ export function EditorClient({ assetsUrl }: { assetsUrl: string }) {
           return res.json() as Promise<EditorAssetSummary[]>;
         })
         .then((data) => {
+          cachedAssets = { url: assetsUrl, data };
           if (!cancelled) setAssets(data);
         })
         .catch(() => {
@@ -45,7 +52,7 @@ export function EditorClient({ assetsUrl }: { assetsUrl: string }) {
   if (assets) return <EditorShell assets={assets} />;
 
   return (
-    <div className="flex h-screen flex-col items-center justify-center gap-2 bg-background px-8 text-center">
+    <div className="flex flex-1 flex-col items-center justify-center gap-2 px-8 text-center">
       <p className="text-h3 text-foreground lg:hidden">Please switch to a laptop</p>
       <p className="max-w-xs text-body-sm text-muted-foreground lg:hidden">
         This needs a bigger screen to work properly.

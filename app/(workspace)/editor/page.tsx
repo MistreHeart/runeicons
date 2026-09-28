@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { createHash } from "node:crypto";
 
-import { TuningProvider } from "@/components/icon-page/tuning";
 import { getEditorAssets } from "@/lib/editor/assets";
 
 import { EditorClient } from "./editor-client";
@@ -21,9 +20,5 @@ export default async function EditorPage() {
   const assets = await getEditorAssets();
   const version = createHash("sha1").update(JSON.stringify(assets)).digest("hex").slice(0, 12);
 
-  return (
-    <TuningProvider>
-      <EditorClient assetsUrl={`/editor/assets.json?v=${version}`} />
-    </TuningProvider>
-  );
+  return <EditorClient assetsUrl={`/editor/assets.json?v=${version}`} />;
 }

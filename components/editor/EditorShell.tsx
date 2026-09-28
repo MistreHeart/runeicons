@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { HeaderPanel } from "@/components/icon-page/panels/header";
+import { PANEL } from "@/components/icon-page/surface";
+import { cn } from "@/lib/utils";
 import { ToolRail } from "@/components/icon-page/panels/outline";
 import { KeyboardShortcutsModal } from "@/components/icon-page/panels/outline/components/keyboard-shortcuts-modal";
 import { PropertiesPanel } from "@/components/icon-page/panels/properties";
@@ -119,16 +120,14 @@ export function EditorShell({ assets }: EditorShellProps) {
 
   return (
     <>
-      <div className="flex h-screen flex-col items-center justify-center gap-2 bg-background px-8 text-center lg:hidden">
-        <p className="text-lg font-medium text-foreground">Please switch to a laptop</p>
-        <p className="max-w-xs text-sm text-muted-foreground">
+      <div className="flex flex-1 flex-col items-center justify-center gap-2 px-8 text-center lg:hidden">
+        <p className="text-h3 text-foreground">Please switch to a laptop</p>
+        <p className="max-w-xs text-body-sm text-muted-foreground">
           This needs a bigger screen to work properly.
         </p>
       </div>
-      <div className="hidden h-screen flex-col bg-background lg:flex">
-      <HeaderPanel />
-      <div className="flex flex-1 overflow-hidden">
-        <aside className="w-12 shrink-0" aria-label="Tool rail">
+      <div className="hidden min-h-0 flex-1 gap-2 overflow-hidden px-2 pb-2 lg:flex">
+        <aside className={cn("relative z-[100] w-12 shrink-0 overflow-visible!", PANEL)} aria-label="Tool rail">
           <ToolRail
             activeType={state.iconType}
             onTypeChange={handleTypeChange}
@@ -137,7 +136,7 @@ export function EditorShell({ assets }: EditorShellProps) {
           />
         </aside>
 
-        <aside className="w-[320px] shrink-0" aria-label="Icon library">
+        <aside className={cn("w-[320px] shrink-0", PANEL)} aria-label="Icon library">
           <IconLibraryPanel
             onIconSelect={handleLibrarySelect}
             selectedIconId={librarySelectedId}
@@ -158,10 +157,9 @@ export function EditorShell({ assets }: EditorShellProps) {
         />
 
         <aside
-          className="w-[341px] shrink-0 border-l border-border bg-workspace-pattern overflow-y-auto relative"
+          className={cn("relative w-[341px] shrink-0 overflow-y-auto!", PANEL)}
           aria-label="Customization controls"
         >
-          <div className="absolute inset-0 bg-background/80 pointer-events-none" />
           <div className="relative z-10">
             <PropertiesPanel
               state={state}
@@ -179,7 +177,6 @@ export function EditorShell({ assets }: EditorShellProps) {
           onClose={() => setShowHelp(false)}
         />
       </div>
-    </div>
     </>
   );
 }

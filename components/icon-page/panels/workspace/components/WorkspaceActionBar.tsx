@@ -140,15 +140,7 @@ export function WorkspaceActionBar({
   );
   return (
     <TooltipProvider delayDuration={400}>
-      <div
-        className={cn(
-          "flex h-[46px] items-stretch gap-1.5 rounded-[14px] border border-black/5 p-1 dark:border-white/10",
-          "bg-[#f5f5f5] dark:bg-[#1a1a1a]",
-          exportOnly &&
-            "border-transparent bg-transparent dark:border-transparent dark:bg-transparent",
-          className,
-        )}
-      >
+      <div className={cn("flex items-center gap-2", className)}>
         {!exportOnly && (
           <>
             <HistoryControls
@@ -166,42 +158,41 @@ export function WorkspaceActionBar({
             />
           </>
         )}
-        <div className="flex items-center gap-1 rounded-[10px] bg-[#1d1d1f] p-[3px] outline outline-1 outline-black/50">
+        <div className="flex items-center gap-0.5 rounded-xl bg-background p-1 ring-1 ring-foreground/10">
           <button
             disabled={isPending}
             onClick={isAnimated ? downloadJsx : downloadSvg}
-            className="group relative flex h-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-[7px] bg-white px-4 text-center transition-all hover:bg-white/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-black"
+            className="flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg bg-foreground px-3 text-center text-background transition-[opacity,scale] duration-150 outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-40"
           >
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full" />
             <Download className="h-3.5 w-3.5" />
-            <span className="text-[10px] font-bold tracking-tight whitespace-nowrap">
-              {isPending ? "Exporting..." : isAnimated ? "Export JSX" : "Export SVG"}
+            <span className="text-label font-medium whitespace-nowrap">
+              {isPending ? "Exporting…" : isAnimated ? "Export JSX" : "Export SVG"}
             </span>
           </button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="group flex h-full w-8 shrink-0 items-center justify-center rounded-[7px] bg-white text-black transition-all hover:bg-white/90 active:scale-[0.98] dark:bg-white dark:text-black">
-                <ChevronDown className="h-4 w-4 opacity-70 transition-opacity group-hover:opacity-100" />
+              <button
+                aria-label="More export options"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 outline-none hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]"
+              >
+                <ChevronDown className="h-4 w-4" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white"
-            >
+            <DropdownMenuContent align="end" className="w-[184px] p-1">
               {isAnimated ? (
                 <>
                   <ActionMenuItem disabled={isPending} onClick={copyJsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <div className="flex flex-1 items-center justify-between">
                       <span>Copy JSX Component</span>
-                      <span className="font-mono text-[9px] opacity-40">JSX</span>
+                      <span className="font-mono text-micro text-muted-foreground">JSX</span>
                     </div>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={copyTsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <div className="flex flex-1 items-center justify-between">
                       <span>Copy TSX Component</span>
-                      <span className="font-mono text-[9px] opacity-40">TSX</span>
+                      <span className="font-mono text-micro text-muted-foreground">TSX</span>
                     </div>
                   </ActionMenuItem>
                   <ActionMenuItem
@@ -211,23 +202,23 @@ export function WorkspaceActionBar({
                       if (svg) copyToClipboard(svg, "SVG (animated)");
                     }}
                   >
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <div className="flex flex-1 items-center justify-between">
                       <span>Copy as SVG</span>
-                      <span className="font-mono text-[9px] opacity-40">SVG</span>
+                      <span className="font-mono text-micro text-muted-foreground">SVG</span>
                     </div>
                   </ActionMenuItem>
-                  <DropdownMenuSeparator className="bg-white/5" />
+                  <DropdownMenuSeparator />
                   <ActionMenuItem disabled={isPending} onClick={downloadJsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <span>Download as JSX</span>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={downloadTsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <span>Download as TSX</span>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={downloadSvg}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <span>Download as SVG (animated)</span>
                   </ActionMenuItem>
                 </>
@@ -244,10 +235,10 @@ export function WorkspaceActionBar({
                       }
                     }}
                   >
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <div className="flex flex-1 items-center justify-between">
                       <span>Copy as SVG</span>
-                      <span className="font-mono text-[9px] opacity-40">SVG</span>
+                      <span className="font-mono text-micro text-muted-foreground">SVG</span>
                     </div>
                   </ActionMenuItem>
                   <ActionMenuItem
@@ -260,24 +251,24 @@ export function WorkspaceActionBar({
                       }
                     }}
                   >
-                    <Braces className="h-4 w-4 text-white/40" />
+                    <Braces className="h-4 w-4 text-muted-foreground" />
                     <span>Copy as React</span>
                   </ActionMenuItem>
-                  <DropdownMenuSeparator className="my-0.5 bg-white/5" />
+                  <DropdownMenuSeparator />
                   <ActionMenuItem disabled={isPending} onClick={downloadSvg}>
-                    <Download className="h-4 w-4 text-white/40" />
+                    <Download className="h-4 w-4 text-muted-foreground" />
                     <span>Download as SVG</span>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={downloadJsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <span>Download as JSX</span>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={downloadTsx}>
-                    <FileCode className="h-4 w-4 text-white/40" />
+                    <FileCode className="h-4 w-4 text-muted-foreground" />
                     <span>Download as TSX</span>
                   </ActionMenuItem>
                   <ActionMenuItem disabled={isPending} onClick={downloadPng}>
-                    <Image className="h-4 w-4 text-white/40" />
+                    <Image className="h-4 w-4 text-muted-foreground" />
                     <span>Download as PNG</span>
                   </ActionMenuItem>
                 </>

@@ -27,9 +27,6 @@ export function NoiseSection({
           }
           min={0}
           max={100}
-          className="noise-track-custom border-transparent"
-          showFill={false}
-          showTicks={false}
         />
       </div>
     </Section>

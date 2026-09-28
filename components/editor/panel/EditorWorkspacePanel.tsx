@@ -261,7 +261,7 @@ export function EditorWorkspacePanel({
   return (
     <>
       <SvgDefinitions state={state} />
-      <main className="flex-1 flex flex-col relative overflow-hidden" aria-label="Editor workspace">
+      <main className="relative flex min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-border bg-card" aria-label="Editor workspace">
         {showGrid ? (
           <div className="absolute inset-0 z-0">
             <WorkspaceGround />

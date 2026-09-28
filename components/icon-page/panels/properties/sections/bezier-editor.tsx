@@ -112,13 +112,13 @@ export function BezierEditor({ value, onChange }: BezierEditorProps) {
 
           <line x1={PAD} y1={PAD + INNER} x2={PAD + INNER} y2={PAD} stroke="currentColor" strokeOpacity="0.1" strokeWidth="1" strokeDasharray="3 3" />
 
-          <g stroke="hsl(220 70% 60%)" strokeWidth="1" strokeOpacity="0.5">
+          <g stroke="currentColor" strokeWidth="1" strokeOpacity="0.35">
             <line x1={PAD} y1={PAD + INNER} x2={p1.svgX} y2={p1.svgY} />
             <line x1={PAD + INNER} y1={PAD} x2={p2.svgX} y2={p2.svgY} />
           </g>
 
           <g transform={curvePathOffset}>
-            <path d={curvePath} fill="none" stroke="hsl(220 80% 65%)" strokeWidth="2" strokeLinecap="round" />
+            <path d={curvePath} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </g>
 
           {([
@@ -138,8 +138,8 @@ export function BezierEditor({ value, onChange }: BezierEditorProps) {
                 cx={point.svgX}
                 cy={point.svgY}
                 r={4}
-                fill="hsl(220 80% 65%)"
-                stroke="white"
+                fill="currentColor"
+                stroke="var(--background)"
                 strokeWidth="1.5"
                 className="pointer-events-none"
               />
@@ -158,7 +158,7 @@ export function BezierEditor({ value, onChange }: BezierEditorProps) {
           setParams(parsed);
           onChange(`cubic-bezier(${parsed.map((v) => +v.toFixed(3)).join(", ")})`);
         }}
-        className="w-full font-mono text-[10px] text-center bg-transparent border border-border/20 rounded px-2 py-1 focus:border-foreground/30 focus:outline-none transition-colors"
+        className="w-full font-mono text-label text-center bg-transparent border border-border rounded px-2 py-1 focus:border-foreground/30 focus:outline-none transition-colors"
       />
     </div>
   );

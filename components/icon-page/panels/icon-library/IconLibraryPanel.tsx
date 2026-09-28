@@ -23,9 +23,8 @@ export function IconLibraryPanel({
   } = useIconLibrary(selectedCategory, iconType, onIconSelect, customIcons);
   const isSearching = searchQuery.length > 0;
   return (
-    <div className="h-full flex flex-col bg-workspace-pattern border-r border-border relative group/panel overflow-hidden">
-      <div className="absolute inset-0 bg-background/80 pointer-events-none" />
-      <div className="relative z-10 flex flex-col h-full">
+    <div className="group/panel relative flex h-full flex-col overflow-hidden">
+      <div className="relative z-10 flex h-full flex-col">
         <IconLibraryHeader
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}

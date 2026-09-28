@@ -77,7 +77,7 @@ export const EditorIconTray = memo(function EditorIconTray({
                     e.stopPropagation();
                     onRemoveAsset(asset.id);
                   }}
-                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center hover:scale-110 active:scale-90 z-10"
+                  className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-white opacity-0 group-hover:opacity-100 transition-[opacity,transform] duration-150 ease-out flex items-center justify-center hover:scale-110 active:scale-90 z-10"
                   aria-label={`Remove ${asset.name}`}
                 >
                   <X className="w-2.5 h-2.5" />

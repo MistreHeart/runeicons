@@ -9,11 +9,13 @@ import { ToolRail } from "@/components/icon-page/panels/outline";
 import { KeyboardShortcutsModal } from "@/components/icon-page/panels/outline/components/keyboard-shortcuts-modal";
 import { PropertiesPanel } from "@/components/icon-page/panels/properties";
 import { useConfigPersistence } from "@/components/icon-page/panels/properties/hooks/use-config-persistence";
+import { PANEL } from "@/components/icon-page/surface";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useWorkspaceState } from "@/hooks/use-workspace-state";
 import { getIconDataById, resolveLibraryIconType, type StateIconType } from "@/lib/icons";
 import { fetchSvgInnerContentRaw, generateStandaloneSvg } from "@/lib/svg-export-utils";
 import type { IconCategory, IconData } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 import { WorkspaceActionBar } from "./components/WorkspaceActionBar";
 import { useWorkspaceSelection } from "./hooks/use-workspace-selection";
@@ -213,16 +215,16 @@ export function WorkspaceShell() {
 
   return (
     <>
-      <div className="flex min-h-0 flex-1 flex-col lg:hidden">
-        <div className="relative flex min-h-0 flex-1">
-          <aside className="w-12 shrink-0" aria-label="Icon style">
+      <div className="flex min-h-0 flex-1 flex-col px-2 pb-2 lg:hidden">
+        <div className="relative flex min-h-0 flex-1 gap-2">
+          <aside className={cn("w-12 shrink-0", PANEL)} aria-label="Icon style">
             <ToolRail
               activeType={state.iconType}
               onTypeChange={handleTypeChange}
               onHelpClick={() => setShowHelp(true)}
             />
           </aside>
-          <div className="min-w-0 flex-1 overflow-y-auto" aria-label="Icon library">
+          <div className={cn("min-w-0 flex-1 overflow-y-auto", PANEL)} aria-label="Icon library">
             <IconLibraryPanel
               onIconSelect={handleIconSelectWithTypeSync}
               selectedIconId={selectedIcon?.id ?? null}
@@ -249,8 +251,11 @@ export function WorkspaceShell() {
           />
         </div>
       </div>
-      <div className="hidden flex-1 overflow-x-auto overflow-y-hidden lg:flex">
-        <aside className="relative z-[100] w-12 shrink-0" aria-label="Tool rail">
+      <div className="hidden min-h-0 flex-1 gap-2 overflow-x-auto overflow-y-hidden px-2 pb-2 lg:flex">
+        <aside
+          className={cn("relative z-[100] w-12 shrink-0 overflow-visible!", PANEL)}
+          aria-label="Tool rail"
+        >
           <ToolRail
             activeType={state.iconType}
             onTypeChange={handleTypeChange}
@@ -258,7 +263,7 @@ export function WorkspaceShell() {
           />
         </aside>
 
-        <aside className="w-[320px] shrink-0" aria-label="Icon library">
+        <aside className={cn("w-[320px] shrink-0", PANEL)} aria-label="Icon library">
           <IconLibraryPanel
             onIconSelect={handleIconSelectWithTypeSync}
             selectedIconId={selectedIcon?.id ?? null}
@@ -287,10 +292,9 @@ export function WorkspaceShell() {
         />
 
         <aside
-          className="bg-workspace-pattern relative w-[341px] shrink-0 overflow-y-auto border-l border-border"
+          className={cn("relative w-[341px] shrink-0 overflow-y-auto!", PANEL)}
           aria-label="Customization controls"
         >
-          <div className="pointer-events-none absolute inset-0 bg-background/80" />
           <div className="relative z-10">
             <PropertiesPanel
               state={state}
