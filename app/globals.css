@@ -157,7 +157,6 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
-  --font-special-gothic: var(--font-special-gothic-face), ui-sans-serif, sans-serif;
   --font-mono:
     var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", monospace;

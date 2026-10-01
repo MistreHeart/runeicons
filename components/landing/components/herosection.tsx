@@ -56,7 +56,7 @@ const HeroSection = () => {
         </Link>
         <TextHighlightWave
           as="h1"
-          className="mt-4 text-display"
+          className="mt-4 text-2xl leading-tight font-medium tracking-[-0.02em] [word-spacing:-0.08em] sm:text-4xl sm:leading-none md:text-5xl lg:text-6xl"
           text={["Modern icon\nsystem for products"]}
         />
         <p className="mt-4 max-w-lg text-lead text-muted-foreground">

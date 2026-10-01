@@ -12,7 +12,7 @@ import { WORDMARK_D } from "../svg/wordmark-data";
 // where it fits wholly inside a letter, so none get sliced by the letter edges.
 // At rest only the faint letters show; hovering fades the field in.
 
-const VB_W = 1202;
+const VB_W = 1170;
 const VB_H = 147;
 const CELL = 21;
 const COLS = Math.floor(VB_W / CELL);
