@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Github } from "lucide-react";
 import { motion } from "motion/react";
 
-import LightLogo from "@/components/landing/svg/light";
+import { BrandMark } from "@/app/brand-mark";
 import { Button } from "@/components/ui/button";
 import { LightDarkMode } from "@/components/ui/light-dark-mode";
 import { cn } from "@/lib/utils";
@@ -34,8 +34,8 @@ export function HeaderPanel({ className }: HeaderPanelProps) {
           prefetch={false}
           className="group flex h-full w-12 shrink-0 cursor-pointer items-center justify-center border-r border-border transition-colors duration-150 ease-out hover:bg-muted/50"
         >
-          <span className="flex h-8 w-8 items-center justify-center transition-transform duration-150 ease-out group-hover:scale-[1.02]">
-            <LightLogo />
+          <span className="flex h-8 w-8 items-center justify-center text-foreground transition-transform duration-150 ease-out group-hover:scale-[1.02]">
+            <BrandMark size={19} fill="currentColor" />
           </span>
         </Link>
         <div className="hidden h-full w-[320px] shrink-0 items-center border-r border-border px-5 lg:flex" />
