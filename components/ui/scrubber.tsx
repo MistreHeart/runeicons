@@ -286,15 +286,15 @@ export const Scrubber: React.FC<ScrubberProps> = ({
       onKeyDown={handleSliderKeyDown}
       style={{ width: rubberBandWidth, x: rubberBandX }}
       className={cn(
-        "group relative h-9 w-full touch-none overflow-hidden rounded-lg bg-foreground/3 ring-1 ring-foreground/7 transition-[background-color,box-shadow] duration-150 outline-none ring-inset focus-visible:ring-foreground/25",
+        "group relative h-[34px] w-full touch-none overflow-hidden rounded-sm border border-border/40 bg-muted/10 transition-all",
         className,
         disabled ? "cursor-not-allowed opacity-50" : "cursor-grab active:cursor-grabbing",
         (isEditing ||
           (showInput &&
             typeof document !== "undefined" &&
             document.activeElement === inputRef.current)) &&
-          "ring-foreground/25",
-        isHovered && !disabled && "ring-foreground/15",
+          "border-brand/40 ring-1 ring-brand/20",
+        isHovered && !disabled && "border-border/60 bg-muted/20",
       )}
       role="slider"
       aria-valuemin={min}
@@ -333,8 +333,8 @@ export const Scrubber: React.FC<ScrubberProps> = ({
           <motion.div
             style={{ transform: progressTransform, transformOrigin: "left" }}
             animate={{
-              backgroundColor: fillClassName ? undefined : "var(--foreground)",
-              opacity: isDragging ? 0.09 : 0.055,
+              backgroundColor: fillClassName ? undefined : "var(--brand)",
+              opacity: isDragging ? 0.2 : 0.12,
             }}
             transition={{ duration: 0.1 }}
             className={cn("absolute top-0 right-0 bottom-0 left-0 z-0", fillClassName)}
@@ -345,7 +345,7 @@ export const Scrubber: React.FC<ScrubberProps> = ({
         )}
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-0 z-10 flex items-center px-2 text-label text-foreground/75 select-none">
+      <div className="pointer-events-none absolute inset-0 z-10 flex items-center px-2 text-micro tracking-[0.08em] text-foreground/70 uppercase select-none">
         <div className="flex w-full items-center justify-between">
           <span ref={labelRef} className="ml-1">
             {label}
@@ -390,11 +390,11 @@ export const Scrubber: React.FC<ScrubberProps> = ({
                 onKeyDown={handleInputKeyDown}
                 onFocus={() => setIsEditing(true)}
                 className={cn(
-                  "w-10 rounded-md bg-transparent text-right font-mono text-label text-foreground tabular-nums transition-colors outline-none",
+                  "w-10 bg-transparent text-right font-mono text-micro tabular-nums transition-all outline-none",
                   "[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none",
                   "cursor-ew-resize border border-transparent px-1 py-0.5",
-                  "hover:bg-foreground/5",
-                  "focus:cursor-text focus:bg-background",
+                  "hover:bg-muted/20",
+                  "focus:cursor-text focus:bg-background/20",
                 )}
               />
             </div>
@@ -409,7 +409,7 @@ export const Scrubber: React.FC<ScrubberProps> = ({
             className="absolute inset-0 flex items-center justify-end px-2"
           >
             {!isEditing && (
-              <div ref={valueRef} className="flex items-center text-label text-foreground/75">
+              <div ref={valueRef} className="flex items-center text-micro tracking-[0.08em] text-foreground/70 uppercase">
                 {rightSlot ?? <span className="font-mono">{value}</span>}
               </div>
             )}
@@ -424,7 +424,7 @@ export const Scrubber: React.FC<ScrubberProps> = ({
         <div className="absolute inset-0 flex h-full items-center justify-center">
           <motion.div
             animate={{
-              backgroundColor: "var(--foreground)",
+              backgroundColor: "var(--brand)",
               width: isDragging ? 3 : 2,
               height: isDragging ? 16 : 14,
               opacity: isOverlapping ? 0.05 : 1,

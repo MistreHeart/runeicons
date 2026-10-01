@@ -165,7 +165,8 @@ export function EditorActionBar({
       <LayoutGroup>
         <div
           className={cn(
-            "flex items-center gap-2",
+            "flex h-[46px] items-stretch gap-1.5 rounded-[14px] p-1 border border-black/5 dark:border-white/10",
+            "bg-[#f5f5f5] dark:bg-[#1a1a1a]",
             className,
           )}
         >
@@ -225,7 +226,7 @@ export function EditorActionBar({
                     }
               }
               style={{ originX: 0.5, originY: 0.5 }}
-              className="flex items-center gap-0.5 rounded-xl bg-background p-1 ring-1 ring-foreground/10"
+              className="flex items-center gap-0.5 rounded-[10px] bg-[#1d1d1f] p-[3px] outline outline-1 outline-black/50"
             >
               <motion.div
                 variants={reduceMotion ? undefined : toolsParent}
@@ -246,8 +247,10 @@ export function EditorActionBar({
                           aria-pressed={isActive}
                           aria-label={label}
                           className={cn(
-                            "flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 outline-none hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]",
-                            isActive && "bg-foreground text-background hover:bg-foreground hover:text-background",
+                            "flex h-9 w-9 items-center justify-center rounded-[7px] transition-all active:translate-y-[0.5px]",
+                            isActive
+                              ? "bg-white text-black"
+                              : "text-[#c9c9cb] hover:bg-white/5 hover:text-white",
                           )}
                         >
                           <Icon className="h-3.5 w-3.5" />
@@ -260,7 +263,7 @@ export function EditorActionBar({
                   );
                 })}
                 <div
-                  className="mx-0.5 h-5 w-px bg-border"
+                  className="mx-0.5 h-5 w-px bg-white/10"
                   aria-hidden="true"
                 />
                 <Tooltip>
@@ -274,8 +277,10 @@ export function EditorActionBar({
                         showReference ? "Hide reference" : "Show reference"
                       }
                       className={cn(
-                        "flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 outline-none hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]",
-                        showReference && "bg-foreground text-background hover:bg-foreground hover:text-background",
+                        "flex h-9 w-9 items-center justify-center rounded-[7px] transition-all active:translate-y-[0.5px]",
+                        showReference
+                          ? "bg-white text-black"
+                          : "text-[#c9c9cb] hover:bg-white/5 hover:text-white",
                       )}
                     >
                       {showReference ? (
@@ -300,25 +305,23 @@ export function EditorActionBar({
           <button
             disabled={isPending}
             onClick={downloadSvg}
-            className="flex h-8 flex-1 items-center justify-center gap-1.5 rounded-lg bg-foreground px-3 text-center text-background transition-[opacity,scale] duration-150 outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-40"
+            className="group relative flex h-full flex-1 items-center justify-center gap-2 overflow-hidden rounded-[7px] bg-white px-4 text-center transition-all hover:bg-white/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40 dark:bg-white dark:text-black"
           >
+            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-black/5 to-transparent transition-transform duration-500 ease-out group-hover:translate-x-full" />
             <Download className="h-3.5 w-3.5" />
-            <span className="text-label font-medium whitespace-nowrap">
-              {isPending ? "Exporting…" : "Export SVG"}
+            <span className="text-[10px] font-bold tracking-tight whitespace-nowrap">
+              {isPending ? "Exporting..." : "Export SVG"}
             </span>
           </button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button
-                aria-label="More export options"
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 outline-none hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]"
-              >
-                <ChevronDown className="h-4 w-4" />
+              <button className="group flex h-full w-8 items-center justify-center rounded-[7px] bg-white text-black transition-all hover:bg-white/90 active:scale-[0.98] dark:bg-white dark:text-black">
+                <ChevronDown className="h-4 w-4 opacity-70 transition-opacity group-hover:opacity-100" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-[184px] p-1"
+              className="w-[146px] border-white/10 bg-[#2c2c2e] p-1 text-white"
             >
               <ActionMenuItem
                 disabled={isPending}
@@ -333,23 +336,23 @@ export function EditorActionBar({
                   });
                 }}
               >
-                <FileCode className="h-4 w-4 text-muted-foreground" />
+                <FileCode className="h-4 w-4 text-white/40" />
                 <div className="flex flex-1 items-center justify-between">
                   <span>Copy as SVG</span>
-                  <span className="font-mono text-micro text-muted-foreground">SVG</span>
+                  <span className="font-mono text-[9px] opacity-40">SVG</span>
                 </div>
               </ActionMenuItem>
-              <DropdownMenuSeparator />
+              <DropdownMenuSeparator className="my-0.5 bg-white/5" />
               <ActionMenuItem
                 disabled={isPending}
                 onClick={downloadSvg}
               >
-                <Download className="h-4 w-4 text-muted-foreground" />
+                <Download className="h-4 w-4 text-white/40" />
                 <span>Download as SVG</span>
               </ActionMenuItem>
               {additionalDropdownItems && (
                 <>
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator className="my-0.5 bg-white/5" />
                   {additionalDropdownItems}
                 </>
               )}

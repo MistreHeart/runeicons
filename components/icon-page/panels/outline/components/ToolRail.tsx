@@ -34,7 +34,8 @@ export function ToolRail({
 }: ToolRailProps) {
   const [showFeedback, setShowFeedback] = useState(false);
   return (
-    <div className="relative z-10 flex h-full flex-col items-center justify-between py-2">
+    <aside className="relative z-10 flex h-full flex-col justify-between border-r border-border bg-background p-2">
+      <div className="bg-pattern-vertical-dashes pointer-events-none absolute inset-0 opacity-100" />
       <div className="relative z-10 flex h-full flex-col">
         <IconTypeList
           activeType={activeType}
@@ -49,11 +50,11 @@ export function ToolRail({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 className={cn(
-                  "h-8 w-8 rounded-lg text-muted-foreground transition-[background-color,color,scale] duration-150 ease-out hover:bg-foreground/5 hover:text-foreground focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]",
-                  showFeedback && "bg-foreground/5 text-foreground",
+                  "h-8 w-8 border-border bg-white text-muted-foreground transition-[background-color,color,scale] duration-150 ease-out hover:bg-accent/80 hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.96] dark:bg-[#1a1a1a]",
+                  showFeedback && "scale-110 border-primary/30 bg-primary/10 text-primary",
                 )}
                 aria-label="Info and shortcuts"
               >
@@ -96,6 +97,6 @@ export function ToolRail({
           </DropdownMenu>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }

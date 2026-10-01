@@ -54,7 +54,7 @@ export function UploadSection({
     <Section 
       title="Uploads" 
       headerAction={
-        <span className="text-label font-medium text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
+        <span className="text-[10px] font-bold text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
           {state.customIcons.length}/{maxIcons}
         </span>
       }
@@ -71,7 +71,7 @@ export function UploadSection({
             <p className="text-xs text-destructive leading-relaxed">{uploadError}</p>
             <button
               onClick={() => setUploadError(null)}
-              className="ml-auto text-destructive hover:text-destructive/80 focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2 rounded-md outline-none"
+              className="ml-auto text-destructive hover:text-destructive/80 focus-visible:ring-2 focus-visible:ring-destructive focus-visible:ring-offset-2 rounded-sm outline-none"
               aria-label="Dismiss error"
             >
               <X className="h-3 w-3" />
@@ -84,8 +84,8 @@ export function UploadSection({
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           className={cn(
-            "border-2 border-dashed rounded-xl p-6 text-center transition-colors duration-200 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
-            isDragging ? "border-primary bg-primary/5 scale-[0.99]" : "border-border hover:border-border",
+            "border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200 focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
+            isDragging ? "border-primary bg-primary/5 scale-[0.99]" : "border-border hover:border-border/80",
             isUploading && "opacity-50 pointer-events-none",
             state.customIcons.length >= maxIcons && "opacity-50 cursor-not-allowed grayscale pointer-events-none"
           )}
@@ -98,7 +98,7 @@ export function UploadSection({
                 className="h-8 w-8 mx-auto mb-3 text-primary animate-spin"
                 aria-hidden="true"
               />
-              <p className="text-xs font-medium text-primary">UPLOADING...</p>
+              <p className="text-xs font-bold text-primary tracking-tight">UPLOADING...</p>
             </div>
           ) : (
             <>
@@ -109,7 +109,7 @@ export function UploadSection({
               <p className="text-sm font-medium text-foreground mb-1">
                 Drag & drop files here
               </p>
-              <p className="text-label font-medium text-muted-foreground/60 mb-4 px-6">
+              <p className="text-[10px] font-bold text-muted-foreground/60 mb-4 px-6">
                 SVG, PNG or JPG (MAX 5MB)
               </p>
               <label className="cursor-pointer">
@@ -138,7 +138,7 @@ export function UploadSection({
 
         {state.customIcons.length > 0 && (
           <div className="pt-2">
-            <label className="text-label font-medium text-muted-foreground mb-3 block opacity-70 text-balance">
+            <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-3 block opacity-70 text-balance">
               Custom Icons
             </label>
             <motion.div
@@ -164,7 +164,7 @@ export function UploadSection({
                     hidden: { opacity: 0, y: 12, filter: "blur(4px)" },
                     visible: { opacity: 1, y: 0, filter: "blur(0px)" }
                   }}
-                  className="flex items-center gap-3 p-2 rounded-xl border border-border bg-muted/10 hover:bg-foreground/8 transition-[background-color,border-color,scale] duration-200 group cursor-pointer active:scale-[0.98] focus-within:ring-2 focus-within:ring-primary"
+                  className="flex items-center gap-3 p-2 rounded-xl border border-border bg-muted/10 hover:bg-muted/30 transition-[background-color,border-color,scale] duration-200 group cursor-pointer active:scale-[0.98] focus-within:ring-2 focus-within:ring-primary"
                   role="listitem"
                   onClick={() => onIconSelect?.({
                     id: icon.id,

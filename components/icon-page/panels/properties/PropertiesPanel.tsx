@@ -108,7 +108,7 @@ export function PropertiesPanel({
               <DropdownMenuTrigger asChild>
                 <button
                   type="button"
-                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-foreground/8 px-3 text-xs font-medium text-foreground transition-colors hover:bg-muted/50 focus:outline-none"
+                  className="flex h-8 items-center gap-1.5 rounded-md border border-border bg-muted/30 px-3 text-xs font-medium text-foreground transition-colors hover:bg-muted/50 focus:outline-none"
                 >
                   <span className="font-mono">{state.width}px</span>
                   <ChevronDown className="h-3 w-3 opacity-50" />

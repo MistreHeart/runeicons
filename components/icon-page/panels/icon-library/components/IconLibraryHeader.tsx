@@ -1,5 +1,5 @@
 import { RefObject, useMemo } from "react";
-import { Check, ChevronDown, Search, X } from "lucide-react";
+import { ChevronDown, Search, X } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { IconCategory } from "@/lib/types";
+import { cn } from "@/lib/utils";
 interface HeaderProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
@@ -48,17 +49,17 @@ export function IconLibraryHeader({
     [],
   );
   return (
-    <div className="flex items-center gap-2 border-b border-border p-3">
+    <div className="flex items-center gap-2 border-b border-border px-3 pt-3 pb-3">
       <div className="min-w-0 flex-1">
         <div className="group/search relative">
-          <Search className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within/search:text-foreground" />
+          <Search className="pointer-events-none absolute top-1/2 left-3 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within/search:text-primary" />
           <Input
             ref={searchInputRef}
             type="text"
-            placeholder="Search icons"
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-9 rounded-lg border-0 bg-foreground/4 pr-12 pl-9 text-body-sm text-foreground shadow-none ring-1 ring-foreground/7 transition-[background-color,box-shadow] outline-none ring-inset placeholder:text-muted-foreground focus-visible:bg-background focus-visible:ring-foreground/20"
+            className="h-9 rounded-md border border-border bg-muted/20 pr-12 pl-9 text-xs font-medium text-foreground transition-[background-color,border-color,box-shadow,ring] outline-none placeholder:text-muted-foreground focus:border-brand/40 focus:bg-muted/40 focus:ring-4 focus:ring-brand/10"
             aria-label="Search icons and shapes"
           />
           <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-1.5 px-0.5">
@@ -78,7 +79,7 @@ export function IconLibraryHeader({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
-              className="relative flex h-9 min-w-[100px] items-center gap-2 rounded-lg bg-foreground/4 px-3 text-body-sm font-medium whitespace-nowrap text-foreground ring-1 ring-foreground/7 transition-[scale,background-color] ring-inset outline-none hover:bg-foreground/7 focus-visible:ring-foreground/20 active:scale-[0.96]"
+              className="relative flex h-9 min-w-[100px] items-center gap-2 rounded-md border border-border bg-muted/20 px-3 text-xs font-medium whitespace-nowrap text-foreground transition-[scale,background-color] hover:bg-muted/40 focus:outline-none active:scale-[0.96]"
               aria-label="Category filter"
             >
               <svg
@@ -87,7 +88,7 @@ export function IconLibraryHeader({
                 height="14"
                 viewBox="0 0 24 24"
                 fill="none"
-                className="shrink-0 text-muted-foreground"
+                className="shrink-0 text-primary"
               >
                 <g>
                   <path
@@ -131,10 +132,12 @@ export function IconLibraryHeader({
               <DropdownMenuItem
                 key={cat.value}
                 onClick={() => onCategoryChange(cat.value)}
-                className="flex cursor-pointer items-center justify-between gap-2"
+                className={cn(
+                  "flex cursor-pointer items-center gap-2 transition-colors duration-200",
+                  selectedCategory === cat.value && "bg-accent text-accent-foreground",
+                )}
               >
-                <span className="text-body-sm">{cat.label}</span>
-                {selectedCategory === cat.value && <Check className="size-3.5 opacity-70" />}
+                <div className="text-sm">{cat.label}</div>
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>

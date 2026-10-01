@@ -101,7 +101,7 @@ export function IconTypeList({
       <div
         ref={containerRef}
         onKeyDown={handleKeyDown}
-        className={cn("grid gap-1", compact ? "grid-cols-1" : "grid-cols-3")}
+        className={cn("grid gap-2", compact ? "grid-cols-1" : "grid-cols-3")}
         role="radiogroup"
         aria-label="Icon style type"
       >
@@ -112,16 +112,16 @@ export function IconTypeList({
             <Tooltip key={type.id}>
               <TooltipTrigger asChild>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   onClick={() => onTypeChange?.(type.id)}
                   onMouseEnter={() => prefetchType(type.id)}
                   onFocus={() => prefetchType(type.id)}
                   className={cn(
-                    "group/icon-type h-8 w-8 rounded-lg transition-[background-color,color,scale] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-foreground/30 active:scale-[0.96]",
+                    "group/icon-type h-8 w-8 rounded-md border-border transition-[background-color,color,scale] duration-150 ease-out focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.96]",
                     isActive
-                      ? "bg-foreground text-background hover:bg-foreground/90 hover:text-background"
-                      : "text-muted-foreground hover:bg-foreground/5 hover:text-foreground",
+                      ? "border-brand/20 bg-brand text-white hover:bg-brand/90 dark:bg-brand dark:hover:bg-brand/90"
+                      : "bg-white text-muted-foreground hover:bg-accent hover:text-foreground dark:bg-[#1a1a1a]",
                   )}
                   aria-label={type.label}
                   role="radio"

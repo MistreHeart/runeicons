@@ -22,7 +22,7 @@ export function ShadowSection({
       title="Shadow"
       headerAction={
         <div className="flex items-center gap-2">
-          <div className="flex rounded-md bg-foreground/5 p-0.5">
+          <div className="flex p-0.5 rounded-md border border-border/50 bg-muted/20">
             <Button
               variant="ghost"
               size="sm"
@@ -32,9 +32,9 @@ export function ShadowSection({
                 })
               }
               className={cn(
-                "h-6 px-3 text-micro rounded-md transition-colors duration-150 active:scale-[0.98]",
+                "h-6 px-3 text-[9px] uppercase tracking-tighter rounded-sm transition-all duration-150 active:scale-[0.98]",
                 !state.shadow.inner
-                  ? "bg-background text-foreground ring-1 ring-foreground/10"
+                  ? "bg-background text-foreground border border-border/60"
                   : "text-muted-foreground hover:text-foreground hover:bg-background/40",
               )}
             >
@@ -49,9 +49,9 @@ export function ShadowSection({
                 })
               }
               className={cn(
-                "h-6 px-3 text-micro rounded-md transition-colors duration-150 active:scale-[0.98]",
+                "h-6 px-3 text-[9px] uppercase tracking-tighter rounded-sm transition-all duration-150 active:scale-[0.98]",
                 state.shadow.inner
-                  ? "bg-background text-foreground ring-1 ring-foreground/10"
+                  ? "bg-background text-foreground border border-border/60"
                   : "text-muted-foreground hover:text-foreground hover:bg-background/40",
               )}
             >

@@ -124,14 +124,14 @@ function EasingCurve({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y
         strokeWidth="0.5"
         strokeDasharray="2 2"
       />
-      <g stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.35">
+      <g stroke="hsl(220 70% 65%)" strokeWidth="0.75" strokeOpacity="0.6">
         <line x1={origin.sx} y1={origin.sy} x2={p1.sx} y2={p1.sy} />
         <line x1={end.sx} y1={end.sy} x2={p2.sx} y2={p2.sy} />
       </g>
       <path
         d={pts.join(" ")}
         fill="none"
-        stroke="currentColor"
+        stroke="hsl(220 80% 65%)"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
@@ -141,7 +141,7 @@ function EasingCurve({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y
         cx={p1.sx}
         cy={p1.sy}
         r={2.5}
-        fill="currentColor"
+        fill="hsl(220 80% 65%)"
         stroke="currentColor"
         strokeWidth="0.75"
         strokeOpacity="0.4"
@@ -150,7 +150,7 @@ function EasingCurve({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y
         cx={p2.sx}
         cy={p2.sy}
         r={2.5}
-        fill="currentColor"
+        fill="hsl(220 80% 65%)"
         stroke="currentColor"
         strokeWidth="0.75"
         strokeOpacity="0.4"
@@ -404,7 +404,7 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                 aria-pressed={motionState?.loop ?? false}
                 onClick={() => handleGlobalChange({ loop: !motionState?.loop })}
                 className={cn(
-                  "flex h-5 items-center gap-1 rounded px-1.5 text-micro transition-colors",
+                  "flex h-5 items-center gap-1 rounded px-1.5 text-[9px] tracking-widest uppercase transition-colors",
                   motionState?.loop
                     ? "text-foreground"
                     : "text-foreground/30 hover:text-foreground/55",
@@ -425,10 +425,10 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                 title={isPaused ? "Push & Play" : "Pause"}
                 onClick={() => handleGlobalChange({ isPaused: !isPaused, scrubProgress: null })}
                 className={cn(
-                  "flex h-6 w-6 items-center justify-center rounded-md transition-colors active:scale-90",
+                  "flex h-6 w-6 items-center justify-center rounded-md transition-all active:scale-90",
                   isPaused
                     ? "bg-foreground/8 text-foreground hover:bg-foreground/15"
-                    : "text-foreground/40 hover:bg-foreground/5 hover:text-foreground",
+                    : "text-foreground/40 hover:bg-muted/15 hover:text-foreground",
                 )}
               >
                 {isPaused ? (
@@ -463,7 +463,7 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                     selectedPathIndex: -1,
                   })
                 }
-                className="flex h-6 w-6 items-center justify-center rounded-md text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                className="flex h-6 w-6 items-center justify-center rounded-md text-foreground/40 transition-all hover:bg-muted/15 hover:text-foreground"
               >
                 <svg
                   className="h-3 w-3"
@@ -576,20 +576,20 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                             handleGlobalChange({ animationType: type, presetId: null })
                           }
                           className={cn(
-                            "flex flex-col items-center gap-2 transition-colors",
-                            isActive ? "opacity-100" : "opacity-40 hover:opacity-70",
+                            "flex flex-col items-center gap-2 transition-all",
+                            isActive ? "opacity-100" : "opacity-30 hover:opacity-60",
                           )}
                         >
                           {preview}
                           <div
                             className={cn(
-                              "h-0.5 rounded-full transition-colors duration-300",
+                              "h-0.5 rounded-full transition-all duration-300",
                               isActive ? "w-5 bg-foreground" : "w-1.5 bg-foreground/15",
                             )}
                           />
                           <span
                             className={cn(
-                              "text-micro transition-colors",
+                              "text-[8px] tracking-widest uppercase transition-colors",
                               isActive ? "text-foreground/70" : "text-foreground/40",
                             )}
                           >
@@ -612,13 +612,15 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                       }
                       showInput={false}
                       rightSlot={
-                        <span className="text-label text-foreground/70">
+                        <span className="text-[10px] tracking-widest text-foreground/70 uppercase">
                           {(motionState?.duration ?? 2).toFixed(1)}s
                         </span>
                       }
                     />
                     <div className="flex w-full items-center justify-between px-2">
-                      <span className="ml-1 text-label text-foreground/70 select-none">Loop</span>
+                      <span className="ml-1 text-[10px] tracking-widest text-foreground/70 uppercase select-none">
+                        Loop
+                      </span>
                       <Switch
                         checked={motionState?.loop ?? true}
                         onCheckedChange={(v) => handleGlobalChange({ loop: v, presetId: null })}
@@ -629,7 +631,9 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                   <div className="space-y-3">
                     <div className="space-y-1.5">
                       <div className="px-1">
-                        <span className="text-label text-foreground/75">Easing</span>
+                        <span className="text-[10px] tracking-widest text-foreground/35 uppercase">
+                          Easing
+                        </span>
                       </div>
                       <div className="grid grid-cols-4 gap-1 px-1">
                         {EASING_SIMPLE.map((e) => {
@@ -641,14 +645,16 @@ export function MotionSection({ state, onChange, pathCount = 0 }: CustomizationS
                               type="button"
                               onClick={() => handleGlobalChange({ easingId: e.id, presetId: null })}
                               className={cn(
-                                "flex h-20 flex-col items-center justify-center gap-1 rounded-md transition-colors",
+                                "flex h-20 flex-col items-center justify-center gap-1 rounded-sm transition-all",
                                 isActive
-                                  ? "bg-foreground/6 text-foreground ring-1 ring-foreground/12 ring-inset"
-                                  : "text-foreground/45 hover:bg-foreground/5 hover:text-foreground/80",
+                                  ? "bg-foreground text-background"
+                                  : "text-foreground/35 hover:bg-muted/10 hover:text-foreground/70",
                               )}
                             >
                               <EasingCurve x1={cx1} y1={cy1} x2={cx2} y2={cy2} />
-                              <span className="text-micro">{e.label}</span>
+                              <span className="text-[8px] tracking-tighter uppercase">
+                                {e.label}
+                              </span>
                             </button>
                           );
                         })}

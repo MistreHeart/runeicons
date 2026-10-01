@@ -15,13 +15,13 @@ function TexturePreview({ texId }: { texId: string }) {
   const tex = TEXTURES.find(t => t.id === texId);
   return (
     <div
-      className="w-5 h-5 rounded-md border border-border/40 overflow-hidden bg-muted/10 flex items-center justify-center"
+      className="w-5 h-5 rounded-sm border border-border/40 overflow-hidden bg-muted/10 flex items-center justify-center"
       style={tex?.path ? {
         backgroundImage: `url(${tex.path})`,
         backgroundSize: 'cover'
       } : {}}
     >
-      {texId === 'none' && <span className="text-micro font-medium opacity-40">∅</span>}
+      {texId === 'none' && <span className="text-[8px] font-black opacity-40">∅</span>}
     </div>
   );
 }
@@ -57,19 +57,19 @@ export function TextureSection({
         <div
           ref={wrapperRef}
           className={cn(
-            "overflow-hidden rounded-lg bg-foreground/3 ring-1 ring-inset ring-foreground/7",
+            "overflow-hidden rounded-sm border border-border/40 bg-muted/10",
             "transition-colors",
-            isOpen && "border-border bg-foreground/5"
+            isOpen && "border-border/60 bg-muted/15"
           )}
         >
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
             className={cn(
-              "flex h-9 w-full cursor-pointer items-center justify-between px-2",
-              "text-label text-foreground/70 transition-colors",
-              "hover:bg-foreground/5 focus:outline-none",
-              isOpen && "bg-foreground/5"
+              "flex h-[34px] w-full cursor-pointer items-center justify-between px-2",
+              "text-[10px] uppercase tracking-widest text-foreground/70 transition-colors",
+              "hover:bg-muted/20 focus:outline-none",
+              isOpen && "bg-muted/20"
             )}
           >
             <span className="ml-1">Texture</span>
@@ -88,16 +88,16 @@ export function TextureSection({
                 transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 className="overflow-hidden"
               >
-                <div className="border-t border-border">
+                <div className="border-t border-border/20">
                   {TEXTURES.map((tex) => (
                     <button
                       key={tex.id}
                       type="button"
                       onClick={() => selectTexture(tex.id)}
                       className={cn(
-                        "flex w-full items-center justify-between px-3 py-2 text-label",
-                        "text-foreground/70 transition-colors hover:bg-foreground/5",
-                        state.texture.selected === tex.id && "bg-foreground/8 text-foreground"
+                        "flex w-full items-center justify-between px-3 py-2 text-[10px] uppercase tracking-widest",
+                        "text-foreground/70 transition-colors hover:bg-muted/20",
+                        state.texture.selected === tex.id && "bg-muted/30 text-foreground"
                       )}
                     >
                       <span>{tex.name}</span>
@@ -121,6 +121,8 @@ export function TextureSection({
             }
             min={0}
             max={100}
+            className="bg-white/[0.07] border-white/10"
+            fillClassName="bg-white/20"
           />
         )}
       </div>

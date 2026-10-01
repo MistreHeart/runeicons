@@ -38,7 +38,7 @@ export function WorkspacePanel({
     <>
       <SvgDefinitions state={state} />
       <main
-        className="relative flex min-h-0 min-w-[360px] flex-1 flex-col overflow-hidden rounded-2xl border border-border bg-card"
+        className="flex-1 flex flex-col relative min-h-0 min-w-[360px]"
         aria-label="Preview area"
       >
         <PreviewArea
@@ -53,7 +53,7 @@ export function WorkspacePanel({
           initial={{ opacity: 0, scale: 0.9, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 400, damping: 28 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 will-change-transform"
+          className="absolute bottom-9.5 left-1/2 -translate-x-1/2 z-40 will-change-transform"
         >
           <WorkspaceActionBar
             onReset={onReset}

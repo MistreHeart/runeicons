@@ -639,29 +639,22 @@ export const PreviewContent = memo(
                     )}
                   </div>
                 </motion.div>
-              ) : null}
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="text-center text-sm font-medium text-muted-foreground"
+                >
+                  <p>Select an icon</p>
+                  <p className="mt-1 text-xs opacity-70">from the left panel</p>
+                </motion.div>
+              )}
             </AnimatePresence>
             {shadowOuterOn ? (
               <ShadowDirectionArrow offsetX={state.shadow.offsetX} offsetY={state.shadow.offsetY} />
             ) : null}
           </motion.div>
-          {/* Outside the scaled preview box, so it reads at normal size. */}
-          <AnimatePresence>
-            {!selectedIcon && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-                className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center"
-              >
-                <p className="text-body-sm font-medium text-foreground">No icon selected</p>
-                <p className="text-caption text-muted-foreground">
-                  Pick one from the library to start tuning it.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       );
     },

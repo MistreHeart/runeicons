@@ -1,7 +1,7 @@
 "use client";
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 
 import type { IconType } from "@/lib/icons";
 import { getSpriteHref } from "@/lib/icons";
@@ -9,7 +9,7 @@ import { STROKE_STYLE_MAP } from "@/lib/stroke-style";
 import { CustomizationState, IconData } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
-import { CursorNameTag, type CursorNameTagHandle } from "./IconNameTag";
+import { IconNameTag } from "./IconNameTag";
 
 interface IconGridProps {
   icons: IconData[];
@@ -53,6 +53,13 @@ const GridTile = memo(function GridTile({
 
   return (
     <div className="relative w-full">
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-0 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+      >
+        <span className="absolute h-2.5 w-px bg-border" />
+        <span className="absolute h-px w-2.5 bg-border" />
+      </span>
       <motion.button
         onClick={() => onSelect(icon)}
         onMouseEnter={(e) => onTrackMove(icon, e.currentTarget, e.clientX, e.clientY)}
@@ -124,6 +131,16 @@ const GridTile = memo(function GridTile({
   );
 });
 
+interface ActiveTag {
+  id: string;
+  label: string;
+  left?: number;
+  right?: number;
+  top: number;
+  above: boolean;
+  align: "center" | "left" | "right";
+}
+
 function IconGridInner({
   icons,
   selectedIconId,
@@ -135,35 +152,126 @@ function IconGridInner({
   const invertInDark = iconType === "normal" || iconType === "pixelated";
   const containerRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
+  const [activeTag, setActiveTag] = useState<ActiveTag | null>(null);
+  const activeTagRef = useRef<ActiveTag | null>(null);
+  const tagTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastMoveRef = useRef({ x: 0, y: 0, t: 0 });
   const COLS = 5;
-  const tagRef = useRef<CursorNameTagHandle>(null);
-  const hide = useCallback((immediate?: boolean) => tagRef.current?.hide(immediate), []);
+  const DWELL_MS = 280;
+  const MOVE_TOLERANCE = 6;
+
+  const clearTagTimer = useCallback(() => {
+    if (tagTimer.current) clearTimeout(tagTimer.current);
+    tagTimer.current = null;
+  }, []);
+
+  const measureTag = useCallback(
+    (icon: IconData, el: HTMLButtonElement): ActiveTag | null => {
+      const container = containerRef.current;
+      if (!container) return null;
+      const gridBox = container.getBoundingClientRect();
+      const tileBox = el.getBoundingClientRect();
+      const index = icons.findIndex((entry) => entry.id === icon.id);
+      const col = index % COLS;
+      const above = index >= icons.length - COLS;
+      const align = col === 0 ? "left" : col === COLS - 1 ? "right" : ("center" as const);
+      const tag: ActiveTag = {
+        id: icon.id,
+        label: icon.name,
+        top: above ? tileBox.top - gridBox.top : tileBox.top - gridBox.top + tileBox.height,
+        above,
+        align,
+      };
+      if (align === "center") tag.left = tileBox.left - gridBox.left + tileBox.width / 2;
+      else if (align === "left") tag.left = tileBox.left - gridBox.left + 4;
+      else tag.right = gridBox.right - tileBox.right + 4;
+      return tag;
+    },
+    [icons],
+  );
 
   const showTag = useCallback(
-    (icon: IconData, _index: number, el: HTMLButtonElement) =>
-      tagRef.current?.showAt(icon.name, el),
-    [],
+    (icon: IconData, _index: number, el: HTMLButtonElement) => {
+      if (tagTimer.current) clearTimeout(tagTimer.current);
+      tagTimer.current = null;
+      const now = performance.now();
+      const still = now - lastMoveRef.current.t;
+      const place = () => {
+        const next = measureTag(icon, el);
+        if (!next) return;
+        activeTagRef.current = next;
+        setActiveTag(next);
+      };
+      if (activeTagRef.current !== null || still >= DWELL_MS) {
+        place();
+        return;
+      }
+      tagTimer.current = setTimeout(() => {
+        if (performance.now() - lastMoveRef.current.t < DWELL_MS) return;
+        place();
+      }, DWELL_MS - still);
+    },
+    [measureTag],
   );
+
   const trackMove = useCallback(
-    (icon: IconData, _el: HTMLButtonElement, x: number, y: number) =>
-      tagRef.current?.follow(icon.name, x, y),
-    [],
+    (icon: IconData, el: HTMLButtonElement, x: number, y: number) => {
+      const last = lastMoveRef.current;
+      if (Math.hypot(x - last.x, y - last.y) > MOVE_TOLERANCE) {
+        lastMoveRef.current = { x, y, t: performance.now() };
+      }
+      if (activeTagRef.current === null) {
+        showTag(icon, -1, el);
+      } else if (activeTagRef.current.id !== icon.id) {
+        const next = measureTag(icon, el);
+        if (next) {
+          activeTagRef.current = next;
+          setActiveTag(next);
+        }
+      }
+    },
+    [measureTag, showTag],
   );
-  const hideTag = useCallback(() => hide(), [hide]);
+
+  const hideTag = useCallback(() => {
+    if (tagTimer.current) clearTimeout(tagTimer.current);
+    tagTimer.current = null;
+    tagTimer.current = setTimeout(() => {
+      activeTagRef.current = null;
+      setActiveTag(null);
+    }, 120);
+  }, []);
 
   useEffect(() => {
-    const hideNow = () => hide(true);
+    const timer = tagTimer.current;
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hideNow = () => {
+      if (tagTimer.current) clearTimeout(tagTimer.current);
+      tagTimer.current = null;
+      activeTagRef.current = null;
+      setActiveTag(null);
+    };
     window.addEventListener("blur", hideNow);
     window.addEventListener("resize", hideNow);
     return () => {
       window.removeEventListener("blur", hideNow);
       window.removeEventListener("resize", hideNow);
     };
-  }, [hide]);
+  }, []);
 
+  const [tagIcons, setTagIcons] = useState(icons);
+  if (tagIcons !== icons) {
+    setTagIcons(icons);
+    setActiveTag(null);
+  }
   useEffect(() => {
-    hide(true);
-  }, [icons, hide]);
+    activeTagRef.current = null;
+  }, [icons]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -210,7 +318,7 @@ function IconGridInner({
 
   return (
     <div
-      className="grid-fade relative grid grid-cols-5 border-b border-border outline-none [&>div:nth-child(5n)>button]:border-r-0"
+      className="grid-fade relative grid grid-cols-5 border-b border-border outline-none"
       ref={containerRef}
       tabIndex={-1}
     >
@@ -231,11 +339,19 @@ function IconGridInner({
           onSelect={onIconClick}
         />
       ))}
-      <CursorNameTag
-        ref={tagRef}
-        containerRef={containerRef}
-        reduceMotion={reduceMotion === true}
-      />
+      <AnimatePresence>
+        {activeTag && (
+          <IconNameTag
+            label={activeTag.label}
+            above={activeTag.above}
+            align={activeTag.align}
+            left={activeTag.left}
+            right={activeTag.right}
+            top={activeTag.top}
+            reduceMotion={reduceMotion === true}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
