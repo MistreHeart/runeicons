@@ -1,1 +1,1 @@
-export { WorkspaceShell } from "./WorkspaceShell";
+export { useIconsWorkspace } from "./use-icons-workspace";

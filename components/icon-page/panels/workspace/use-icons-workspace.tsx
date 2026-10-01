@@ -1,21 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ComponentProps } from "react";
 
 import { toast } from "sonner";
 
 import { IconLibraryPanel } from "@/components/icon-page/panels/icon-library";
 import { ToolRail } from "@/components/icon-page/panels/outline";
-import { KeyboardShortcutsModal } from "@/components/icon-page/panels/outline/components/keyboard-shortcuts-modal";
 import { PropertiesPanel } from "@/components/icon-page/panels/properties";
 import { useConfigPersistence } from "@/components/icon-page/panels/properties/hooks/use-config-persistence";
-import { PANEL } from "@/components/icon-page/surface";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
-import { useWorkspaceState } from "@/hooks/use-workspace-state";
+import type { useWorkspaceState } from "@/hooks/use-workspace-state";
 import { getIconDataById, resolveLibraryIconType, type StateIconType } from "@/lib/icons";
 import { fetchSvgInnerContentRaw, generateStandaloneSvg } from "@/lib/svg-export-utils";
 import type { IconCategory, IconData } from "@/lib/types";
-import { cn } from "@/lib/utils";
 
 import { WorkspaceActionBar } from "./components/WorkspaceActionBar";
 import { useWorkspaceSelection } from "./hooks/use-workspace-selection";
@@ -44,7 +41,15 @@ const CATEGORIES: IconCategory[] = [
 
 const ICON_TYPES: StateIconType[] = ["normal", "duotone", "fill", "pixelated", "glass"];
 
-export function WorkspaceShell() {
+/**
+ * The /icons workspace: library selection, tray, preview and shortcuts. It
+ * returns props for the shared side panels plus its own centre, so the
+ * workspace layout can keep the panels mounted when switching to /editor.
+ */
+export function useIconsWorkspace(
+  workspace: ReturnType<typeof useWorkspaceState>,
+  active: boolean,
+) {
   const {
     state,
     handleChange,
@@ -54,7 +59,7 @@ export function WorkspaceShell() {
     canUndo,
     canRedo,
     hasLoadedFromStorage,
-  } = useWorkspaceState({ enableKeyboardShortcuts: false });
+  } = workspace;
 
   const {
     activeCategory,
@@ -211,104 +216,70 @@ export function WorkspaceShell() {
     },
     trayIcons,
     canCopy: !!selectedIcon,
+    enabled: active,
   });
 
-  return (
-    <>
-      <div className="flex min-h-0 flex-1 flex-col px-2 pb-2 lg:hidden">
-        <div className="relative flex min-h-0 flex-1 gap-2">
-          <aside className={cn("w-12 shrink-0", PANEL)} aria-label="Icon style">
-            <ToolRail
-              activeType={state.iconType}
-              onTypeChange={handleTypeChange}
-              onHelpClick={() => setShowHelp(true)}
-            />
-          </aside>
-          <div className={cn("min-w-0 flex-1 overflow-y-auto", PANEL)} aria-label="Icon library">
-            <IconLibraryPanel
-              onIconSelect={handleIconSelectWithTypeSync}
-              selectedIconId={selectedIcon?.id ?? null}
-              selectedCategory={activeCategory}
-              onCategoryChange={setActiveCategory}
-              customIcons={state.customIcons}
-              iconType={resolveLibraryIconType(state.iconType)}
-              customizationState={state}
-            />
-          </div>
-          <WorkspaceActionBar
-            exportOnly
-            className="absolute bottom-4 left-1/2 z-10 w-fit -translate-x-1/2"
-            onReset={handleReset}
-            onUndo={handleUndo}
-            onRedo={handleRedo}
-            canUndo={canUndo}
-            canRedo={canRedo}
-            selectedIcon={selectedIcon}
-            state={state}
-            onChange={handleChange}
-            showGrid={showGrid}
-            onGridToggle={() => setShowGrid((previous) => !previous)}
-          />
-        </div>
-      </div>
-      <div className="hidden min-h-0 flex-1 gap-2 overflow-x-auto overflow-y-hidden px-2 pb-2 lg:flex">
-        <aside
-          className={cn("relative z-[100] w-12 shrink-0 overflow-visible!", PANEL)}
-          aria-label="Tool rail"
-        >
-          <ToolRail
-            activeType={state.iconType}
-            onTypeChange={handleTypeChange}
-            onHelpClick={() => setShowHelp(true)}
-          />
-        </aside>
+  const toolRail: ComponentProps<typeof ToolRail> = {
+    activeType: state.iconType,
+    onTypeChange: handleTypeChange,
+    onHelpClick: () => setShowHelp(true),
+  };
 
-        <aside className={cn("w-[320px] shrink-0", PANEL)} aria-label="Icon library">
-          <IconLibraryPanel
-            onIconSelect={handleIconSelectWithTypeSync}
-            selectedIconId={selectedIcon?.id ?? null}
-            selectedCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-            customIcons={state.customIcons}
-            iconType={resolveLibraryIconType(state.iconType)}
-            customizationState={state}
-          />
-        </aside>
+  const library: ComponentProps<typeof IconLibraryPanel> = {
+    onIconSelect: handleIconSelectWithTypeSync,
+    selectedIconId: selectedIcon?.id ?? null,
+    selectedCategory: activeCategory,
+    onCategoryChange: setActiveCategory,
+    customIcons: state.customIcons,
+    iconType: resolveLibraryIconType(state.iconType),
+    customizationState: state,
+  };
 
-        <WorkspacePanel
-          state={state}
-          trayIcons={trayIcons}
-          selectedIcon={selectedIcon}
-          onSelectIcon={handleIconSelectWithTypeSync}
-          onRemoveFromTray={handleRemoveFromTray}
-          onReset={handleReset}
-          onUndo={handleUndo}
-          onRedo={handleRedo}
-          canUndo={canUndo}
-          canRedo={canRedo}
-          onChange={handleChange}
-          showGrid={showGrid}
-          onGridToggle={() => setShowGrid((previous) => !previous)}
-        />
+  const properties: ComponentProps<typeof PropertiesPanel> = {
+    state,
+    selectedIcon: selectedIconForPanel,
+    onIconSelect: handleIconSelectWithTypeSync,
+    onDeleteIcon: handleRemoveById,
+    onChange: handleChange,
+    onReset: handleReset,
+  };
 
-        <aside
-          className={cn("relative w-[341px] shrink-0 overflow-y-auto!", PANEL)}
-          aria-label="Customization controls"
-        >
-          <div className="relative z-10">
-            <PropertiesPanel
-              state={state}
-              selectedIcon={selectedIconForPanel}
-              onIconSelect={handleIconSelectWithTypeSync}
-              onDeleteIcon={handleRemoveById}
-              onChange={handleChange}
-              onReset={handleReset}
-            />
-          </div>
-        </aside>
-
-        <KeyboardShortcutsModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
-      </div>
-    </>
+  const center = (
+    <WorkspacePanel
+      state={state}
+      trayIcons={trayIcons}
+      selectedIcon={selectedIcon}
+      onSelectIcon={handleIconSelectWithTypeSync}
+      onRemoveFromTray={handleRemoveFromTray}
+      onReset={handleReset}
+      onUndo={handleUndo}
+      onRedo={handleRedo}
+      canUndo={canUndo}
+      canRedo={canRedo}
+      onChange={handleChange}
+      showGrid={showGrid}
+      onGridToggle={() => setShowGrid((previous) => !previous)}
+    />
   );
+
+  // Below lg there is no preview: the library fills the screen with an
+  // export-only action bar over it.
+  const mobileActionBar = (
+    <WorkspaceActionBar
+      exportOnly
+      className="absolute bottom-4 left-1/2 z-10 w-fit -translate-x-1/2"
+      onReset={handleReset}
+      onUndo={handleUndo}
+      onRedo={handleRedo}
+      canUndo={canUndo}
+      canRedo={canRedo}
+      selectedIcon={selectedIcon}
+      state={state}
+      onChange={handleChange}
+      showGrid={showGrid}
+      onGridToggle={() => setShowGrid((previous) => !previous)}
+    />
+  );
+
+  return { toolRail, library, properties, center, mobileActionBar, showHelp, setShowHelp };
 }
